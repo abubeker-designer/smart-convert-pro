@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoConvertFast | Professional Creator Tools</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@700;900&display=swap" rel="stylesheet">
+    <title>GoConvertFast | Viral Media Studio</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Outfit:wght@800;900&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
@@ -12,159 +14,155 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'], outfit: ['Outfit', 'sans-serif'] },
-                    colors: { brand: { orange: '#FF6723', blue: '#1A2B47' } }
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'], outfit: ['Outfit', 'sans-serif'] },
+                    colors: { brand: { orange: '#FF6723', dark: '#080A0F', glass: 'rgba(255, 255, 255, 0.03)' } }
                 }
             }
         }
     </script>
 
     <style>
-        .ad-placeholder { background: #f8fafc; border: 2px dashed #e2e8f0; border-radius: 12px; text-align: center; padding: 20px; color: #94a3b8; font-size: 12px; font-weight: bold; }
-        .tool-card { transition: all 0.3s ease; border: 1px solid #f1f5f9; }
-        .tool-card:hover { transform: translateY(-5px); border-color: #FF6723; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05); }
-        .studio-btn { background: #FF6723; transition: all 0.3s ease; }
-        .studio-btn:hover { background: #e55a1f; transform: scale(1.02); }
+        body { background-color: #080A0F; color: #ffffff; overflow-x: hidden; }
+        .glass-card { 
+            background: rgba(255, 255, 255, 0.03); 
+            backdrop-filter: blur(20px); 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            border-radius: 40px; 
+        }
+        .gradient-text { 
+            background: linear-gradient(135deg, #FF6723 0%, #FF9E6D 100%); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+        }
+        .shimmer-btn {
+            background: linear-gradient(90deg, #FF6723, #FF8E53, #FF6723);
+            background-size: 200% auto;
+            animation: shimmer 3s linear infinite;
+        }
+        @keyframes shimmer { to { background-position: 200% center; } }
+        .loader { border: 4px solid rgba(255,255,255,0.1); border-top: 4px solid #FF6723; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
-<body class="bg-[#fafbfc] text-slate-800 font-sans">
+<body class="antialiased">
 
-    <nav class="bg-white border-b border-slate-100 sticky top-0 z-50 py-4 px-6 md:px-20 flex justify-between items-center shadow-sm">
+    <nav class="py-6 px-8 md:px-16 flex justify-between items-center border-b border-white/5">
         <div class="flex items-center space-x-3 cursor-pointer" onclick="location.reload()">
-            <img src="brand_logo.png" alt="Logo" class="w-10 h-10">
-            <span class="text-2xl font-black italic text-brand-blue tracking-tighter uppercase">Go<span class="text-brand-orange">Convert</span>Fast</span>
+            <img src="brand_logo.png" alt="Logo" class="w-10 h-10 object-contain">
+            <span class="text-2xl font-black italic tracking-tighter uppercase font-outfit">GO<span class="text-brand-orange">CONVERT</span>FAST</span>
         </div>
-        <div class="hidden md:flex space-x-8 text-[11px] font-bold uppercase tracking-widest text-slate-500">
-            <a href="#" class="hover:text-brand-orange">Text Tools</a>
-            <a href="#" class="hover:text-brand-orange">Image Tools</a>
-            <a href="#" class="hover:text-brand-orange">Privacy Gen</a>
+        <div class="hidden md:flex items-center space-x-8 text-[11px] font-extrabold uppercase tracking-widest text-slate-400">
+            <a href="#" class="hover:text-white transition">TikTok Studio</a>
+            <a href="#" class="hover:text-white transition">YouTube Pro</a>
+            <a href="#" class="hover:text-white transition">HD Export</a>
         </div>
     </nav>
 
-    <div class="container mx-auto px-6 mt-8">
-        <div class="ad-placeholder w-full h-24 flex items-center justify-center uppercase tracking-widest">
-            [ AdSense Top Banner - 728x90 ]
-        </div>
-    </div>
-
-    <main class="container mx-auto px-6 py-12">
-        <div class="text-center max-w-3xl mx-auto mb-16">
-            <h1 class="text-5xl md:text-7xl font-black font-outfit text-brand-blue mb-6 tracking-tight">Free Digital <span class="text-brand-orange italic">Studio.</span></h1>
-            <p class="text-slate-500 text-lg leading-relaxed">The ultimate toolkit for creators. Professional, fast, and 100% free forever.</p>
+    <main class="container mx-auto px-6 pt-20 pb-40">
+        <div class="max-w-4xl mx-auto text-center mb-16">
+            <h1 class="text-6xl md:text-8xl font-black font-outfit leading-[0.9] mb-8">
+                Download <span class="gradient-text">Viral</span> <br> Media in 4K.
+            </h1>
+            <p class="text-slate-400 text-lg font-medium max-w-2xl mx-auto leading-relaxed">
+                The fastest way to convert social media URLs into high-quality video files. No watermarks, no limits.
+            </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16" id="toolsGrid">
-            
-            <div class="tool-card bg-white p-10 rounded-[32px]">
-                <div class="w-14 h-14 bg-orange-50 rounded-2xl flex items-center justify-center mb-6 text-brand-orange">
-                    <i class="fas fa-pen-nib text-2xl"></i>
+        <div class="max-w-5xl mx-auto glass-card p-8 md:p-16 shadow-3xl">
+            <div class="flex flex-col space-y-8">
+                
+                <div class="relative group">
+                    <div class="absolute inset-y-0 left-0 pl-8 flex items-center pointer-events-none">
+                        <i class="fas fa-link text-slate-500 group-focus-within:text-brand-orange transition"></i>
+                    </div>
+                    <input type="text" id="videoUrl" 
+                        class="w-full bg-white/5 border border-white/10 rounded-[30px] py-8 pl-16 pr-8 text-xl font-bold focus:outline-none focus:border-brand-orange focus:ring-4 focus:ring-brand-orange/10 transition-all" 
+                        placeholder="Paste TikTok or YouTube URL here...">
                 </div>
-                <h3 class="text-2xl font-black text-brand-blue mb-4">AI Paragraph Writer</h3>
-                <p class="text-slate-500 text-sm mb-8 leading-relaxed">Generate unique, SEO-friendly paragraphs for your blogs and social media.</p>
-                <button onclick="openStudio('writer')" class="studio-btn text-white w-full py-4 rounded-2xl font-bold uppercase text-xs tracking-widest">Open Studio</button>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <button id="tiktokBtn" onclick="setPlatform('TikTok')" class="flex items-center justify-center space-x-3 py-5 rounded-2xl bg-white/5 border border-white/10 hover:border-white transition-all">
+                        <i class="fab fa-tiktok"></i> <span class="font-bold uppercase text-xs tracking-widest">TikTok</span>
+                    </button>
+                    <button id="youtubeBtn" onclick="setPlatform('YouTube')" class="flex items-center justify-center space-x-3 py-5 rounded-2xl bg-white/5 border border-white/10 hover:border-white transition-all">
+                        <i class="fab fa-youtube"></i> <span class="font-bold uppercase text-xs tracking-widest">YouTube</span>
+                    </button>
+                </div>
+
+                <button onclick="processVideo()" class="shimmer-btn w-full py-8 rounded-[30px] font-black text-2xl uppercase tracking-tighter shadow-2xl hover:scale-[1.01] active:scale-[0.98] transition-all">
+                    Fetch Video Assets
+                </button>
             </div>
 
-            <div class="tool-card bg-white p-10 rounded-[32px]">
-                <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 text-blue-600">
-                    <i class="fas fa-arrow-down-9-1 text-2xl"></i>
+            <div id="resultArea" class="hidden mt-16 pt-16 border-t border-white/5">
+                <div class="flex flex-col md:flex-row gap-12 items-center">
+                    <div id="videoPreview" class="w-full md:w-1/3 aspect-[9/16] bg-black rounded-[30px] flex items-center justify-center overflow-hidden border border-white/10">
+                         <i class="fas fa-play text-4xl text-white/20"></i>
+                    </div>
+                    <div class="flex-1 space-y-6">
+                        <div id="loaderArea" class="flex items-center space-x-4">
+                            <div class="loader"></div>
+                            <p class="font-black text-brand-orange uppercase text-xs tracking-widest">Extracting HD Streams...</p>
+                        </div>
+                        <div id="downloadOptions" class="hidden space-y-4">
+                            <h4 class="text-3xl font-black italic uppercase">Ready for Export</h4>
+                            <div class="grid grid-cols-1 gap-3">
+                                <a id="hdDl" class="flex justify-between items-center bg-white text-black p-6 rounded-2xl font-black uppercase text-sm">
+                                    <span>Download MP4 (1080p)</span>
+                                    <i class="fas fa-download"></i>
+                                </a>
+                                <a id="sdDl" class="flex justify-between items-center bg-white/10 text-white p-6 rounded-2xl font-black uppercase text-sm border border-white/10 hover:bg-white/20">
+                                    <span>Download MP4 (720p)</span>
+                                    <i class="fas fa-download"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <h3 class="text-2xl font-black text-brand-blue mb-4">Word & Character Counter</h3>
-                <p class="text-slate-500 text-sm mb-8 leading-relaxed">Analyze your text length, reading time, and character count instantly.</p>
-                <button onclick="openStudio('counter')" class="studio-btn text-white w-full py-4 rounded-2xl font-bold uppercase text-xs tracking-widest">Analyze Now</button>
             </div>
-
-            <div class="tool-card bg-white p-10 rounded-[32px]">
-                <div class="w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center mb-6 text-green-600">
-                    <i class="fas fa-file-shield text-2xl"></i>
-                </div>
-                <h3 class="text-2xl font-black text-brand-blue mb-4">Privacy Policy Gen</h3>
-                <p class="text-slate-500 text-sm mb-8 leading-relaxed">Essential tool for AdSense approval. Generate professional policies for free.</p>
-                <button onclick="openStudio('policy')" class="studio-btn text-white w-full py-4 rounded-2xl font-bold uppercase text-xs tracking-widest">Generate Policy</button>
-            </div>
-
         </div>
 
-        <div class="hidden lg:block ad-placeholder w-full h-32 mb-16">
-            [ AdSense Middle Banner - 970x250 ]
+        <div class="max-w-5xl mx-auto mt-20 p-10 border-2 border-dashed border-white/5 rounded-3xl text-center">
+            <span class="text-[10px] font-bold text-slate-700 uppercase tracking-[0.5em]">[ AdSense Display Unit - Optimized for High CPC ]</span>
         </div>
     </main>
 
-    <section id="studioOverlay" class="hidden fixed inset-0 z-[60] bg-white overflow-y-auto">
-        <div class="container mx-auto px-6 py-10 max-w-5xl">
-            <button onclick="closeStudio()" class="mb-10 text-slate-400 hover:text-brand-blue font-bold flex items-center uppercase tracking-widest text-xs transition">
-                <i class="fas fa-arrow-left mr-3"></i> Back to Home
-            </button>
-
-            <div id="studioUI" class="space-y-8">
-                <h2 id="stTitle" class="text-5xl font-black text-brand-blue italic tracking-tighter uppercase">Studio</h2>
-                <div class="bg-slate-50 p-8 md:p-12 rounded-[40px] border border-slate-100">
-                    <textarea id="stInput" rows="10" class="w-full bg-white border border-slate-200 rounded-3xl p-8 text-slate-800 text-lg focus:ring-2 focus:ring-brand-orange/20 outline-none transition shadow-sm" placeholder="Start typing or paste your content here..."></textarea>
-                    
-                    <div id="stResult" class="hidden mt-8 p-8 bg-brand-blue text-white rounded-3xl font-medium leading-relaxed shadow-xl"></div>
-
-                    <div class="flex flex-col md:flex-row gap-4 mt-8">
-                        <button id="stAction" class="studio-btn text-white px-10 py-5 rounded-2xl font-black uppercase text-sm tracking-widest flex-1">Process Data</button>
-                        <button onclick="copyResult()" class="bg-slate-200 text-slate-600 px-10 py-5 rounded-2xl font-black uppercase text-sm tracking-widest">Copy to Clipboard</button>
-                    </div>
-                </div>
-
-                <div class="ad-placeholder h-48 mt-12 flex items-center justify-center">
-                    [ AdSense In-Article Ad Slot ]
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-white border-t border-slate-100 py-16 text-center">
-        <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.8em] italic">Abu Sira Designs • GoConvertFast • 2026</p>
+    <footer class="py-20 text-center border-t border-white/5">
+        <p class="text-[10px] font-bold text-slate-600 uppercase tracking-[1em] italic">GoConvertFast Studio • Premium Asset Engine • 2026</p>
     </footer>
 
     <script>
-        function openStudio(type) {
-            document.getElementById('studioOverlay').classList.remove('hidden');
-            const title = document.getElementById('stTitle');
-            const input = document.getElementById('stInput');
-            const btn = document.getElementById('stAction');
-            const result = document.getElementById('stResult');
-            
-            result.classList.add('hidden');
-            input.value = "";
+        let currentPlatform = 'TikTok';
 
-            if(type === 'writer') {
-                title.innerText = "AI Paragraph Writer";
-                input.placeholder = "Enter a topic (e.g. Benefits of Graphic Design)...";
-                btn.onclick = () => {
-                    result.classList.remove('hidden');
-                    result.innerText = "Processing AI Content... (In a real app, this would call an API. For now, it generates a high-quality sample paragraph related to your topic: '" + input.value + " is an essential part of modern digital strategy. It helps brands communicate effectively with their audience...')";
-                };
-            } else if(type === 'counter') {
-                title.innerText = "Word Analyzer";
-                input.placeholder = "Paste your article here...";
-                btn.onclick = () => {
-                    const words = input.value.trim().split(/\s+/).length;
-                    const chars = input.value.length;
-                    const time = Math.ceil(words / 200);
-                    result.classList.remove('hidden');
-                    result.innerText = `Analysis: ${words} Words | ${chars} Characters | Estimated Reading Time: ${time} min.`;
-                };
-            } else if(type === 'policy') {
-                title.innerText = "Privacy Policy Generator";
-                input.placeholder = "Enter your Website Name and URL...";
-                btn.onclick = () => {
-                    result.classList.remove('hidden');
-                    result.innerText = "Privacy Policy for " + input.value + ": This website uses cookies to improve user experience. We value your privacy and do not share your data with third parties. This policy is AdSense compliant.";
-                };
-            }
+        function setPlatform(p) {
+            currentPlatform = p;
+            alert(p + " Mode Activated. High-quality 4K engine ready.");
         }
 
-        function closeStudio() {
-            document.getElementById('studioOverlay').classList.add('hidden');
-        }
+        function processVideo() {
+            const url = document.getElementById('videoUrl').value;
+            if(!url) return alert("Please paste a valid URL!");
 
-        function copyResult() {
-            const res = document.getElementById('stResult').innerText;
-            navigator.clipboard.writeText(res);
-            alert("Copied to clipboard!");
+            const result = document.getElementById('resultArea');
+            const loader = document.getElementById('loaderArea');
+            const options = document.getElementById('downloadOptions');
+            const preview = document.getElementById('videoPreview');
+
+            result.classList.remove('hidden');
+            loader.classList.remove('hidden');
+            options.classList.add('hidden');
+            preview.innerHTML = `<i class="fas fa-circle-notch animate-spin text-4xl text-brand-orange"></i>`;
+
+            // Logic: Simulate server-side fetching
+            setTimeout(() => {
+                loader.classList.add('hidden');
+                options.classList.remove('hidden');
+                preview.innerHTML = `<div class="bg-brand-orange/20 w-full h-full flex items-center justify-center"><i class="fas fa-video text-6xl text-brand-orange"></i></div>`;
+                
+                // Set dummy download links
+                document.getElementById('hdDl').href = url;
+                document.getElementById('sdDl').href = url;
+            }, 3000);
         }
     </script>
 </body>

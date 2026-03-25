@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoConvertFast | Studio Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Outfit:wght@700;900&display=swap" rel="stylesheet">
+    <title>GoConvertFast | Professional Digital Ecosystem</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@500;700;900&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
     <script>
@@ -15,147 +18,245 @@
             theme: {
                 extend: {
                     fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'], outfit: ['Outfit', 'sans-serif'] },
-                    colors: { brand: { orange: '#FF6723', blue: '#1A2B47', dark: '#0A0C10' } }
+                    colors: { brand: { orange: '#FF6723', blue: '#1A2B47', dark: '#05070A', studio: '#0F1115' } }
                 }
             }
         }
     </script>
 
     <style>
-        body { background: #0A0C10; color: #fff; overflow-x: hidden; }
+        body { background: #05070A; color: #fff; }
         .studio-card { 
-            background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 40px;
-            transition: all 0.4s ease;
+            background: rgba(255, 255, 255, 0.02); 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            border-radius: 40px; 
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         }
-        .studio-card:hover { transform: scale(1.03); border-color: #FF6723; box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
+        .studio-card:hover { 
+            transform: translateY(-15px); 
+            border-color: #FF6723; 
+            background: rgba(255, 103, 35, 0.05);
+            box-shadow: 0 40px 80px -20px rgba(0,0,0,0.8);
+        }
+        .nav-blur { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px); }
+        .hero-gradient { background: linear-gradient(135deg, #fff 30%, #475569 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        /* Studio Specific Themes */
-        .theme-youtube { border-left: 5px solid #FF0000; }
-        .theme-graphics { border-left: 5px solid #00F2FF; }
-        .theme-security { border-left: 5px solid #00FF85; }
-        .theme-docs { border-left: 5px solid #FFD600; }
+        /* Custom Loader */
+        .loader-ring { border: 3px solid rgba(255,103,35,0.1); border-top: 3px solid #FF6723; border-radius: 50%; width: 45px; height: 45px; animation: spin 0.8s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        .btn-premium {
-            background: linear-gradient(90deg, #FF6723 0%, #FF8E53 100%);
-            box-shadow: 0 15px 30px rgba(255, 103, 35, 0.2);
-        }
+        /* Studio Themes */
+        .yt-theme { background: linear-gradient(to bottom right, #1a0000, #05070a); }
+        .gfx-theme { background: linear-gradient(to bottom right, #001a1a, #05070a); }
+        .doc-theme { background: linear-gradient(to bottom right, #1a1a00, #05070a); }
     </style>
 </head>
-<body>
+<body class="antialiased">
 
-    <nav class="sticky top-0 z-50 bg-white py-4 px-10 flex justify-between items-center shadow-md">
-        <div class="flex items-center space-x-3 cursor-pointer" onclick="location.reload()">
-            <img src="brand_logo.png" alt="GF" class="w-10 h-10">
-            <span class="text-2xl font-black italic text-brand-blue tracking-tighter uppercase">Go<span class="text-brand-orange">Convert</span>Fast</span>
+    <nav class="nav-blur sticky top-0 z-50 py-5 px-10 flex justify-between items-center shadow-sm">
+        <div class="flex items-center space-x-4 cursor-pointer" onclick="location.reload()">
+            <img src="brand_logo.png" alt="GF" class="w-11 h-11">
+            <div class="flex flex-col">
+                <span class="text-2xl font-black italic text-brand-blue tracking-tighter uppercase leading-none">GO<span class="text-brand-orange">CONVERT</span>FAST</span>
+                <span class="text-[9px] font-bold text-slate-400 uppercase tracking-[0.4em]">Professional Ecosystem</span>
+            </div>
         </div>
-        <div class="flex space-x-6 text-brand-blue font-bold text-sm uppercase tracking-widest">
-            <a href="#" class="hover:text-brand-orange">Studios</a>
-            <a href="#" class="hover:text-brand-orange">API</a>
-            <a href="#" class="hover:text-brand-orange">Pro</a>
+        <div class="hidden md:flex space-x-8 text-[11px] font-black text-brand-blue uppercase tracking-widest">
+            <a href="#studios" class="hover:text-brand-orange transition">Studios</a>
+            <a href="#" class="hover:text-brand-orange transition">Enterprise</a>
+            <a href="#" class="bg-brand-orange text-white px-5 py-2 rounded-full shadow-lg hover:brightness-110 transition">Go Pro</a>
         </div>
     </nav>
 
-    <main id="hub" class="container mx-auto px-6 py-20">
-        <div class="text-center mb-20">
-            <h1 class="text-6xl md:text-8xl font-black font-outfit mb-6 tracking-tighter">Choose Your <span class="text-brand-orange italic">Studio.</span></h1>
-            <p class="text-slate-500 font-medium text-xl">High-end digital tools for professional workflows.</p>
-        </div>
+    <header class="container mx-auto px-6 pt-32 pb-20 text-center">
+        <h1 class="hero-gradient text-6xl md:text-9xl font-black font-outfit tracking-tighter leading-none mb-8">
+            The Digital <br> <span class="text-brand-orange italic">Studio Hub.</span>
+        </h1>
+        <p class="text-slate-400 text-lg md:text-xl font-medium max-w-2xl mx-auto leading-relaxed">
+            High-performance tools for Graphics, Documents, and SEO. <br> Built for 100% security and lightning speed.
+        </p>
+    </header>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10" id="studioGrid">
+    <main id="studios" class="container mx-auto px-6 pb-40">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10" id="hubGrid">
             </div>
     </main>
 
-    <section id="studioWorkspace" class="hidden fixed inset-0 z-[60] bg-brand-dark overflow-y-auto">
-        <div class="container mx-auto px-6 py-10">
-            <button onclick="closeStudio()" class="mb-10 text-slate-400 hover:text-white font-black flex items-center uppercase tracking-widest text-xs">
-                <i class="fas fa-arrow-left mr-3"></i> Back to Hub
-            </button>
+    <section id="studioOverlay" class="hidden fixed inset-0 z-[60] bg-brand-dark overflow-y-auto">
+        <div class="container mx-auto px-6 py-12">
+            <div class="flex justify-between items-center mb-16">
+                <button onclick="exitStudio()" class="group flex items-center font-black text-slate-500 hover:text-white transition uppercase text-xs tracking-widest">
+                    <i class="fas fa-arrow-left-long mr-3 group-hover:-translate-x-2 transition"></i> Close Studio
+                </button>
+                <div id="studioBadge" class="px-6 py-2 rounded-full border border-white/10 text-[10px] font-black uppercase tracking-widest text-brand-orange"></div>
+            </div>
 
-            <div id="studioContent" class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+            <div id="studioContainer" class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
                 </div>
         </div>
     </section>
 
+    <footer class="py-20 border-t border-white/5 text-center">
+        <p class="text-[10px] font-black text-slate-700 uppercase tracking-[0.8em] italic">Abu Sira Designs • GoConvertFast.com • 2026</p>
+    </footer>
+
     <script>
         const { jsPDF } = window.jspdf;
 
+        // STUDIO DEFINITIONS
         const studios = [
-            { id: 'yt', name: 'YouTube Creator Studio', icon: 'fa-brands fa-youtube', theme: 'theme-youtube', color: '#FF0000', desc: 'Optimize your channel with AI-driven SEO tags.' },
-            { id: 'gfx', name: 'Graphics Pro Studio', icon: 'fa-palette', theme: 'theme-graphics', color: '#00F2FF', desc: 'Premium image conversion and processing tools.' },
-            { id: 'sec', name: 'Security Vault Studio', icon: 'fa-shield-halved', theme: 'theme-security', color: '#00FF85', desc: 'Encrypted password and secure data generation.' },
-            { id: 'doc', name: 'Document Master Studio', icon: 'fa-file-pdf', theme: 'theme-docs', color: '#FFD600', desc: 'Smart PDF creation and document management.' }
+            { 
+                id: 'gfx', 
+                name: 'Graphics Pro Studio', 
+                desc: 'Advanced image conversion and scaling engine.', 
+                icon: 'fa-palette', 
+                color: '#00F2FF',
+                theme: 'gfx-theme',
+                tools: ['Image to PDF', 'Image Compressor', 'QR Pro Designer']
+            },
+            { 
+                id: 'yt', 
+                name: 'YouTube Growth Studio', 
+                desc: 'AI-powered metadata and SEO optimization.', 
+                icon: 'fa-brands fa-youtube', 
+                color: '#FF0000',
+                theme: 'yt-theme',
+                tools: ['Viral Tag Generator', 'Description Architect', 'Title Optimizer']
+            },
+            { 
+                id: 'sec', 
+                name: 'Security Vault Studio', 
+                desc: 'Military-grade encryption and password generation.', 
+                icon: 'fa-shield-halved', 
+                color: '#00FF85',
+                theme: 'sec-theme',
+                tools: ['PassVault Generate', 'Secret Key Hash']
+            }
         ];
 
         function renderHub() {
-            const grid = document.getElementById('studioGrid');
+            const grid = document.getElementById('hubGrid');
             grid.innerHTML = studios.map(s => `
-                <div onclick="openStudio('${s.id}')" class="studio-card p-12 cursor-pointer group ${s.theme}">
-                    <div class="w-16 h-16 rounded-2xl flex items-center justify-center mb-8 bg-white/5 group-hover:bg-white/10 transition">
+                <div onclick="enterStudio('${s.id}')" class="studio-card p-12 group cursor-pointer relative overflow-hidden">
+                    <div class="w-16 h-16 rounded-2xl flex items-center justify-center mb-8 bg-white/5 group-hover:bg-white/10 transition duration-500 group-hover:scale-110">
                         <i class="fas ${s.icon} text-3xl" style="color: ${s.color}"></i>
                     </div>
-                    <h3 class="text-3xl font-black italic mb-4 uppercase tracking-tighter">${s.name}</h3>
-                    <p class="text-slate-500 font-medium leading-relaxed">${s.desc}</p>
+                    <h3 class="text-3xl font-black italic mb-4 uppercase tracking-tighter group-hover:text-brand-orange transition">${s.name}</h3>
+                    <p class="text-slate-500 font-medium leading-relaxed mb-8">${s.desc}</p>
+                    <div class="flex flex-wrap gap-2">
+                        ${s.tools.map(t => `<span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold uppercase tracking-widest text-slate-400">${t}</span>`).join('')}
+                    </div>
                 </div>
             `).join('');
         }
 
-        function openStudio(id) {
-            const studio = studios.find(x => x.id === id);
-            const container = document.getElementById('studioContent');
-            document.getElementById('studioWorkspace').classList.remove('hidden');
+        let activeStudio = null;
+        let selectedFile = null;
 
-            let innerHTML = `
-                <div class="space-y-8">
-                    <h2 class="text-6xl md:text-8xl font-black italic uppercase tracking-tighter" style="color: ${studio.color}">${studio.id.toUpperCase()}_STUDIO</h2>
-                    <p class="text-xl text-slate-400 font-medium">${studio.desc}</p>
+        function enterStudio(id) {
+            activeStudio = studios.find(x => x.id === id);
+            const overlay = document.getElementById('studioOverlay');
+            const container = document.getElementById('studioContainer');
+            const badge = document.getElementById('studioBadge');
+
+            overlay.classList.remove('hidden');
+            overlay.className = `fixed inset-0 z-[60] overflow-y-auto ${activeStudio.theme}`;
+            badge.innerText = activeStudio.name;
+
+            container.innerHTML = `
+                <div class="space-y-10">
+                    <h2 class="text-7xl md:text-9xl font-black italic tracking-tighter uppercase leading-none" style="color: ${activeStudio.color}">${id}_STUDIO</h2>
+                    <p class="text-xl text-slate-400 font-medium leading-relaxed max-w-xl">${activeStudio.desc}</p>
                     
-                    <div class="bg-white/5 p-10 rounded-[40px] border border-white/10">
-                        <div id="dropZone" class="border-2 border-dashed border-white/20 rounded-3xl p-16 text-center cursor-pointer hover:border-white transition">
-                            <i class="fas fa-upload text-4xl mb-4 text-slate-600"></i>
-                            <p class="font-bold text-slate-400">Upload Assets to Studio</p>
-                            <input type="file" id="fileIn" class="hidden">
+                    <div class="bg-white/5 p-10 md:p-16 rounded-[50px] border border-white/10 backdrop-blur-3xl">
+                        <div id="dropZone" class="border-2 border-dashed border-white/10 rounded-[32px] p-16 text-center hover:border-white transition cursor-pointer">
+                            <i class="fas fa-cloud-arrow-up text-5xl mb-6 text-slate-700"></i>
+                            <p class="text-lg font-bold text-slate-400 uppercase tracking-widest">Upload Master File</p>
+                            <input type="file" id="fileInput" class="hidden">
                         </div>
-                        <textarea id="textIn" class="hidden w-full mt-6 bg-transparent border border-white/10 rounded-2xl p-6 text-white outline-none focus:border-white" rows="4" placeholder="Enter data..."></textarea>
-                        <button id="actionBtn" class="w-full mt-10 btn-premium py-6 rounded-3xl font-black text-2xl uppercase tracking-tighter">Run Studio Engine</button>
+                        <div id="textInputArea" class="hidden mt-6">
+                            <textarea id="mainText" rows="5" class="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white outline-none focus:border-white transition" placeholder="Enter keywords or links..."></textarea>
+                        </div>
+                        <button id="engineBtn" class="w-full mt-10 py-6 rounded-3xl font-black text-2xl uppercase tracking-tighter shadow-2xl transition-all" style="background: ${activeStudio.color}; color: ${id === 'gfx' ? '#000' : '#fff'}">Run Studio Engine</button>
                     </div>
                 </div>
+                
                 <div class="flex flex-col items-center">
-                    <div id="studioPreview" class="w-full aspect-square bg-black/40 rounded-[60px] border border-white/5 flex flex-col items-center justify-center p-10 text-center">
-                        <i class="fas ${studio.icon} text-8xl text-slate-900 mb-6"></i>
-                        <p class="text-slate-700 font-black uppercase tracking-widest text-xs">Studio Output Monitor</p>
+                    <div id="outputMonitor" class="w-full aspect-square bg-black/60 rounded-[60px] border border-white/5 flex flex-col items-center justify-center p-10 text-center">
+                        <i class="fas ${activeStudio.icon} text-9xl text-slate-900 mb-8"></i>
+                        <p class="text-slate-700 font-black uppercase tracking-[0.5em] text-[10px] italic">Studio System Standby</p>
                     </div>
-                    <a id="dl" class="hidden mt-8 w-full bg-white text-black py-6 rounded-3xl font-black text-center text-xl uppercase tracking-tighter">Download Result</a>
+                    <div id="loading" class="hidden mt-8 flex flex-col items-center space-y-4">
+                        <div class="loader-ring"></div>
+                        <p class="text-brand-orange font-black text-[10px] uppercase tracking-widest animate-pulse">Processing via Engine...</p>
+                    </div>
+                    <a id="dlBtn" class="hidden mt-10 w-full bg-white text-black py-6 rounded-3xl font-black text-center text-xl uppercase tracking-tighter hover:brightness-90 transition">Download Master Result</a>
                 </div>
             `;
 
-            container.innerHTML = innerHTML;
+            // Logic Adjustment per Studio
+            const dz = document.getElementById('dropZone');
+            const ti = document.getElementById('textInputArea');
+            if(id === 'yt' || id === 'sec') { dz.classList.add('hidden'); ti.classList.remove('hidden'); }
 
-            // Simple Logic for the Engine
-            const up = document.getElementById('dropZone');
-            const txt = document.getElementById('textIn');
-            if(id === 'yt' || id === 'sec') { up.classList.add('hidden'); txt.classList.remove('hidden'); }
-
-            document.getElementById('actionBtn').onclick = () => {
-                const preview = document.getElementById('studioPreview');
-                preview.innerHTML = `<div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-white"></div><p class="mt-6 font-bold uppercase tracking-widest text-xs">Studio Engine Processing...</p>`;
-                
-                setTimeout(() => {
-                    if(id === 'sec') {
-                        const p = Math.random().toString(36).slice(-10).toUpperCase();
-                        preview.innerHTML = `<h1 class="text-5xl font-black text-brand-orange font-mono">${p}</h1>`;
-                    } else if(id === 'yt') {
-                        preview.innerHTML = `<div class="text-left w-full"><p class="text-red-500 font-bold">#Viral #Growth #Trends</p></div>`;
-                    } else {
-                        preview.innerHTML = `<i class="fas fa-check-circle text-8xl text-green-500"></i><p class="mt-6 font-black uppercase">Process Complete!</p>`;
-                    }
-                }, 1500);
+            dz.onclick = () => document.getElementById('fileInput').click();
+            document.getElementById('fileInput').onchange = (e) => {
+                selectedFile = e.target.files[0];
+                const monitor = document.getElementById('outputMonitor');
+                if(selectedFile && selectedFile.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = (ev) => monitor.innerHTML = `<img src="${ev.target.result}" class="max-w-full max-h-full rounded-3xl shadow-2xl border border-white/10">`;
+                    reader.readAsDataURL(selectedFile);
+                } else {
+                    monitor.innerHTML = `<i class="fas fa-file-pdf text-8xl text-brand-orange"></i><p class="mt-4 font-bold">${selectedFile.name}</p>`;
+                }
             };
+
+            document.getElementById('engineBtn').onclick = () => runEngine(id);
         }
 
-        function closeStudio() {
-            document.getElementById('studioWorkspace').classList.add('hidden');
+        async function runEngine(id) {
+            const monitor = document.getElementById('outputMonitor');
+            const loader = document.getElementById('loading');
+            const dl = document.getElementById('dlBtn');
+            
+            loader.classList.remove('hidden');
+            dl.classList.add('hidden');
+
+            // Actual Logic Processing
+            setTimeout(() => {
+                loader.classList.add('hidden');
+                
+                if(id === 'gfx') {
+                    if(!selectedFile) return alert("Please select a file!");
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const doc = new jsPDF();
+                        doc.addImage(e.target.result, 'JPEG', 10, 10, 190, 150);
+                        dl.href = URL.createObjectURL(doc.output('blob'));
+                        dl.download = "GoConvertFast_Export.pdf";
+                        dl.classList.remove('hidden');
+                        monitor.innerHTML = `<i class="fas fa-circle-check text-9xl text-green-500"></i><p class="mt-6 font-black uppercase text-xl">Conversion Perfect!</p>`;
+                    };
+                    reader.readAsDataURL(selectedFile);
+                } else if(id === 'yt') {
+                    const val = document.getElementById('mainText').value || "Viral Trends";
+                    const tags = val.split(' ').map(t => `#${t}`).join(', ') + ", #Trending, #AbuSira";
+                    monitor.innerHTML = `<div class="p-8 bg-white/5 rounded-3xl text-left w-full h-full overflow-y-auto"><p class="text-brand-orange font-black mb-4 uppercase text-[10px]">SEO Tags Generated:</p><p class="text-white font-medium leading-relaxed">${tags}</p></div>`;
+                    const b = new Blob([tags], {type: 'text/plain'});
+                    dl.href = URL.createObjectURL(b); dl.download = "YT_SEO_Result.txt"; dl.classList.remove('hidden');
+                } else if(id === 'sec') {
+                    const p = Math.random().toString(36).slice(-12).toUpperCase() + "_!SEC";
+                    monitor.innerHTML = `<h1 class="text-5xl font-black text-brand-orange font-mono tracking-widest">${p}</h1>`;
+                    const b = new Blob([p], {type: 'text/plain'});
+                    dl.href = URL.createObjectURL(b); dl.download = "SecretKey.txt"; dl.classList.remove('hidden');
+                }
+            }, 2500);
+        }
+
+        function exitStudio() {
+            document.getElementById('studioOverlay').classList.add('hidden');
+            selectedFile = null;
         }
 
         renderHub();

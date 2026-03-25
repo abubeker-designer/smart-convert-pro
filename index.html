@@ -1,150 +1,77 @@
-/* =========================
-   CORE: Unified AI Agent
-========================= */
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
 
-import { detectInputType, detectFileType, detectURLType } from "./utils.js";
-import { toolRegistry } from "./registry.js";
+<body class="bg-neutral-950 text-white">
 
-export async function unifiedAgent(input) {
-  try {
-    const inputType = detectInputType(input);
-    let detectedType;
+<div class="flex h-screen">
 
-    if (inputType === "url") {
-      detectedType = await detectURLType(input);
-    } else {
-      detectedType = detectFileType(input);
-    }
+  <!-- Sidebar -->
+  <aside class="w-64 bg-neutral-900 p-4">
+    <h1 class="text-xl font-bold mb-6">Tools</h1>
+    <button onclick="setTool('image')" class="block mb-2">Image Compressor</button>
+    <button onclick="setTool('pdf')" class="block mb-2">PDF Tool</button>
+  </aside>
 
-    const tool = toolRegistry.find(tool =>
-      tool.supports.includes(detectedType)
-    );
+  <!-- Main -->
+  <main class="flex-1 p-6">
+    <h1 id="title" class="text-2xl mb-4">Tool</h1>
 
-    if (!tool) throw new Error("No supported tool found");
+    <input type="file" id="fileInput" class="mb-3">
+    <input type="text" id="urlInput" placeholder="Paste URL..." class="w-full p-2 bg-neutral-800 mb-3">
 
-    const module = await import(`./modules/${tool.module}.js`);
+    <button onclick="runTool()" class="bg-white text-black px-4 py-2 rounded">
+      Run
+    </button>
 
-    return await module.process(input, tool.config);
+    <pre id="result" class="mt-4"></pre>
+  </main>
 
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
+</div>
+
+<script>
+let currentTool = "image";
+
+function setTool(tool) {
+  currentTool = tool;
+  document.getElementById("title").innerText = tool;
 }
 
-
-/* =========================
-   UTILS: Detector
-========================= */
-
-export function detectInputType(input) {
+function detectInput(input) {
   if (typeof input === "string" && input.startsWith("http")) return "url";
   return "file";
 }
 
-export function detectFileType(file) {
-  const type = file.type;
+async function runTool() {
+  const file = document.getElementById("fileInput").files[0];
+  const url = document.getElementById("urlInput").value;
 
-  if (type.includes("image")) return "image";
-  if (type.includes("video")) return "video";
-  if (type.includes("pdf")) return "pdf";
+  const input = file || url;
 
-  return "unknown";
-}
-
-export async function detectURLType(url) {
-  if (url.includes("youtube.com") || url.includes("youtu.be")) return "youtube";
-  if (url.includes("tiktok.com")) return "tiktok";
-
-  return "unknown";
-}
-
-
-/* =========================
-   REGISTRY: Tool System
-========================= */
-
-export const toolRegistry = [
-  {
-    id: "yt-downloader",
-    name: "YouTube Downloader",
-    category: "video",
-    supports: ["youtube"],
-    module: "video/youtube",
-    config: {
-      quality: ["720p", "1080p", "4k"]
-    }
-  },
-  {
-    id: "tiktok-downloader",
-    name: "TikTok Downloader",
-    category: "video",
-    supports: ["tiktok"],
-    module: "video/tiktok"
-  },
-  {
-    id: "pdf-to-image",
-    name: "PDF to Image",
-    category: "document",
-    supports: ["pdf"],
-    module: "document/pdfToImage"
-  },
-  {
-    id: "image-compressor",
-    name: "Image Compressor",
-    category: "image",
-    supports: ["image"],
-    module: "image/compressor"
+  if (!input) {
+    alert("No input");
+    return;
   }
-];
 
+  const type = detectInput(input);
 
-/* =========================
-   MODULES: VIDEO
-========================= */
+  let result;
 
-// modules/video/youtube.js
-export async function process(url, config) {
-  const response = await fetch(`/api/youtube?url=${encodeURIComponent(url)}`);
-  const data = await response.json();
+  if (currentTool === "image" && type === "file") {
+    result = await compressImage(input);
+  } else if (currentTool === "pdf") {
+    result = "PDF processing requires backend";
+  } else {
+    result = "Unsupported";
+  }
 
-  return {
-    title: data.title,
-    formats: data.formats
-  };
+  document.getElementById("result").innerText =
+    JSON.stringify(result, null, 2);
 }
 
-// modules/video/tiktok.js
-export async function process(url) {
-  const res = await fetch(`/api/tiktok?url=${encodeURIComponent(url)}`);
-  return await res.json();
-}
-
-
-/* =========================
-   MODULES: DOCUMENT
-========================= */
-
-// modules/document/pdfToImage.js
-export async function process(file) {
-  const formData = new FormData();
-  formData.append("file", file);
-
-  const res = await fetch("/api/pdf-to-image", {
-    method: "POST",
-    body: formData
-  });
-
-  return await res.json();
-}
-
-
-/* =========================
-   MODULES: IMAGE
-========================= */
-
-// modules/image/compressor.js
-export async function process(file) {
+async function compressImage(file) {
   const bitmap = await createImageBitmap(file);
 
   const canvas = document.createElement("canvas");
@@ -158,102 +85,12 @@ export async function process(file) {
   return new Promise(resolve => {
     canvas.toBlob(blob => {
       resolve({
-        file: blob,
         size: blob.size
       });
     }, "image/jpeg", 0.7);
   });
 }
+</script>
 
-
-/* =========================
-   UI: Studio Layout
-========================= */
-
-export const layoutHTML = `
-<div class="flex h-screen bg-neutral-950 text-white">
-
-  <aside class="w-64 bg-neutral-900 p-4">
-    <h1 class="text-xl font-bold mb-6">Tools</h1>
-    <nav id="toolList"></nav>
-  </aside>
-
-  <main class="flex-1 p-6 overflow-y-auto">
-    <div id="workspace"></div>
-  </main>
-
-  <aside class="w-80 bg-neutral-900 p-4 space-y-6">
-
-    <div class="h-64 bg-neutral-800 flex items-center justify-center">
-      Ad Space
-    </div>
-
-    <div>
-      <h2 class="text-lg font-semibold">About this tool</h2>
-      <p class="text-sm text-neutral-400">
-        High-quality conversion with optimized performance...
-      </p>
-    </div>
-
-  </aside>
-</div>
-`;
-
-
-/* =========================
-   TOOL RENDERER
-========================= */
-
-export function renderTool(tool) {
-  const container = document.getElementById("workspace");
-
-  container.innerHTML = `
-    <div class="space-y-4">
-      <h1 class="text-2xl font-bold">${tool.name}</h1>
-
-      <input type="file" id="fileInput" class="block w-full" />
-      <input type="text" id="urlInput" placeholder="Paste URL..." class="w-full p-2 bg-neutral-800" />
-
-      <button id="runBtn" class="bg-white text-black px-4 py-2 rounded">
-        Convert
-      </button>
-
-      <div id="result"></div>
-    </div>
-  `;
-
-  document.getElementById("runBtn").onclick = async () => {
-    const file = document.getElementById("fileInput").files[0];
-    const url = document.getElementById("urlInput").value;
-
-    const input = file || url;
-
-    const result = await unifiedAgent(input);
-
-    document.getElementById("result").innerText =
-      JSON.stringify(result, null, 2);
-  };
-}
-
-
-/* =========================
-   APP INIT
-========================= */
-
-import { renderTool } from "./renderer.js";
-
-window.onload = () => {
-  document.body.innerHTML = layoutHTML;
-
-  const toolList = document.getElementById("toolList");
-
-  toolRegistry.forEach(tool => {
-    const btn = document.createElement("button");
-    btn.className = "block w-full text-left mb-2 hover:text-gray-400";
-    btn.innerText = tool.name;
-
-    btn.onclick = () => renderTool(tool);
-
-    toolList.appendChild(btn);
-  });
-};
+</body>
+</html>

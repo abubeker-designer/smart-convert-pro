@@ -3,192 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartConvert Pro | 3D Hub</title>
+    <title>GoConvertFast | Next-Gen AI Converters</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
         
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: #0f172a; /* Dark Elegant Background */
+            background: #050505; /* Deep Black */
             color: #ffffff;
             overflow-x: hidden;
         }
 
-        /* 3D Premium Card */
-        .card-3d {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        /* Animated Background Gradients */
+        .bg-glow {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(37, 99, 235, 0.15) 0%, transparent 40%),
+                        radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.15) 0%, transparent 40%);
+            z-index: -1;
+        }
+
+        /* Glassmorphism Redefined */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 32px;
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .tool-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 24px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer;
+            transition: all 0.4s ease;
         }
 
-        .card-3d:hover {
-            transform: translateY(-12px) scale(1.03);
-            background: rgba(51, 65, 85, 0.9);
-            border-color: #6366f1;
-            box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.3);
+        .tool-card:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: #3b82f6;
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(59, 130, 246, 0.2);
         }
 
-        .glass-nav {
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .gradient-text {
-            background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
+        .neon-text {
+            background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+        .btn-neon {
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .btn-primary:hover {
-            box-shadow: 0 0 20px rgba(99, 102, 241, 0.6);
+        .btn-neon:hover {
+            box-shadow: 0 0 30px rgba(37, 99, 235, 0.5);
             transform: translateY(-2px);
         }
 
-        #outputArea img {
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        /* Sidebar Styling */
+        .sidebar-link {
+            transition: all 0.3s;
+            border-left: 3px solid transparent;
         }
 
-        /* 3D Floating Animation */
-        .float { animation: floating 3s ease-in-out infinite; }
-        @keyframes floating {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
+        .sidebar-link:hover, .sidebar-link.active {
+            background: rgba(59, 130, 246, 0.1);
+            border-left-color: #3b82f6;
+            color: #3b82f6;
         }
+
+        .floating { animation: float 6s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
     </style>
 </head>
-<body class="min-h-screen">
+<body class="flex min-h-screen">
 
-    <nav class="glass-nav sticky top-0 z-50 py-5 px-8">
-        <div class="container mx-auto flex justify-between items-center">
-            <div onclick="window.location.reload()" class="flex items-center space-x-3 cursor-pointer">
-                <div class="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center float">
-                    <i class="fas fa-cube text-white"></i>
-                </div>
-                <span class="text-xl font-extrabold tracking-tighter uppercase">Smart<span class="text-indigo-500">Hub</span></span>
+    <div class="bg-glow"></div>
+
+    <aside class="hidden lg:flex flex-col w-72 bg-black/40 backdrop-blur-xl border-r border-white/5 sticky top-0 h-screen p-6">
+        <div class="flex items-center space-x-3 mb-12">
+            <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/50">
+                <i class="fas fa-bolt"></i>
             </div>
-            <div class="hidden md:flex space-x-8 text-sm font-bold uppercase tracking-widest text-slate-400">
-                <a href="#" class="hover:text-white transition">Tools</a>
-                <a href="#" class="hover:text-white transition">AI Studio</a>
-            </div>
-            <button class="btn-primary px-6 py-2 rounded-xl font-bold text-sm shadow-lg">ABU SIRA PRO</button>
+            <span class="text-xl font-black tracking-tighter italic">GO<span class="text-blue-500">CONVERT</span></span>
         </div>
-    </nav>
 
-    <header class="container mx-auto px-6 py-24 text-center" id="hero">
-        <h1 class="text-6xl md:text-8xl font-black mb-6 tracking-tighter leading-none">
-            3D <span class="gradient-text">Design</span> Tools
-        </h1>
-        <p class="text-xl text-slate-400 max-w-2xl mx-auto font-medium">
-            Professional high-end utilities for the modern digital developer.
-        </p>
-    </header>
+        <nav class="space-y-2 flex-1">
+            <p class="text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-4">Workspace</p>
+            <a href="#" onclick="showSection('home')" class="sidebar-link active flex items-center space-x-3 p-3 rounded-xl font-semibold text-gray-400">
+                <i class="fas fa-layer-group w-5 text-sm"></i> <span>Dashboard</span>
+            </a>
+            <a href="#" class="sidebar-link flex items-center space-x-3 p-3 rounded-xl font-semibold text-gray-400">
+                <i class="fas fa-file-pdf w-5 text-sm"></i> <span>PDF Studio</span>
+            </a>
+            <a href="#" class="sidebar-link flex items-center space-x-3 p-3 rounded-xl font-semibold text-gray-400">
+                <i class="fas fa-magic w-5 text-sm"></i> <span>AI Enhancer</span>
+            </a>
+            <a href="#" class="sidebar-link flex items-center space-x-3 p-3 rounded-xl font-semibold text-gray-400">
+                <i class="fas fa-code w-5 text-sm"></i> <span>Dev Tools</span>
+            </a>
+        </nav>
 
-    <main class="container mx-auto px-6 pb-24" id="tool-grid-view">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" id="toolsContainer">
+        <div class="mt-auto p-5 glass-panel text-center">
+            <p class="text-xs font-bold text-blue-400 mb-2 uppercase">Pro Status</p>
+            <button class="text-[10px] font-black bg-white/10 hover:bg-white/20 py-2 px-4 rounded-lg transition">ACTIVATE API</button>
+        </div>
+    </aside>
+
+    <main class="flex-1 overflow-x-hidden">
+        <header class="py-6 px-10 flex justify-between items-center border-b border-white/5 sticky top-0 bg-black/20 backdrop-blur-md z-50">
+            <div class="flex items-center bg-white/5 border border-white/10 px-5 py-2.5 rounded-2xl w-full max-w-md focus-within:border-blue-500 transition">
+                <i class="fas fa-search text-gray-500 mr-3"></i>
+                <input type="text" placeholder="Search 200+ Next-Gen Tools..." class="bg-transparent outline-none w-full text-sm font-medium">
             </div>
-    </main>
+            <div class="flex items-center space-x-6 ml-6">
+                <i class="fas fa-bell text-gray-500 hover:text-white cursor-pointer transition"></i>
+                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-600 to-purple-500 border-2 border-white/10 shadow-xl"></div>
+            </div>
+        </header>
 
-    <section id="workspace" class="hidden container mx-auto px-6 py-12">
-        <div class="max-w-5xl mx-auto card-3d p-10 md:p-16 border border-white/10 relative overflow-hidden">
-            <button onclick="closeWorkspace()" class="mb-8 text-indigo-400 font-bold flex items-center hover:text-white transition">
-                <i class="fas fa-arrow-left mr-2"></i> Dashboard
-            </button>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                <div>
-                    <h2 id="activeToolTitle" class="text-4xl font-extrabold mb-4 italic">Tool Name</h2>
-                    <p id="activeToolDesc" class="text-slate-400 mb-8 font-medium"></p>
-                    <div id="inputSpace" class="space-y-6"></div>
-                    <button id="actionBtn" class="btn-primary w-full mt-8 py-5 rounded-2xl font-black text-lg uppercase tracking-widest shadow-2xl">
-                        Generate Now
-                    </button>
+        <section id="home-section" class="p-10 lg:p-16 max-w-7xl mx-auto">
+            <div class="mb-16">
+                <h1 class="text-5xl lg:text-7xl font-black mb-6 leading-tight tracking-tighter">
+                    The Future of <br><span class="neon-text italic">File Conversion.</span>
+                </h1>
+                <p class="text-gray-400 text-xl font-medium max-w-2xl">Stop waiting. Start converting at light speed with our decentralized tool engine.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8" id="toolGrid">
                 </div>
-                <div class="flex flex-col items-center">
-                    <div id="outputArea" class="w-full min-h-[300px] bg-slate-900/50 rounded-3xl border-2 border-dashed border-white/10 flex items-center justify-center p-6">
-                        <i class="fas fa-wand-magic-sparkles text-7xl text-slate-800 float"></i>
+        </section>
+
+        <section id="workspace-section" class="hidden p-10 lg:p-16 max-w-5xl mx-auto">
+            <div class="glass-panel p-10 md:p-20 relative overflow-hidden">
+                <button onclick="showSection('home')" class="mb-10 flex items-center text-gray-400 hover:text-white font-bold transition">
+                    <i class="fas fa-arrow-left mr-3"></i> Return to Station
+                </button>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 relative z-10">
+                    <div>
+                        <div id="toolBadge" class="inline-block px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-400 text-[10px] font-black uppercase tracking-widest mb-6 border border-blue-500/20">Security</div>
+                        <h2 id="activeTitle" class="text-5xl font-black mb-6 italic tracking-tight uppercase">Tool Name</h2>
+                        <p id="activeDesc" class="text-gray-400 mb-10 text-lg leading-relaxed"></p>
+                        <div id="dynamicInputs" class="space-y-6 mb-10"></div>
+                        <button id="mainBtn" class="btn-neon w-full py-6 rounded-3xl font-black text-xl tracking-tighter uppercase italic">Execute Task</button>
                     </div>
-                    <button id="downloadBtn" class="hidden mt-6 w-full bg-white text-slate-900 py-4 rounded-xl font-bold hover:bg-indigo-500 hover:text-white transition">
-                        <i class="fas fa-download mr-2"></i> DOWNLOAD FILE
-                    </button>
+
+                    <div class="flex flex-col items-center">
+                        <div class="w-full aspect-square bg-black/40 border border-white/10 rounded-[3rem] shadow-inner flex flex-col items-center justify-center p-10 relative group">
+                            <div id="outputContainer" class="text-center">
+                                <i class="fas fa-cube text-7xl text-white/5 floating"></i>
+                            </div>
+                        </div>
+                        <button id="dlBtn" class="hidden mt-8 w-full bg-white text-black py-5 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-blue-500 hover:text-white transition-all shadow-2xl">
+                            Download Asset
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <footer class="py-16 text-center border-t border-white/5">
-        <p class="text-[10px] font-black tracking-[0.4em] text-slate-600 uppercase italic">© 2026 Abu Sira Designs | Next-Gen Toolset</p>
-    </footer>
+        <footer class="p-20 text-center border-t border-white/5">
+            <p class="text-[10px] font-bold text-gray-600 uppercase tracking-[0.6em]">Powered by Abu Sira Engine • goconvertfast.com</p>
+        </footer>
+    </main>
 
     <script>
         const tools = [
-            { id: 'qr', name: '3D QR Maker', desc: 'Create HD branding QR codes.', icon: 'fa-qrcode' },
-            { id: 'pass', name: 'Secure Key', desc: 'Generate encrypted 3D passwords.', icon: 'fa-shield-halved' },
-            { id: 'img', name: 'Image Master', desc: 'Advanced graphics processing.', icon: 'fa-image' },
-            { id: 'doc', name: 'Doc AI', desc: 'Smart document conversion.', icon: 'fa-file-code' }
+            { id: 'qr', name: 'QR Matrix', icon: 'fa-qrcode', cat: 'Marketing', desc: 'Generate encrypted QR codes with custom 3D depth.' },
+            { id: 'pass', name: 'SafeKey Pro', icon: 'fa-shield-virus', cat: 'Security', desc: 'Next-gen algorithmic password generation suite.' },
+            { id: 'img', name: 'Vortex Convert', icon: 'fa-wind', cat: 'Graphics', desc: 'Hyper-fast image format conversion with AI scaling.' },
+            { id: 'pdf', name: 'Doc Pulse', icon: 'fa-file-signature', cat: 'Documents', desc: 'Surgical precision PDF text and data extraction.' },
+            { id: 'json', name: 'Code Flow', icon: 'fa-terminal', cat: 'Dev Tools', desc: 'Advanced JSON formatting and syntax optimization.' }
         ];
 
         function init() {
-            const container = document.getElementById('toolsContainer');
-            container.innerHTML = tools.map(t => `
-                <div onclick="openTool('${t.id}')" class="card-3d p-10 flex flex-col items-start group">
-                    <div class="w-14 h-14 bg-indigo-600/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-indigo-600 transition-all duration-300">
-                        <i class="fas ${t.icon} text-2xl text-indigo-400 group-hover:text-white"></i>
+            const grid = document.getElementById('toolGrid');
+            grid.innerHTML = tools.map(t => `
+                <div onclick="openTool('${t.id}')" class="tool-card p-10 cursor-pointer group">
+                    <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-blue-600 group-hover:rotate-[360deg] transition-all duration-700">
+                        <i class="fas ${t.icon} text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-2 tracking-tight">${t.name}</h3>
-                    <p class="text-sm text-slate-500 font-medium">${t.desc}</p>
+                    <p class="text-[10px] font-black text-blue-500 uppercase tracking-widest mb-2">${t.cat}</p>
+                    <h3 class="text-2xl font-black italic tracking-tighter">${t.name}</h3>
                 </div>
             `).join('');
         }
 
-        function openTool(id) {
-            document.getElementById('hero').classList.add('hidden');
-            document.getElementById('tool-grid-view').classList.add('hidden');
-            document.getElementById('workspace').classList.remove('hidden');
-            
-            const tool = tools.find(x => x.id === id);
-            document.getElementById('activeToolTitle').innerText = tool.name;
-            document.getElementById('activeToolDesc').innerText = tool.desc;
+        function showSection(id) {
+            document.getElementById('home-section').classList.toggle('hidden', id !== 'home');
+            document.getElementById('workspace-section').classList.toggle('hidden', id !== 'workspace');
+        }
 
-            const inputArea = document.getElementById('inputSpace');
-            const output = document.getElementById('outputArea');
-            const dl = document.getElementById('downloadBtn');
+        function openTool(id) {
+            showSection('workspace');
+            const t = tools.find(x => x.id === id);
+            document.getElementById('activeTitle').innerText = t.name;
+            document.getElementById('activeDesc').innerText = t.desc;
+            document.getElementById('toolBadge').innerText = t.cat;
+            
+            const inputs = document.getElementById('dynamicInputs');
+            const output = document.getElementById('outputContainer');
+            const dl = document.getElementById('dlBtn');
             dl.classList.add('hidden');
 
             if(id === 'qr') {
-                inputArea.innerHTML = `<input type="text" id="qrText" placeholder="https://example.com" class="w-full p-5 bg-slate-800 border border-white/10 rounded-xl text-white outline-none focus:border-indigo-500">`;
-                document.getElementById('actionBtn').onclick = () => {
-                    output.innerHTML = '<div id="qrRes" class="bg-white p-3 rounded-xl shadow-2xl"></div>';
-                    new QRCode(document.getElementById('qrRes'), { text: document.getElementById('qrText').value, width: 200, height: 200 });
+                inputs.innerHTML = `<input type="text" id="qrInput" placeholder="Enter Target URL..." class="w-full p-6 bg-white/5 border border-white/10 rounded-2xl text-white outline-none focus:border-blue-500 transition font-medium">`;
+                document.getElementById('mainBtn').onclick = () => {
+                    output.innerHTML = '<div id="final" class="p-6 bg-white rounded-3xl shadow-[0_0_50px_rgba(255,255,255,0.2)]"></div>';
+                    new QRCode(document.getElementById('final'), { text: document.getElementById('qrInput').value, width: 220, height: 220 });
                     dl.classList.remove('hidden');
-                    dl.onclick = () => {
-                        const canvas = document.querySelector('#qrRes canvas');
-                        const link = document.createElement('a');
-                        link.download = 'QR_AbuSira.png';
-                        link.href = canvas.toDataURL();
-                        link.click();
-                    };
                 };
             }
-        }
-
-        function closeWorkspace() {
-            document.getElementById('hero').classList.remove('hidden');
-            document.getElementById('tool-grid-view').classList.remove('hidden');
-            document.getElementById('workspace').classList.add('hidden');
         }
 
         init();

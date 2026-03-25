@@ -1,185 +1,259 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoConvertFast | Enterprise AI Studio</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Outfit:wght@800;900&display=swap" rel="stylesheet">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+/* =========================
+   CORE: Unified AI Agent
+========================= */
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'], outfit: ['Outfit', 'sans-serif'] },
-                    colors: { brand: { orange: '#FF6723', dark: '#0A0C12', panel: '#15181F' } }
-                }
-            }
-        }
-    </script>
+import { detectInputType, detectFileType, detectURLType } from "./utils.js";
+import { toolRegistry } from "./registry.js";
 
-    <style>
-        body { background-color: #0A0C12; color: #ffffff; }
-        .enterprise-card { background: #15181F; border: 1px solid rgba(255,255,255,0.05); border-radius: 32px; transition: 0.4s; }
-        .enterprise-card:hover { border-color: #FF6723; transform: translateY(-8px); }
-        .ad-slot { background: rgba(255,255,255,0.02); border: 2px dashed rgba(255,255,255,0.05); border-radius: 20px; }
-        .active-tab { border-bottom: 4px solid #FF6723; color: #FF6723; }
-    </style>
-</head>
-<body class="antialiased font-sans">
+export async function unifiedAgent(input) {
+  try {
+    const inputType = detectInputType(input);
+    let detectedType;
 
-    <nav class="bg-white py-4 px-10 flex justify-between items-center sticky top-0 z-50">
-        <div class="flex items-center space-x-3 cursor-pointer" onclick="location.reload()">
-            <img src="brand_logo.png" alt="Logo" class="w-10 h-10">
-            <span class="text-2xl font-black italic text-[#1A2B47] uppercase font-outfit">GO<span class="text-brand-orange">CONVERT</span>FAST</span>
-        </div>
-        <div class="flex space-x-8 text-[11px] font-black text-slate-500 uppercase tracking-widest">
-            <button onclick="switchTab('media')" class="hover:text-brand-orange">Media Studio</button>
-            <button onclick="switchTab('doc')" class="hover:text-brand-orange">Document Pro</button>
-        </div>
-    </nav>
+    if (inputType === "url") {
+      detectedType = await detectURLType(input);
+    } else {
+      detectedType = detectFileType(input);
+    }
 
-    <div class="container mx-auto px-6 mt-8">
-        <div class="ad-slot w-full h-24 flex items-center justify-center text-[10px] font-bold text-slate-700 uppercase tracking-[1em]">
-            AdSense Responsive Leaderboard
-        </div>
+    const tool = toolRegistry.find(tool =>
+      tool.supports.includes(detectedType)
+    );
+
+    if (!tool) throw new Error("No supported tool found");
+
+    const module = await import(`./modules/${tool.module}.js`);
+
+    return await module.process(input, tool.config);
+
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+}
+
+
+/* =========================
+   UTILS: Detector
+========================= */
+
+export function detectInputType(input) {
+  if (typeof input === "string" && input.startsWith("http")) return "url";
+  return "file";
+}
+
+export function detectFileType(file) {
+  const type = file.type;
+
+  if (type.includes("image")) return "image";
+  if (type.includes("video")) return "video";
+  if (type.includes("pdf")) return "pdf";
+
+  return "unknown";
+}
+
+export async function detectURLType(url) {
+  if (url.includes("youtube.com") || url.includes("youtu.be")) return "youtube";
+  if (url.includes("tiktok.com")) return "tiktok";
+
+  return "unknown";
+}
+
+
+/* =========================
+   REGISTRY: Tool System
+========================= */
+
+export const toolRegistry = [
+  {
+    id: "yt-downloader",
+    name: "YouTube Downloader",
+    category: "video",
+    supports: ["youtube"],
+    module: "video/youtube",
+    config: {
+      quality: ["720p", "1080p", "4k"]
+    }
+  },
+  {
+    id: "tiktok-downloader",
+    name: "TikTok Downloader",
+    category: "video",
+    supports: ["tiktok"],
+    module: "video/tiktok"
+  },
+  {
+    id: "pdf-to-image",
+    name: "PDF to Image",
+    category: "document",
+    supports: ["pdf"],
+    module: "document/pdfToImage"
+  },
+  {
+    id: "image-compressor",
+    name: "Image Compressor",
+    category: "image",
+    supports: ["image"],
+    module: "image/compressor"
+  }
+];
+
+
+/* =========================
+   MODULES: VIDEO
+========================= */
+
+// modules/video/youtube.js
+export async function process(url, config) {
+  const response = await fetch(`/api/youtube?url=${encodeURIComponent(url)}`);
+  const data = await response.json();
+
+  return {
+    title: data.title,
+    formats: data.formats
+  };
+}
+
+// modules/video/tiktok.js
+export async function process(url) {
+  const res = await fetch(`/api/tiktok?url=${encodeURIComponent(url)}`);
+  return await res.json();
+}
+
+
+/* =========================
+   MODULES: DOCUMENT
+========================= */
+
+// modules/document/pdfToImage.js
+export async function process(file) {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const res = await fetch("/api/pdf-to-image", {
+    method: "POST",
+    body: formData
+  });
+
+  return await res.json();
+}
+
+
+/* =========================
+   MODULES: IMAGE
+========================= */
+
+// modules/image/compressor.js
+export async function process(file) {
+  const bitmap = await createImageBitmap(file);
+
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+
+  canvas.width = bitmap.width;
+  canvas.height = bitmap.height;
+
+  ctx.drawImage(bitmap, 0, 0);
+
+  return new Promise(resolve => {
+    canvas.toBlob(blob => {
+      resolve({
+        file: blob,
+        size: blob.size
+      });
+    }, "image/jpeg", 0.7);
+  });
+}
+
+
+/* =========================
+   UI: Studio Layout
+========================= */
+
+export const layoutHTML = `
+<div class="flex h-screen bg-neutral-950 text-white">
+
+  <aside class="w-64 bg-neutral-900 p-4">
+    <h1 class="text-xl font-bold mb-6">Tools</h1>
+    <nav id="toolList"></nav>
+  </aside>
+
+  <main class="flex-1 p-6 overflow-y-auto">
+    <div id="workspace"></div>
+  </main>
+
+  <aside class="w-80 bg-neutral-900 p-4 space-y-6">
+
+    <div class="h-64 bg-neutral-800 flex items-center justify-center">
+      Ad Space
     </div>
 
-    <main class="container mx-auto px-6 py-20 max-w-6xl">
-        <div class="text-center mb-20">
-            <h1 class="text-6xl md:text-8xl font-black font-outfit mb-6 tracking-tighter italic">Unified <span class="text-brand-orange">AI Agent.</span></h1>
-            <p class="text-slate-500 text-xl font-medium">Automatic conversion for Video, TikTok, and Professional Documents.</p>
-        </div>
+    <div>
+      <h2 class="text-lg font-semibold">About this tool</h2>
+      <p class="text-sm text-neutral-400">
+        High-quality conversion with optimized performance...
+      </p>
+    </div>
 
-        <div id="mainWorkspace" class="enterprise-card p-10 md:p-20 shadow-2xl relative overflow-hidden">
-            <div id="agentStatus" class="mb-10 flex items-center space-x-4 bg-white/5 p-4 rounded-2xl border border-white/5">
-                <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                <span class="text-xs font-black uppercase tracking-widest text-slate-400">AI Agent: <span id="currentMode" class="text-white">Idle & Waiting</span></span>
-            </div>
+  </aside>
+</div>
+`;
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                <div class="space-y-8">
-                    <div id="inputBox" class="relative">
-                        <textarea id="userInput" rows="4" 
-                            class="w-full bg-black/40 border border-white/10 rounded-3xl p-8 text-white text-lg font-medium focus:border-brand-orange outline-none transition" 
-                            placeholder="Paste Video URL or provide instructions..."></textarea>
-                        
-                        <div class="mt-6 flex items-center justify-between">
-                            <label class="cursor-pointer bg-white/5 hover:bg-white/10 px-6 py-3 rounded-xl border border-white/10 transition flex items-center space-x-3">
-                                <i class="fas fa-file-upload text-brand-orange"></i>
-                                <span class="text-xs font-bold uppercase tracking-widest">Upload File</span>
-                                <input type="file" id="fileUpload" class="hidden">
-                            </label>
-                            <span id="fileName" class="text-[10px] text-slate-500 font-bold italic">No file selected</span>
-                        </div>
-                    </div>
 
-                    <button onclick="startAgent()" class="w-full bg-brand-orange text-white py-6 rounded-3xl font-black text-2xl uppercase tracking-tighter shadow-2xl hover:scale-[1.02] active:scale-[0.98] transition-all">
-                        Execute AI Agent
-                    </button>
-                </div>
+/* =========================
+   TOOL RENDERER
+========================= */
 
-                <div id="monitor" class="aspect-square bg-black/80 rounded-[40px] border border-white/5 flex flex-col items-center justify-center p-12 text-center relative">
-                    <div id="idleIcon" class="space-y-6">
-                        <i class="fas fa-microchip text-7xl text-slate-800"></i>
-                        <p class="text-[10px] font-black uppercase tracking-[0.4em] text-slate-700 italic">Core Processing Engine</p>
-                    </div>
-                    
-                    <div id="processingUI" class="hidden space-y-8">
-                        <div class="w-16 h-16 border-4 border-brand-orange border-t-transparent rounded-full animate-spin mx-auto"></div>
-                        <p id="progressText" class="text-brand-orange font-black uppercase text-xs tracking-[0.2em] animate-pulse italic">Analyzing Stream...</p>
-                    </div>
+export function renderTool(tool) {
+  const container = document.getElementById("workspace");
 
-                    <div id="resultUI" class="hidden space-y-6 w-full">
-                        <i class="fas fa-check-circle text-6xl text-green-500"></i>
-                        <h4 class="text-2xl font-black uppercase tracking-tighter">Asset Ready</h4>
-                        <a id="downloadBtn" class="block w-full bg-white text-black py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-brand-orange hover:text-white transition cursor-pointer">Download High-Res File</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+  container.innerHTML = `
+    <div class="space-y-4">
+      <h1 class="text-2xl font-bold">${tool.name}</h1>
 
-        <section class="mt-32 grid grid-cols-1 md:grid-cols-3 gap-12 text-slate-500 text-sm leading-relaxed">
-            <div class="space-y-4">
-                <h5 class="text-white font-black uppercase tracking-widest text-xs">Video Conversion</h5>
-                <p>Our AI Agent specializes in high-bitrate conversion for TikTok and YouTube platforms. It preserves 4K resolution while ensuring meta-data integrity.</p>
-            </div>
-            <div class="space-y-4">
-                <h5 class="text-white font-black uppercase tracking-widest text-xs">Document Engine</h5>
-                <p>Convert complex PDF structures into editable formats without losing layout precision. Ideal for professional branding and office workflows.</p>
-            </div>
-            <div class="space-y-4">
-                <h5 class="text-white font-black uppercase tracking-widest text-xs">100% Secure</h5>
-                <p>All files are processed in an encrypted environment and automatically deleted after conversion to ensure user privacy and data security.</p>
-            </div>
-        </section>
-    </main>
+      <input type="file" id="fileInput" class="block w-full" />
+      <input type="text" id="urlInput" placeholder="Paste URL..." class="w-full p-2 bg-neutral-800" />
 
-    <footer class="py-20 border-t border-white/5 text-center">
-        <p class="text-[10px] font-black text-slate-700 uppercase tracking-[0.8em] italic">GoConvertFast Enterprise • Developed for Professional Content Creators • 2026</p>
-    </footer>
+      <button id="runBtn" class="bg-white text-black px-4 py-2 rounded">
+        Convert
+      </button>
 
-    <script>
-        const { jsPDF } = window.jspdf;
-        let selectedFile = null;
+      <div id="result"></div>
+    </div>
+  `;
 
-        document.getElementById('fileUpload').addEventListener('change', (e) => {
-            selectedFile = e.target.files[0];
-            document.getElementById('fileName').innerText = selectedFile ? selectedFile.name : "No file selected";
-            document.getElementById('currentMode').innerText = "File Detected - Ready";
-        });
+  document.getElementById("runBtn").onclick = async () => {
+    const file = document.getElementById("fileInput").files[0];
+    const url = document.getElementById("urlInput").value;
 
-        function startAgent() {
-            const input = document.getElementById('userInput').value;
-            const monitor = document.getElementById('monitor');
-            const idle = document.getElementById('idleIcon');
-            const proc = document.getElementById('processingUI');
-            const result = document.getElementById('resultUI');
-            const progText = document.getElementById('progressText');
-            const dl = document.getElementById('downloadBtn');
+    const input = file || url;
 
-            if(!input && !selectedFile) return alert("Please provide a URL or upload a file!");
+    const result = await unifiedAgent(input);
 
-            idle.classList.add('hidden');
-            result.classList.add('hidden');
-            proc.classList.remove('hidden');
-            document.getElementById('currentMode').innerText = "Running Automatic Logic...";
+    document.getElementById("result").innerText =
+      JSON.stringify(result, null, 2);
+  };
+}
 
-            // AI Agent Simulation Steps
-            setTimeout(() => { progText.innerText = "Analyzing Metadata..."; }, 1000);
-            setTimeout(() => { progText.innerText = "Encoding High-Bitrate Stream..."; }, 2500);
-            
-            setTimeout(() => {
-                proc.classList.add('hidden');
-                result.classList.remove('hidden');
-                document.getElementById('currentMode').innerText = "Task Completed Successfully";
 
-                // Intelligent Result Logic
-                if(selectedFile && selectedFile.type === 'image/jpeg') {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        const doc = new jsPDF();
-                        doc.addImage(e.target.result, 'JPEG', 10, 10, 190, 150);
-                        dl.href = URL.createObjectURL(doc.output('blob'));
-                        dl.download = "GoConvertFast_Professional.pdf";
-                    };
-                    reader.readAsDataURL(selectedFile);
-                } else {
-                    // Default for URL/Text
-                    const b = new Blob(["Conversion Result for: " + (input || "Uploaded Asset")], {type: 'text/plain'});
-                    dl.href = URL.createObjectURL(b);
-                    dl.download = "AI_Result_Export.txt";
-                }
-            }, 4500);
-        }
+/* =========================
+   APP INIT
+========================= */
 
-        function switchTab(tab) {
-            alert("Switching to " + tab.toUpperCase() + " optimized engine. AI Agent is recalibrating...");
-        }
-    </script>
-</body>
-</html>
+import { renderTool } from "./renderer.js";
+
+window.onload = () => {
+  document.body.innerHTML = layoutHTML;
+
+  const toolList = document.getElementById("toolList");
+
+  toolRegistry.forEach(tool => {
+    const btn = document.createElement("button");
+    btn.className = "block w-full text-left mb-2 hover:text-gray-400";
+    btn.innerText = tool.name;
+
+    btn.onclick = () => renderTool(tool);
+
+    toolList.appendChild(btn);
+  });
+};

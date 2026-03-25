@@ -3,228 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoConvertFast | Next-Gen AI Converters</title>
+    <title>GoConvertFast | Premium Multi-Tool Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
         
+        :root {
+            --bg-deep: #050810;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --brand-orange: #FF6723; /* From your logo */
+            --brand-blue: #1A2B47;   /* From your logo */
+        }
+
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: #050505; /* Deep Black */
+            background-color: var(--bg-deep);
             color: #ffffff;
-            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% -20%, #1e293b 0%, #050810 80%);
         }
 
-        /* Animated Background Gradients */
-        .bg-glow {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 20% 30%, rgba(37, 99, 235, 0.15) 0%, transparent 40%),
-                        radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.15) 0%, transparent 40%);
-            z-index: -1;
-        }
-
-        /* Glassmorphism Redefined */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(25px);
+        .glass {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 32px;
-            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            border-radius: 24px;
         }
 
         .tool-card {
-            background: rgba(255, 255, 255, 0.02);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 24px;
-            transition: all 0.4s ease;
         }
 
         .tool-card:hover {
-            background: rgba(255, 255, 255, 0.07);
-            border-color: #3b82f6;
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(59, 130, 246, 0.2);
+            transform: translateY(-10px);
+            border-color: var(--brand-orange);
+            background: rgba(255, 103, 35, 0.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(255, 103, 35, 0.1);
         }
 
-        .neon-text {
-            background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .cat-active {
+            background: var(--brand-orange) !important;
+            color: white !important;
+            box-shadow: 0 10px 20px rgba(255, 103, 35, 0.3);
         }
 
-        .btn-neon {
-            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+        .orange-glow {
+            text-shadow: 0 0 15px rgba(255, 103, 35, 0.5);
         }
 
-        .btn-neon:hover {
-            box-shadow: 0 0 30px rgba(37, 99, 235, 0.5);
-            transform: translateY(-2px);
-        }
-
-        /* Sidebar Styling */
-        .sidebar-link {
-            transition: all 0.3s;
-            border-left: 3px solid transparent;
-        }
-
-        .sidebar-link:hover, .sidebar-link.active {
-            background: rgba(59, 130, 246, 0.1);
-            border-left-color: #3b82f6;
-            color: #3b82f6;
-        }
-
-        .floating { animation: float 6s ease-in-out infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        #outputArea img { margin: 0 auto; border-radius: 12px; }
     </style>
 </head>
-<body class="flex min-h-screen">
+<body class="min-h-screen">
 
-    <div class="bg-glow"></div>
-
-    <aside class="hidden lg:flex flex-col w-72 bg-black/40 backdrop-blur-xl border-r border-white/5 sticky top-0 h-screen p-6">
-        <div class="flex items-center space-x-3 mb-12">
-            <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/50">
-                <i class="fas fa-bolt"></i>
+    <nav class="sticky top-0 z-50 bg-black/50 backdrop-blur-xl border-b border-white/5 py-4 px-8">
+        <div class="container mx-auto flex justify-between items-center">
+            <div onclick="location.reload()" class="flex items-center space-x-3 cursor-pointer">
+                <img src="brand_logo.png" alt="GF Logo" class="w-10 h-10 object-contain">
+                <span class="text-xl font-extrabold tracking-tighter uppercase italic">
+                    GoConvert<span class="text-[var(--brand-orange)]">Fast</span>
+                </span>
             </div>
-            <span class="text-xl font-black tracking-tighter italic">GO<span class="text-blue-500">CONVERT</span></span>
+            <button class="bg-white/5 hover:bg-white/10 px-6 py-2 rounded-full text-xs font-bold border border-white/10 transition">PRO ACCESS</button>
+        </div>
+    </nav>
+
+    <main id="main-view" class="container mx-auto px-6 py-16">
+        <div class="text-center mb-16">
+            <h1 class="text-5xl md:text-7xl font-black mb-6 tracking-tight italic">Fastest <span class="text-[var(--brand-orange)] orange-glow">Tools</span> Hub</h1>
+            <p class="text-slate-400 text-lg max-w-2xl mx-auto">Professional-grade conversion and design tools for high-end digital production.</p>
         </div>
 
-        <nav class="space-y-2 flex-1">
-            <p class="text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-4">Workspace</p>
-            <a href="#" onclick="showSection('home')" class="sidebar-link active flex items-center space-x-3 p-3 rounded-xl font-semibold text-gray-400">
-                <i class="fas fa-layer-group w-5 text-sm"></i> <span>Dashboard</span>
-            </a>
-            <a href="#" class="sidebar-link flex items-center space-x-3 p-3 rounded-xl font-semibold text-gray-400">
-                <i class="fas fa-file-pdf w-5 text-sm"></i> <span>PDF Studio</span>
-            </a>
-            <a href="#" class="sidebar-link flex items-center space-x-3 p-3 rounded-xl font-semibold text-gray-400">
-                <i class="fas fa-magic w-5 text-sm"></i> <span>AI Enhancer</span>
-            </a>
-            <a href="#" class="sidebar-link flex items-center space-x-3 p-3 rounded-xl font-semibold text-gray-400">
-                <i class="fas fa-code w-5 text-sm"></i> <span>Dev Tools</span>
-            </a>
-        </nav>
-
-        <div class="mt-auto p-5 glass-panel text-center">
-            <p class="text-xs font-bold text-blue-400 mb-2 uppercase">Pro Status</p>
-            <button class="text-[10px] font-black bg-white/10 hover:bg-white/20 py-2 px-4 rounded-lg transition">ACTIVATE API</button>
+        <div class="flex flex-wrap justify-center gap-3 mb-12" id="cat-filters">
+            <button onclick="filterTools('All')" class="cat-btn cat-active px-6 py-2.5 rounded-full text-sm font-bold bg-white/5 border border-white/10 transition">All Tools</button>
+            <button onclick="filterTools('Documents')" class="cat-btn px-6 py-2.5 rounded-full text-sm font-bold bg-white/5 border border-white/10 transition">Documents</button>
+            <button onclick="filterTools('Graphics')" class="cat-btn px-6 py-2.5 rounded-full text-sm font-bold bg-white/5 border border-white/10 transition">Graphics</button>
+            <button onclick="filterTools('Security')" class="cat-btn px-6 py-2.5 rounded-full text-sm font-bold bg-white/5 border border-white/10 transition">Security</button>
         </div>
-    </aside>
 
-    <main class="flex-1 overflow-x-hidden">
-        <header class="py-6 px-10 flex justify-between items-center border-b border-white/5 sticky top-0 bg-black/20 backdrop-blur-md z-50">
-            <div class="flex items-center bg-white/5 border border-white/10 px-5 py-2.5 rounded-2xl w-full max-w-md focus-within:border-blue-500 transition">
-                <i class="fas fa-search text-gray-500 mr-3"></i>
-                <input type="text" placeholder="Search 200+ Next-Gen Tools..." class="bg-transparent outline-none w-full text-sm font-medium">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="tool-grid">
             </div>
-            <div class="flex items-center space-x-6 ml-6">
-                <i class="fas fa-bell text-gray-500 hover:text-white cursor-pointer transition"></i>
-                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-600 to-purple-500 border-2 border-white/10 shadow-xl"></div>
-            </div>
-        </header>
-
-        <section id="home-section" class="p-10 lg:p-16 max-w-7xl mx-auto">
-            <div class="mb-16">
-                <h1 class="text-5xl lg:text-7xl font-black mb-6 leading-tight tracking-tighter">
-                    The Future of <br><span class="neon-text italic">File Conversion.</span>
-                </h1>
-                <p class="text-gray-400 text-xl font-medium max-w-2xl">Stop waiting. Start converting at light speed with our decentralized tool engine.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8" id="toolGrid">
-                </div>
-        </section>
-
-        <section id="workspace-section" class="hidden p-10 lg:p-16 max-w-5xl mx-auto">
-            <div class="glass-panel p-10 md:p-20 relative overflow-hidden">
-                <button onclick="showSection('home')" class="mb-10 flex items-center text-gray-400 hover:text-white font-bold transition">
-                    <i class="fas fa-arrow-left mr-3"></i> Return to Station
-                </button>
-                
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 relative z-10">
-                    <div>
-                        <div id="toolBadge" class="inline-block px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-400 text-[10px] font-black uppercase tracking-widest mb-6 border border-blue-500/20">Security</div>
-                        <h2 id="activeTitle" class="text-5xl font-black mb-6 italic tracking-tight uppercase">Tool Name</h2>
-                        <p id="activeDesc" class="text-gray-400 mb-10 text-lg leading-relaxed"></p>
-                        <div id="dynamicInputs" class="space-y-6 mb-10"></div>
-                        <button id="mainBtn" class="btn-neon w-full py-6 rounded-3xl font-black text-xl tracking-tighter uppercase italic">Execute Task</button>
-                    </div>
-
-                    <div class="flex flex-col items-center">
-                        <div class="w-full aspect-square bg-black/40 border border-white/10 rounded-[3rem] shadow-inner flex flex-col items-center justify-center p-10 relative group">
-                            <div id="outputContainer" class="text-center">
-                                <i class="fas fa-cube text-7xl text-white/5 floating"></i>
-                            </div>
-                        </div>
-                        <button id="dlBtn" class="hidden mt-8 w-full bg-white text-black py-5 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-blue-500 hover:text-white transition-all shadow-2xl">
-                            Download Asset
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <footer class="p-20 text-center border-t border-white/5">
-            <p class="text-[10px] font-bold text-gray-600 uppercase tracking-[0.6em]">Powered by Abu Sira Engine • goconvertfast.com</p>
-        </footer>
     </main>
+
+    <section id="workspace" class="hidden container mx-auto px-6 py-12">
+        <div class="max-w-4xl mx-auto glass p-8 md:p-12 relative overflow-hidden">
+            <button onclick="closeWorkspace()" class="mb-8 text-slate-400 hover:text-white flex items-center font-bold">
+                <i class="fas fa-arrow-left mr-2"></i> Dashboard
+            </button>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+                <div>
+                    <h2 id="tool-name" class="text-4xl font-black mb-4 italic uppercase tracking-tighter">Tool Name</h2>
+                    <p id="tool-desc" class="text-slate-400 mb-8 font-medium"></p>
+                    <div id="input-container" class="space-y-4"></div>
+                    <button id="action-btn" class="w-full mt-8 bg-[var(--brand-orange)] py-4 rounded-xl font-black text-lg shadow-lg hover:shadow-orange-500/40 transition">EXECUTE NOW</button>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div id="outputArea" class="w-full min-h-[300px] bg-black/40 rounded-3xl border border-white/10 flex items-center justify-center p-6 text-center">
+                        <i class="fas fa-bolt text-5xl text-slate-800"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <script>
         const tools = [
-            { id: 'qr', name: 'QR Matrix', icon: 'fa-qrcode', cat: 'Marketing', desc: 'Generate encrypted QR codes with custom 3D depth.' },
-            { id: 'pass', name: 'SafeKey Pro', icon: 'fa-shield-virus', cat: 'Security', desc: 'Next-gen algorithmic password generation suite.' },
-            { id: 'img', name: 'Vortex Convert', icon: 'fa-wind', cat: 'Graphics', desc: 'Hyper-fast image format conversion with AI scaling.' },
-            { id: 'pdf', name: 'Doc Pulse', icon: 'fa-file-signature', cat: 'Documents', desc: 'Surgical precision PDF text and data extraction.' },
-            { id: 'json', name: 'Code Flow', icon: 'fa-terminal', cat: 'Dev Tools', desc: 'Advanced JSON formatting and syntax optimization.' }
+            { id: 'qr', name: 'QR Matrix', desc: 'Create HD branding QR codes instantly.', cat: 'Marketing', icon: 'fa-qrcode' },
+            { id: 'pass', name: 'SafeKey', desc: 'Generate 128-bit secure passwords.', cat: 'Security', icon: 'fa-shield-halved' },
+            { id: 'pdf', name: 'PDF Pulse', desc: 'Extract text and data from PDF files.', cat: 'Documents', icon: 'fa-file-lines' },
+            { id: 'img', name: 'Img Resizer', desc: 'Scale images without losing quality.', cat: 'Graphics', icon: 'fa-expand' },
+            { id: 'json', name: 'Code Formatter', desc: 'Beautify and validate JSON/HTML code.', cat: 'Graphics', icon: 'fa-code' }
         ];
 
-        function init() {
-            const grid = document.getElementById('toolGrid');
-            grid.innerHTML = tools.map(t => `
-                <div onclick="openTool('${t.id}')" class="tool-card p-10 cursor-pointer group">
-                    <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-blue-600 group-hover:rotate-[360deg] transition-all duration-700">
-                        <i class="fas ${t.icon} text-2xl"></i>
+        function renderTools(list) {
+            const grid = document.getElementById('tool-grid');
+            grid.innerHTML = list.map(t => `
+                <div onclick="openTool('${t.id}')" class="tool-card glass p-8 cursor-pointer group">
+                    <div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center mb-6 group-hover:bg-[var(--brand-orange)] transition">
+                        <i class="fas ${t.icon} text-xl"></i>
                     </div>
-                    <p class="text-[10px] font-black text-blue-500 uppercase tracking-widest mb-2">${t.cat}</p>
-                    <h3 class="text-2xl font-black italic tracking-tighter">${t.name}</h3>
+                    <p class="text-[10px] font-bold text-[var(--brand-orange)] uppercase tracking-widest mb-2">${t.cat}</p>
+                    <h3 class="text-xl font-extrabold mb-1">${t.name}</h3>
                 </div>
             `).join('');
         }
 
-        function showSection(id) {
-            document.getElementById('home-section').classList.toggle('hidden', id !== 'home');
-            document.getElementById('workspace-section').classList.toggle('hidden', id !== 'workspace');
+        function filterTools(category) {
+            document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('cat-active'));
+            event.target.classList.add('cat-active');
+            
+            const filtered = category === 'All' ? tools : tools.filter(t => t.cat === category);
+            renderTools(filtered);
         }
 
         function openTool(id) {
-            showSection('workspace');
-            const t = tools.find(x => x.id === id);
-            document.getElementById('activeTitle').innerText = t.name;
-            document.getElementById('activeDesc').innerText = t.desc;
-            document.getElementById('toolBadge').innerText = t.cat;
+            document.getElementById('main-view').classList.add('hidden');
+            document.getElementById('workspace').classList.remove('hidden');
+            const tool = tools.find(t => t.id === id);
+            document.getElementById('tool-name').innerText = tool.name;
+            document.getElementById('tool-desc').innerText = tool.desc;
             
-            const inputs = document.getElementById('dynamicInputs');
-            const output = document.getElementById('outputContainer');
-            const dl = document.getElementById('dlBtn');
-            dl.classList.add('hidden');
+            const inputs = document.getElementById('input-container');
+            const output = document.getElementById('outputArea');
+            output.innerHTML = '<i class="fas fa-bolt text-5xl text-slate-800"></i>';
 
             if(id === 'qr') {
-                inputs.innerHTML = `<input type="text" id="qrInput" placeholder="Enter Target URL..." class="w-full p-6 bg-white/5 border border-white/10 rounded-2xl text-white outline-none focus:border-blue-500 transition font-medium">`;
-                document.getElementById('mainBtn').onclick = () => {
-                    output.innerHTML = '<div id="final" class="p-6 bg-white rounded-3xl shadow-[0_0_50px_rgba(255,255,255,0.2)]"></div>';
-                    new QRCode(document.getElementById('final'), { text: document.getElementById('qrInput').value, width: 220, height: 220 });
-                    dl.classList.remove('hidden');
-                };
+                inputs.innerHTML = `<input type="text" id="qrIn" placeholder="Enter link..." class="w-full p-4 bg-white/5 border border-white/10 rounded-xl text-white outline-none focus:border-[var(--brand-orange)]">`;
+                document.getElementById('action-btn').onclick = () => {
+                    output.innerHTML = '<div id="finalQR" class="p-4 bg-white rounded-xl"></div>';
+                    new QRCode(document.getElementById('finalQR'), { text: document.getElementById('qrIn').value, width: 200, height: 200 });
+                }
+            } else if(id === 'pass') {
+                inputs.innerHTML = `<p class="text-sm text-slate-400">Security Strength: High</p>`;
+                document.getElementById('action-btn').onclick = () => {
+                    const pass = Math.random().toString(36).slice(-10).toUpperCase();
+                    output.innerHTML = `<div class="text-3xl font-mono font-bold text-[var(--brand-orange)]">${pass}</div>`;
+                }
             }
         }
 
-        init();
+        function closeWorkspace() {
+            document.getElementById('main-view').classList.remove('hidden');
+            document.getElementById('workspace').classList.add('hidden');
+        }
+
+        renderTools(tools);
     </script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoConvertFast | High-End File Conversion</title>
+    <title>GoConvertFast | Professional Digital Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -11,13 +11,14 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
         :root { --brand-orange: #FF6723; --brand-blue: #1A2B47; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #050810; color: white; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #050810; color: white; overflow-x: hidden; }
         .white-nav { background: white; border-bottom: 1px solid #e2e8f0; }
         .tool-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; transition: 0.3s; cursor: pointer; }
         .tool-card:hover { transform: translateY(-8px); border-color: var(--brand-orange); background: rgba(255,103,35,0.05); }
-        .cat-btn.active { background: var(--brand-orange); color: white; }
-        .workspace-glass { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); border-radius: 32px; }
-        #drop-zone.active { border-color: var(--brand-orange); background: rgba(255,103,35,0.1); }
+        .cat-btn.active { background: var(--brand-orange); color: white; border-color: var(--brand-orange); }
+        .search-input { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; transition: 0.3s; }
+        .search-input:focus { border-color: var(--brand-orange); background: rgba(255,255,255,0.08); outline: none; }
+        #preview-img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 15px; }
     </style>
 </head>
 <body>
@@ -28,48 +29,60 @@
                 <img src="brand_logo.png" alt="GF Logo" class="w-10 h-10 object-contain">
                 <span class="text-xl font-black italic text-[var(--brand-blue)] uppercase">Go<span class="text-[var(--brand-orange)]">Convert</span>Fast</span>
             </div>
-            <div class="text-[10px] font-bold text-slate-400 tracking-widest uppercase hidden md:block">Graphics & Dev Ecosystem</div>
+            <div class="hidden md:flex items-center bg-slate-100 rounded-full px-4 py-2 border border-slate-200">
+                <i class="fas fa-search text-slate-400 mr-2 text-sm"></i>
+                <input type="text" id="mainSearch" onkeyup="searchTools()" placeholder="Search tools..." class="bg-transparent border-none outline-none text-slate-700 text-sm w-48 font-medium">
+            </div>
         </div>
     </nav>
 
-    <main id="dashboard" class="container mx-auto px-6 py-16">
-        <div class="text-center mb-16">
-            <h1 class="text-6xl font-black italic mb-4">Master <span class="text-[var(--brand-orange)]">Every</span> File.</h1>
-            <p class="text-slate-400 font-medium">Professional-grade AI tools for creators and developers.</p>
+    <main id="dashboard" class="container mx-auto px-6 py-12">
+        <div class="text-center mb-12">
+            <h1 class="text-5xl md:text-7xl font-black italic mb-4">The <span class="text-[var(--brand-orange)]">Ultimate</span> Toolkit.</h1>
+            <p class="text-slate-400 font-medium">Fast. Professional. 100% Secure.</p>
         </div>
 
-        <div class="flex flex-wrap justify-center gap-3 mb-12">
-            <button onclick="filterTools('All')" class="cat-btn active px-6 py-2 rounded-full text-xs font-bold border border-white/10 transition">All Tools</button>
-            <button onclick="filterTools('Documents')" class="cat-btn px-6 py-2 rounded-full text-xs font-bold border border-white/10 transition">Documents</button>
-            <button onclick="filterTools('Graphics')" class="cat-btn px-6 py-2 rounded-full text-xs font-bold border border-white/10 transition">Graphics</button>
+        <div class="flex flex-wrap justify-center gap-2 mb-10" id="filter-bar">
+            <button onclick="filterTools('All')" class="cat-btn active px-5 py-2 rounded-full text-xs font-bold border border-white/10 transition">All</button>
+            <button onclick="filterTools('Documents')" class="cat-btn px-5 py-2 rounded-full text-xs font-bold border border-white/10 transition">Documents</button>
+            <button onclick="filterTools('Graphics')" class="cat-btn px-5 py-2 rounded-full text-xs font-bold border border-white/10 transition">Graphics</button>
+            <button onclick="filterTools('Security')" class="cat-btn px-5 py-2 rounded-full text-xs font-bold border border-white/10 transition">Security</button>
+            <button onclick="filterTools('Dev Tools')" class="cat-btn px-5 py-2 rounded-full text-xs font-bold border border-white/10 transition">Dev Tools</button>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="tool-grid"></div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="tool-grid">
+            </div>
     </main>
 
-    <section id="workspace" class="hidden container mx-auto px-6 py-12">
-        <div class="max-w-5xl mx-auto workspace-glass p-10">
-            <button onclick="closeWorkspace()" class="mb-8 text-slate-500 hover:text-white font-bold transition"><i class="fas fa-arrow-left mr-2"></i> Back</button>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+    <section id="workspace" class="hidden container mx-auto px-6 py-8">
+        <div class="max-w-5xl mx-auto bg-white/5 border border-white/10 p-8 rounded-[40px] backdrop-blur-xl">
+            <button onclick="closeWorkspace()" class="mb-6 text-slate-400 hover:text-white font-bold transition flex items-center">
+                <i class="fas fa-arrow-left mr-2"></i> Back to Dashboard
+            </button>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
                 <div>
-                    <h2 id="tool-title" class="text-4xl font-black italic mb-4 uppercase"></h2>
-                    <p id="tool-info" class="text-slate-400 mb-10"></p>
+                    <h2 id="tool-title" class="text-4xl font-black italic mb-4 text-[var(--brand-orange)] uppercase"></h2>
+                    <p id="tool-info" class="text-slate-400 mb-8 font-medium"></p>
                     
-                    <div id="input-logic">
-                        <div id="drop-zone" class="border-2 border-dashed border-white/10 rounded-3xl p-12 text-center hover:border-[var(--brand-orange)] transition cursor-pointer">
-                            <i class="fas fa-cloud-upload-alt text-4xl mb-4 text-slate-600"></i>
-                            <p class="text-sm font-bold text-slate-400">Click or Drag File Here</p>
-                            <input type="file" id="fileInput" class="hidden">
+                    <div id="input-area" class="space-y-6">
+                        <div id="drop-zone" class="border-2 border-dashed border-white/10 rounded-3xl p-10 text-center hover:border-[var(--brand-orange)] transition cursor-pointer bg-white/5">
+                            <i class="fas fa-cloud-upload-alt text-4xl mb-3 text-slate-500"></i>
+                            <p class="text-sm font-bold text-slate-300">Choose File to Process</p>
+                            <input type="file" id="fileInput" class="hidden" accept="image/*, .pdf">
                         </div>
                     </div>
 
-                    <button id="process-btn" class="w-full mt-8 bg-[var(--brand-orange)] py-5 rounded-2xl font-black text-xl shadow-xl hover:brightness-110 transition uppercase">Convert & Export</button>
+                    <button id="process-btn" class="w-full mt-8 bg-[var(--brand-orange)] py-5 rounded-2xl font-black text-xl shadow-xl hover:brightness-110 transition uppercase tracking-tighter">Start Conversion</button>
                 </div>
+                
                 <div class="flex flex-col items-center justify-center">
-                    <div id="preview-area" class="w-full aspect-square bg-black/40 rounded-3xl border border-white/5 flex items-center justify-center overflow-hidden">
-                        <i class="fas fa-file-export text-6xl text-slate-800"></i>
+                    <div id="preview-area" class="w-full aspect-square bg-black/40 rounded-3xl border border-white/5 flex items-center justify-center p-4">
+                        <i class="fas fa-eye-slash text-5xl text-slate-800"></i>
                     </div>
-                    <a id="download-link" class="hidden mt-6 w-full bg-white text-black py-4 rounded-xl font-bold text-center hover:bg-[var(--brand-orange)] hover:text-white transition">DOWNLOAD RESULT</a>
+                    <a id="download-link" class="hidden mt-6 w-full bg-white text-black py-4 rounded-xl font-bold text-center hover:bg-[var(--brand-orange)] hover:text-white transition shadow-2xl">
+                        <i class="fas fa-download mr-2"></i> DOWNLOAD RESULT
+                    </a>
                 </div>
             </div>
         </div>
@@ -77,23 +90,44 @@
 
     <script>
         const { jsPDF } = window.jspdf;
+        
+        // --- 50+ Tools List (ሊጨመሩ የሚችሉ ቱሎች እዚህ ጋር ይዘረዘራሉ) ---
         const tools = [
-            { id: 'img-to-pdf', name: 'Image to PDF', desc: 'Convert JPG/PNG to high-quality PDF docs.', cat: 'Documents', icon: 'fa-file-pdf' },
-            { id: 'pdf-to-word', name: 'PDF to Word', desc: 'Transform PDF data into editable text formats.', cat: 'Documents', icon: 'fa-file-word' },
-            { id: 'qr-gen', name: 'QR Engine', desc: 'Branded QR codes for marketing assets.', cat: 'Graphics', icon: 'fa-qrcode' }
+            { id: 'img-to-pdf', name: 'Image to PDF', desc: 'Convert JPG, PNG to professional PDF documents.', cat: 'Documents', icon: 'fa-file-pdf' },
+            { id: 'pdf-to-word', name: 'PDF to Word', desc: 'Convert PDF files to editable text (Coming Soon).', cat: 'Documents', icon: 'fa-file-word' },
+            { id: 'qr-gen', name: 'QR Engine', desc: 'Generate custom QR codes for your brand.', cat: 'Graphics', icon: 'fa-qrcode' },
+            { id: 'pass-gen', name: 'Secure Pass', desc: 'Generate strong encrypted passwords.', cat: 'Security', icon: 'fa-lock' },
+            { id: 'img-res', name: 'Image Resize', desc: 'Change dimensions of any image fast.', cat: 'Graphics', icon: 'fa-expand' },
+            { id: 'json-fmt', name: 'JSON Format', desc: 'Clean and validate your code blocks.', cat: 'Dev Tools', icon: 'fa-code' },
+            { id: 'unit-conv', name: 'Unit Master', desc: 'Convert weight, length, and more.', cat: 'Dev Tools', icon: 'fa-calculator' }
         ];
 
+        let activeFile = null;
+
         function renderTools(list) {
-            document.getElementById('tool-grid').innerHTML = list.map(t => `
+            const grid = document.getElementById('tool-grid');
+            grid.innerHTML = list.map(t => `
                 <div onclick="openTool('${t.id}')" class="tool-card p-8 group">
-                    <div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center mb-6 group-hover:bg-[var(--brand-orange)] transition"><i class="fas ${t.icon} text-xl"></i></div>
-                    <p class="text-[10px] font-bold text-[var(--brand-orange)] uppercase mb-2">${t.cat}</p>
+                    <div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center mb-6 group-hover:bg-[var(--brand-orange)] transition">
+                        <i class="fas ${t.icon} text-xl"></i>
+                    </div>
+                    <p class="text-[10px] font-bold text-[var(--brand-orange)] uppercase mb-2 tracking-widest">${t.cat}</p>
                     <h3 class="text-xl font-extrabold italic">${t.name}</h3>
                 </div>
             `).join('');
         }
 
-        let activeFile = null;
+        function searchTools() {
+            const val = document.getElementById('mainSearch').value.toLowerCase();
+            const filtered = tools.filter(t => t.name.toLowerCase().includes(val) || t.cat.toLowerCase().includes(val));
+            renderTools(filtered);
+        }
+
+        function filterTools(cat) {
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            renderTools(cat === 'All' ? tools : tools.filter(t => t.cat === cat));
+        }
 
         function openTool(id) {
             document.getElementById('dashboard').classList.add('hidden');
@@ -108,34 +142,39 @@
             const dl = document.getElementById('download-link');
 
             dl.classList.add('hidden');
-            preview.innerHTML = '<i class="fas fa-file-export text-6xl text-slate-800"></i>';
+            preview.innerHTML = '<i class="fas fa-eye-slash text-5xl text-slate-800"></i>';
 
             dropZone.onclick = () => fileInput.click();
             fileInput.onchange = (e) => {
                 activeFile = e.target.files[0];
-                if (activeFile) {
-                    preview.innerHTML = `<p class="text-sm font-bold text-[var(--brand-orange)] uppercase">${activeFile.name}</p>`;
+                if (activeFile && activeFile.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = (re) => {
+                        preview.innerHTML = `<img src="${re.target.result}" id="preview-img">`;
+                    };
+                    reader.readAsDataURL(activeFile);
+                } else if(activeFile) {
+                    preview.innerHTML = `<p class="font-bold text-[var(--brand-orange)]">${activeFile.name}</p>`;
                 }
             };
 
             document.getElementById('process-btn').onclick = () => {
-                if (!activeFile && id !== 'qr-gen') return alert("እባክህ ፋይል መጀመሪያ ምረጥ!");
+                if (!activeFile && id !== 'qr-gen') return alert("Please select a file first!");
                 
                 if (id === 'img-to-pdf') {
                     const reader = new FileReader();
                     reader.onload = (e) => {
                         const doc = new jsPDF();
-                        doc.addImage(e.target.result, 'JPEG', 10, 10, 180, 160);
-                        const pdfBlob = doc.output('blob');
-                        const url = URL.createObjectURL(pdfBlob);
+                        doc.addImage(e.target.result, 'JPEG', 10, 10, 190, 150);
+                        const url = URL.createObjectURL(doc.output('blob'));
                         dl.href = url;
                         dl.download = "GoConvertFast_Export.pdf";
                         dl.classList.remove('hidden');
-                        preview.innerHTML = '<i class="fas fa-check-circle text-6xl text-green-500"></i><p class="mt-4 font-bold uppercase">PDF Ready!</p>';
+                        alert("Conversion Success! Click Download.");
                     };
                     reader.readAsDataURL(activeFile);
                 } else {
-                    alert("ይህ ቱል በቅርቡ ሙሉ በሙሉ ይሰራል። አሁን Image to PDF ይሞክሩ!");
+                    alert("This tool is coming in the next update. Try Image to PDF!");
                 }
             };
         }
@@ -143,12 +182,6 @@
         function closeWorkspace() {
             document.getElementById('workspace').classList.add('hidden');
             document.getElementById('dashboard').classList.remove('hidden');
-        }
-
-        function filterTools(cat) {
-            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
-            renderTools(cat === 'All' ? tools : tools.filter(t => t.cat === cat));
         }
 
         renderTools(tools);

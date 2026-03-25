@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoConvertFast | Premium Multi-Tool Hub</title>
+    <title>GoConvertFast | Fast, Secure & Professional Tools</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
         
         :root {
             --bg-deep: #050810;
-            --brand-orange: #FF6723; /* Bright Orange from your logo */
-            --brand-blue: #1A2B47;   /* Dark Blue from your logo */
+            --brand-orange: #FF6723;
+            --brand-blue: #1A2B47;
         }
 
         body {
@@ -22,212 +22,182 @@
             background-color: var(--bg-deep);
             color: #ffffff;
             background-image: radial-gradient(circle at 50% -20%, #1e293b 0%, #050810 80%);
-            scroll-behavior: smooth;
         }
 
-        /* White Header for Logo Visibility */
-        .white-nav {
-            background-color: #ffffff;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
-            border-b: 1px solid #f1f5f9;
+        /* ነጭ ሄደር ሎጎው በደንብ እንዲታይ */
+        .white-header {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
         }
 
         .tool-card {
             background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 28px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer;
+            border-radius: 24px;
+            transition: all 0.3s ease;
         }
 
         .tool-card:hover {
-            transform: translateY(-12px);
+            transform: translateY(-8px);
             border-color: var(--brand-orange);
-            background: rgba(255, 103, 35, 0.08);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 103, 35, 0.15);
+            background: rgba(255, 103, 35, 0.05);
         }
 
-        .cat-active {
-            background: var(--brand-orange) !important;
-            color: white !important;
-            box-shadow: 0 10px 20px rgba(255, 103, 35, 0.3);
+        .cat-btn.active {
+            background: var(--brand-orange);
+            color: white;
+            border-color: var(--brand-orange);
         }
 
-        .gradient-text {
-            background: linear-gradient(135deg, #ffffff 0%, var(--brand-orange) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .workspace-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 32px;
         }
-
-        .orange-glow {
-            text-shadow: 0 0 20px rgba(255, 103, 35, 0.6);
-        }
-
-        /* workspace animation */
-        .page-transition {
-            animation: slideIn 0.5s ease-out;
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        #qrReady canvas { margin: 0 auto; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
     </style>
 </head>
 <body class="min-h-screen">
 
-    <nav class="white-nav sticky top-0 z-50 py-5 px-8">
+    <nav class="white-header sticky top-0 z-50 py-4 px-8 shadow-md">
         <div class="container mx-auto flex justify-between items-center">
-            <div onclick="location.reload()" class="flex items-center space-x-3 cursor-pointer group">
-                <img src="brand_logo.png" alt="GF Logo" class="w-11 h-11 object-contain group-hover:rotate-[-5deg] transition">
-                <span class="text-2xl font-black tracking-tighter uppercase italic text-[var(--brand-blue)]">
+            <div onclick="location.reload()" class="flex items-center space-x-3 cursor-pointer">
+                <img src="brand_logo.png" alt="GF Logo" class="w-10 h-10 object-contain">
+                <span class="text-xl font-black italic text-[var(--brand-blue)]">
                     GO<span class="text-[var(--brand-orange)]">CONVERT</span>FAST
                 </span>
             </div>
-            <div class="flex items-center space-x-4">
-                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Powered by Abu Sira</span>
-                <button class="bg-black text-white px-7 py-2.5 rounded-full text-xs font-bold hover:bg-[var(--brand-orange)] transition shadow-lg">PRO STUDIO</button>
+            <div class="hidden md:block text-[10px] font-bold text-slate-400 tracking-widest uppercase">
+                Premium Digital Toolkit
             </div>
         </div>
     </nav>
 
-    <main id="dashboard" class="container mx-auto px-6 py-20 page-transition">
-        <div class="max-w-4xl mx-auto text-center mb-24">
-            <h1 class="text-6xl md:text-8xl font-black mb-8 tracking-tighter leading-none text-white">
-                Fast <span class="gradient-text orange-glow italic">Conversion</span> Suite.
+    <main id="dashboard" class="container mx-auto px-6 py-16">
+        <div class="text-center mb-16">
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-6 italic tracking-tighter">
+                Smart <span class="text-[var(--brand-orange)]">Tools.</span> Fast <span class="text-[var(--brand-orange)]">Results.</span>
             </h1>
-            <p class="text-xl text-slate-400 font-medium max-w-2xl mx-auto leading-relaxed">Discover 200+ professional tools for high-end digital production. Find your utility and convert now.</p>
+            <p class="text-slate-400 text-lg max-w-2xl mx-auto font-medium">Professional-grade utilities for graphics, documents, and secure production.</p>
         </div>
 
-        <div class="flex flex-wrap justify-center gap-3 mb-16 border-b border-white/5 pb-10" id="cat-filters">
-            <button onclick="filterTools('All')" class="cat-btn cat-active text-sm font-bold bg-white/5 px-6 py-3 rounded-full border border-white/10 transition">All Tools</button>
-            <button onclick="filterTools('Documents')" class="cat-btn text-sm font-bold bg-white/5 px-6 py-3 rounded-full border border-white/10 transition">Documents</button>
-            <button onclick="filterTools('Graphics')" class="cat-btn text-sm font-bold bg-white/5 px-6 py-3 rounded-full border border-white/10 transition">Graphics</button>
-            <button onclick="filterTools('Security')" class="cat-btn text-sm font-bold bg-white/5 px-6 py-3 rounded-full border border-white/10 transition">Security</button>
+        <div class="flex flex-wrap justify-center gap-3 mb-12" id="filters">
+            <button onclick="filterTools('All')" class="cat-btn active px-6 py-2.5 rounded-full text-xs font-bold border border-white/10 bg-white/5 transition">All Tools</button>
+            <button onclick="filterTools('Documents')" class="cat-btn px-6 py-2.5 rounded-full text-xs font-bold border border-white/10 bg-white/5 transition">Documents</button>
+            <button onclick="filterTools('Graphics')" class="cat-btn px-6 py-2.5 rounded-full text-xs font-bold border border-white/10 bg-white/5 transition">Graphics</button>
+            <button onclick="filterTools('Security')" class="cat-btn px-6 py-2.5 rounded-full text-xs font-bold border border-white/10 bg-white/5 transition">Security</button>
+            <button onclick="filterTools('Dev Tools')" class="cat-btn px-6 py-2.5 rounded-full text-xs font-bold border border-white/10 bg-white/5 transition">Dev Tools</button>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10" id="tool-grid">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="tool-grid">
             </div>
     </main>
 
-    <section id="workspace" class="hidden container mx-auto px-6 py-12 page-transition">
-        <div class="max-w-5xl mx-auto tool-card p-10 md:p-16 border border-white/10 relative overflow-hidden">
-            <button onclick="closeWorkspace()" class="mb-10 text-indigo-400 hover:text-[var(--brand-orange)] flex items-center font-bold transition">
-                <i class="fas fa-arrow-left mr-3"></i> Back to Hub
+    <section id="workspace" class="hidden container mx-auto px-6 py-12">
+        <div class="max-w-5xl mx-auto workspace-box p-8 md:p-12">
+            <button onclick="closeWorkspace()" class="mb-8 text-slate-400 hover:text-white flex items-center font-bold transition">
+                <i class="fas fa-chevron-left mr-2"></i> Dashboard
             </button>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <div>
-                    <h2 id="tool-name" class="text-5xl font-black mb-6 italic uppercase tracking-tighter text-white">Tool Name</h2>
-                    <p id="tool-desc" class="text-lg text-slate-400 mb-10 font-medium leading-relaxed"></p>
-                    <div id="input-container" class="space-y-6"></div>
-                    <button id="action-btn" class="w-full mt-10 bg-[var(--brand-orange)] text-white py-6 rounded-3xl font-black text-xl tracking-widest uppercase hover:scale-[1.02] transition shadow-2xl">Execute Now</button>
+                    <h2 id="t-name" class="text-4xl font-black mb-4 italic uppercase">Tool Name</h2>
+                    <p id="t-desc" class="text-slate-400 mb-8 font-medium"></p>
+                    <div id="t-inputs" class="space-y-4"></div>
+                    <button id="t-action" class="w-full mt-8 bg-[var(--brand-orange)] py-4 rounded-xl font-black text-lg shadow-lg hover:brightness-110 transition">CONVERT NOW</button>
                 </div>
                 <div class="flex flex-col items-center">
-                    <div id="outputArea" class="w-full aspect-square bg-slate-900/30 rounded-[2rem] border-2 border-dashed border-white/10 flex flex-col items-center justify-center p-8 text-center group">
-                        <p class="text-xs font-black uppercase text-slate-600 mb-4 tracking-widest">Live Output</p>
-                        <div id="outputContent" class="transition-all group-hover:scale-105">
-                            <i class="fas fa-bolt text-7xl text-slate-800"></i>
-                        </div>
+                    <div id="t-output" class="w-full aspect-square bg-black/40 rounded-3xl border border-white/5 flex items-center justify-center p-6 shadow-inner">
+                        <i class="fas fa-bolt text-5xl text-slate-800"></i>
                     </div>
-                    <button id="dlBtn" class="hidden mt-8 w-full bg-white text-black py-5 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-[var(--brand-orange)] hover:text-white transition shadow-2xl flex items-center justify-center gap-3">
-                        <i class="fas fa-cloud-download-alt text-lg"></i> DOWNLOAD RESULT
+                    <button id="t-download" class="hidden mt-6 w-full bg-white text-black py-4 rounded-xl font-bold hover:bg-[var(--brand-orange)] hover:text-white transition shadow-xl">
+                        <i class="fas fa-download mr-2"></i> DOWNLOAD FILE
                     </button>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="py-20 text-center border-t border-white/5">
-        <p class="text-[10px] font-bold text-slate-700 uppercase tracking-[0.5em] italic">Abu Sira Designs • goconvertfast.com • 2026 Edition</p>
-    </footer>
-
     <script>
-        const tools = [
-            { id: 'qr', name: 'QR Matrix', desc: 'Create HD branding QR codes instantly for any link.', cat: 'Marketing', icon: 'fa-qrcode', color: 'text-orange-500' },
-            { id: 'pass', name: 'SafeKey Pro', desc: 'Generate 128-bit algorithmic secure passwords.', cat: 'Security', icon: 'fa-shield-halved', color: 'text-indigo-400' },
-            { id: 'pdf', name: 'PDF Pulse AI', desc: 'Extract accurate text and data from PDF files.', cat: 'Documents', icon: 'fa-file-lines', color: 'text-red-400' },
-            { id: 'img', name: 'Img Master', desc: 'Advanced graphics processing and conversion.', cat: 'Graphics', icon: 'fa-image', color: 'text-emerald-400' },
-            { id: 'json', name: 'Code Flow', desc: 'Beautify and validate JSON/HTML code.', cat: 'Dev Tools', icon: 'fa-code', color: 'text-amber-400' }
+        // የቱሎች ዝርዝር (እንዳይጠፋ በጥንቃቄ የተቀመጠ)
+        const allTools = [
+            { id: 'qr', name: 'QR Matrix', desc: 'Generate high-resolution branding QR codes.', cat: 'Marketing', icon: 'fa-qrcode' },
+            { id: 'pass', name: 'SafeKey Pro', desc: 'Secure 128-bit algorithmic password generator.', cat: 'Security', icon: 'fa-shield-halved' },
+            { id: 'pdf-text', name: 'PDF to Text', desc: 'Extract clean text from any PDF document.', cat: 'Documents', icon: 'fa-file-lines' },
+            { id: 'img-res', name: 'Image Resize', desc: 'Professional image scaling and compression.', cat: 'Graphics', icon: 'fa-expand' },
+            { id: 'json-fmt', name: 'JSON Flow', desc: 'Validate and beautify JSON/Code structures.', cat: 'Dev Tools', icon: 'fa-code' },
+            { id: 'unit', name: 'Unit Convert', desc: 'Precision calculation for all global units.', cat: 'Dev Tools', icon: 'fa-calculator' }
         ];
 
-        function renderTools(list) {
+        function render(list) {
             const grid = document.getElementById('tool-grid');
             grid.innerHTML = list.map(t => `
-                <div onclick="openTool('${t.id}')" class="tool-card p-10 flex flex-col items-start group">
-                    <div class="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-[var(--brand-orange)] transition-all duration-300">
-                        <i class="fas ${t.icon} text-3xl"></i>
+                <div onclick="openTool('${t.id}')" class="tool-card p-8 cursor-pointer group">
+                    <div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center mb-6 group-hover:bg-[var(--brand-orange)] transition">
+                        <i class="fas ${t.icon} text-xl"></i>
                     </div>
-                    <p class="text-[10px] font-black text-[var(--brand-orange)] uppercase tracking-widest mb-2">${t.cat}</p>
-                    <h3 class="text-2xl font-extrabold mb-1 tracking-tight text-white group-hover:text-[var(--brand-orange)] transition">${t.name}</h3>
+                    <p class="text-[10px] font-bold text-[var(--brand-orange)] uppercase mb-2 tracking-widest">${t.cat}</p>
+                    <h3 class="text-xl font-extrabold italic">${t.name}</h3>
                 </div>
             `).join('');
         }
 
-        function filterTools(category) {
-            document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('cat-active'));
-            event.target.classList.add('cat-active');
-            
-            const filtered = category === 'All' ? tools : tools.filter(t => t.cat === category);
-            renderTools(filtered);
+        function filterTools(cat) {
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            render(cat === 'All' ? allTools : allTools.filter(t => t.cat === cat));
         }
 
         function openTool(id) {
             document.getElementById('dashboard').classList.add('hidden');
             document.getElementById('workspace').classList.remove('hidden');
-            const tool = tools.find(t => t.id === id);
-            document.getElementById('tool-name').innerText = tool.name;
-            document.getElementById('tool-desc').innerText = tool.desc;
+            const t = allTools.find(x => x.id === id);
+            document.getElementById('t-name').innerText = t.name;
+            document.getElementById('t-desc').innerText = t.desc;
             
-            const inputs = document.getElementById('input-container');
-            const output = document.getElementById('outputContent');
-            const dl = document.getElementById('dlBtn');
+            const inputs = document.getElementById('t-inputs');
+            const output = document.getElementById('t-output');
+            const dl = document.getElementById('t-download');
             dl.classList.add('hidden');
-            output.innerHTML = '<i class="fas fa-bolt text-7xl text-slate-800"></i>';
 
             if(id === 'qr') {
-                inputs.innerHTML = `<input type="text" id="qrIn" placeholder="Enter URL or Text..." class="w-full p-6 bg-white/5 border border-white/10 rounded-2xl text-white outline-none focus:border-[var(--brand-orange)] text-lg transition font-medium">`;
-                document.getElementById('action-btn').onclick = () => {
-                    output.innerHTML = '<div id="qrReady" class="p-5 bg-white rounded-3xl"></div>';
-                    new QRCode(document.getElementById('qrReady'), { text: document.getElementById('qrIn').value, width: 220, height: 220 });
+                inputs.innerHTML = `<input type="text" id="qrInput" placeholder="Enter link or text..." class="w-full p-4 bg-white/5 border border-white/10 rounded-xl text-white outline-none focus:border-[var(--brand-orange)]">`;
+                document.getElementById('t-action').onclick = () => {
+                    output.innerHTML = '<div id="finalQR" class="p-4 bg-white rounded-xl"></div>';
+                    new QRCode(document.getElementById('finalQR'), { text: document.getElementById('qrInput').value, width: 200, height: 200 });
                     dl.classList.remove('hidden');
                     dl.onclick = () => {
-                        html2canvas(document.getElementById('qrReady')).then(canvas => {
-                            const link = document.createElement('a');
-                            link.download = 'GoConvertFast_QR.png';
-                            link.href = canvas.toDataURL();
-                            link.click();
+                        html2canvas(document.getElementById('finalQR')).then(canvas => {
+                            const a = document.createElement('a');
+                            a.download = 'GoConvertFast_QR.png';
+                            a.href = canvas.toDataURL();
+                            a.click();
                         });
                     };
-                }
+                };
             } else if(id === 'pass') {
-                inputs.innerHTML = `<div class="p-8 bg-black/50 text-white rounded-2xl text-center text-3xl font-mono border border-white/10" id="passRes">********</div>`;
-                document.getElementById('action-btn').onclick = () => {
-                    const pass = Math.random().toString(36).slice(-10).toUpperCase() + "GF!";
-                    document.getElementById('passRes').innerText = pass;
-                    output.innerHTML = `<div class="text-3xl font-mono font-bold text-[var(--brand-orange)]">${pass}</div>`;
+                inputs.innerHTML = `<div class="p-6 bg-white/5 rounded-xl text-center text-2xl font-mono" id="passView">********</div>`;
+                document.getElementById('t-action').onclick = () => {
+                    const p = Math.random().toString(36).slice(-10).toUpperCase() + "!";
+                    document.getElementById('passView').innerText = p;
+                    output.innerHTML = `<span class="text-3xl font-mono font-bold text-[var(--brand-orange)]">${p}</span>`;
                     dl.classList.remove('hidden');
                     dl.onclick = () => {
-                        const blob = new Blob([pass], {type: 'text/plain'});
-                        const link = document.createElement('a');
-                        link.href = URL.createObjectURL(blob);
-                        link.download = 'GoConvertFast_Password.txt';
-                        link.click();
-                    }
-                }
+                        const blob = new Blob([p], {type: 'text/plain'});
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url; a.download = 'password.txt'; a.click();
+                    };
+                };
             }
         }
 
         function closeWorkspace() {
-            document.getElementById('dashboard').classList.remove('hidden');
             document.getElementById('workspace').classList.add('hidden');
+            document.getElementById('dashboard').classList.remove('hidden');
         }
 
-        renderTools(tools);
-    } catch (e) { console.error(e); }
+        render(allTools);
     </script>
 </body>
 </html>

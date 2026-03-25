@@ -3,137 +3,200 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartConvert Pro | Professional 200+ Tools Suite</title>
+    <title>SmartConvert Pro | Advanced Tools Suite</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }
-        .tool-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); background: white; border: 1px solid #f1f5f9; }
-        .tool-card:hover { transform: translateY(-8px); border-color: #2563eb; box-shadow: 0 20px 40px rgba(37, 99, 235, 0.1); }
-        .active-page { display: block; animation: fadeInUp 0.5s ease; }
-        .hidden-page { display: none; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        
+        :root {
+            --primary: #0061ff;
+            --secondary: #60efff;
+            --surface: #ffffff;
+            --bg: #f8fafc;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            color: #1e293b;
+            scroll-behavior: smooth;
+        }
+
+        /* Professional Glassmorphism */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+            border-color: var(--primary);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #0061ff 0%, #60efff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sidebar-link {
+            transition: all 0.2s;
+            border-radius: 12px;
+        }
+
+        .sidebar-link:hover {
+            background: rgba(0, 97, 255, 0.05);
+            color: var(--primary);
+        }
+
+        .page-transition {
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Search Bar Glow */
+        .search-focus:focus-within {
+            box-shadow: 0 0 0 4px rgba(0, 97, 255, 0.1);
+            border-color: var(--primary);
+        }
     </style>
 </head>
-<body>
-    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 py-4 px-8">
-        <div class="container mx-auto flex justify-between items-center">
-            <div onclick="showPage('home')" class="flex items-center space-x-3 cursor-pointer">
-                <div class="bg-blue-600 w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-200">
-                    <i class="fas fa-layer-group"></i>
+<body class="flex min-h-screen">
+
+    <aside class="hidden lg:flex flex-col w-72 bg-white border-r border-slate-100 p-6 sticky top-0 h-screen">
+        <div class="flex items-center space-x-3 mb-12">
+            <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg">
+                <i class="fas fa-bolt"></i>
+            </div>
+            <span class="text-xl font-extrabold tracking-tighter">Smart<span class="text-blue-600">Convert</span></span>
+        </div>
+
+        <nav class="space-y-2 flex-1">
+            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">Main Menu</p>
+            <a href="#" onclick="showSection('home')" class="sidebar-link flex items-center space-x-3 p-3 text-slate-600 font-semibold active bg-blue-50 text-blue-600">
+                <i class="fas fa-th-large w-5"></i> <span>Dashboard</span>
+            </a>
+            <a href="#" class="sidebar-link flex items-center space-x-3 p-3 text-slate-600 font-semibold">
+                <i class="fas fa-file-pdf w-5"></i> <span>PDF Tools</span>
+            </a>
+            <a href="#" class="sidebar-link flex items-center space-x-3 p-3 text-slate-600 font-semibold">
+                <i class="fas fa-image w-5"></i> <span>Image Studio</span>
+            </a>
+            <a href="#" class="sidebar-link flex items-center space-x-3 p-3 text-slate-600 font-semibold">
+                <i class="fas fa-shield-alt w-5"></i> <span>Security</span>
+            </a>
+        </nav>
+
+        <div class="mt-auto p-4 bg-slate-900 rounded-2xl text-white">
+            <p class="text-xs font-bold opacity-60 mb-2">Abu Sira Pro</p>
+            <p class="text-[10px] leading-relaxed">Upgrade to access API & Batch processing.</p>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col">
+        <header class="bg-white/80 backdrop-blur-md sticky top-0 z-40 py-4 px-8 border-b border-slate-50 flex justify-between items-center">
+            <div class="search-focus flex items-center bg-slate-100 px-4 py-2.5 rounded-2xl w-full max-w-md border border-transparent transition-all">
+                <i class="fas fa-search text-slate-400 mr-3"></i>
+                <input type="text" id="toolSearch" onkeyup="searchTools()" placeholder="Search from 200+ tools..." class="bg-transparent outline-none text-sm w-full font-medium">
+            </div>
+            <div class="flex items-center space-x-4 ml-4">
+                <button class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 transition"><i class="fas fa-bell"></i></button>
+                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-600 to-cyan-400 border-2 border-white shadow-md"></div>
+            </div>
+        </header>
+
+        <section id="home-section" class="p-8 lg:p-12 page-transition">
+            <div class="mb-12">
+                <h1 class="text-4xl lg:text-5xl font-extrabold tracking-tight mb-4">Welcome back, <span class="gradient-text">Abu Sira</span></h1>
+                <p class="text-slate-500 font-medium text-lg">Your professional toolkit is ready. What are we building today?</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6" id="toolGrid">
                 </div>
-                <span class="text-2xl font-extrabold tracking-tight">Smart<span class="text-blue-600">Convert</span></span>
-            </div>
-            <button class="bg-blue-600 text-white px-6 py-2 rounded-full font-bold text-sm shadow-xl hover:bg-blue-700 transition">GitHub Live</button>
-        </div>
-    </nav>
+        </section>
 
-    <section id="home" class="active-page container mx-auto px-6 py-16">
-        <div class="max-w-4xl mx-auto text-center mb-16">
-            <h1 class="text-5xl font-black mb-6 tracking-tight">One Hub. <span class="text-blue-600 italic">Unlimited Power.</span></h1>
-            <p class="text-xl text-slate-500 font-medium">Professional-grade tools for conversion, security, and design.</p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="toolGrid"></div>
-    </section>
-
-    <section id="workspace" class="hidden-page container mx-auto px-6 py-12">
-        <div class="max-w-5xl mx-auto bg-white rounded-[40px] shadow-2xl border border-slate-50 overflow-hidden">
-            <div class="p-8 border-b bg-slate-50 flex justify-between">
-                <button onclick="showPage('home')" class="font-bold text-slate-500 hover:text-blue-600 transition"><i class="fas fa-arrow-left mr-2"></i> Dashboard</button>
-                <div class="text-xs font-black text-blue-600 uppercase tracking-widest">Enterprise v1.0</div>
-            </div>
-            <div class="p-8 md:p-16 grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <div id="controls">
-                    <h2 id="toolTitle" class="text-4xl font-black mb-4 tracking-tight">Tool Name</h2>
-                    <p id="toolDesc" class="text-slate-400 mb-8 font-medium">Description</p>
-                    <div id="dynamicInput" class="space-y-6"></div>
-                    <div class="mt-10 flex space-x-4">
-                        <button id="convertBtn" class="flex-1 bg-blue-600 text-white py-5 rounded-2xl font-black text-lg shadow-xl shadow-blue-100 hover:scale-[1.02] transition uppercase tracking-widest">Process Now</button>
+        <section id="workspace-section" class="hidden p-8 lg:p-12 page-transition">
+            <div class="max-w-4xl mx-auto">
+                <button onclick="showSection('home')" class="mb-8 flex items-center text-blue-600 font-bold hover:translate-x-[-5px] transition-all"><i class="fas fa-arrow-left mr-2"></i> Back to Dashboard</button>
+                <div class="bg-white rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden">
+                    <div class="p-8 lg:p-12 grid grid-cols-1 lg:grid-cols-2 gap-12">
+                        <div id="tool-ui-area">
+                            <h2 id="activeToolName" class="text-4xl font-black mb-4 tracking-tight">QR Generator</h2>
+                            <p id="activeToolDesc" class="text-slate-400 mb-8 font-medium">Create high-quality QR codes in seconds.</p>
+                            <div id="dynamicInputs" class="space-y-6"></div>
+                            <button id="actionBtn" class="mt-8 w-full bg-blue-600 text-white py-5 rounded-2xl font-black text-lg shadow-xl shadow-blue-100 hover:bg-blue-700 transition-all">PROCESS NOW</button>
+                        </div>
+                        <div class="bg-slate-50 rounded-[2rem] p-8 flex flex-col items-center justify-center border-2 border-dashed border-slate-200 min-h-[400px]">
+                            <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-300 mb-6">Live Output Preview</p>
+                            <div id="outputArea" class="w-full flex justify-center">
+                                <i class="fas fa-wand-magic-sparkles text-6xl text-slate-100"></i>
+                            </div>
+                            <button id="downloadBtn" class="hidden mt-8 w-full bg-emerald-500 text-white py-4 rounded-xl font-bold shadow-lg shadow-emerald-100"><i class="fas fa-download mr-2"></i> DOWNLOAD RESULT</button>
+                        </div>
                     </div>
                 </div>
-                <div class="bg-slate-50 rounded-[32px] border-2 border-dashed border-slate-200 p-8 flex flex-col items-center justify-center min-h-[400px]">
-                    <p class="text-slate-300 font-bold uppercase tracking-widest text-[10px] mb-4">Output Preview</p>
-                    <div id="previewArea" class="w-full flex justify-center items-center">
-                        <i class="fas fa-magic text-6xl text-slate-100"></i>
-                    </div>
-                    <button id="downloadBtn" class="hidden mt-8 w-full bg-emerald-600 text-white py-4 rounded-xl font-bold shadow-lg">
-                        <i class="fas fa-download mr-2"></i> DOWNLOAD FILE
-                    </button>
-                </div>
             </div>
-        </div>
-    </section>
-
-    <footer class="py-12 text-center text-slate-400 font-bold uppercase tracking-widest text-[10px]">
-        © 2026 Abu Sira Designs | Professional Tool Suite
-    </footer>
+        </section>
+    </main>
 
     <script>
         const tools = [
-            { id: 'qr', name: 'QR Pro Maker', icon: 'fa-qrcode', color: 'text-indigo-600', desc: 'Create HD QR codes with live download preview.' },
-            { id: 'pdf', name: 'PDF to Text', icon: 'fa-file-pdf', color: 'text-red-500', desc: 'AI-powered text extraction from PDF documents.' },
-            { id: 'pass', name: 'Secure Key', icon: 'fa-shield-alt', color: 'text-emerald-500', desc: 'Generate 128-bit encrypted professional passwords.' },
-            { id: 'word', name: 'Word Analyst', icon: 'fa-font', color: 'text-blue-500', desc: 'Deep analytics for text, characters, and sentences.' }
+            { id: 'qr', name: 'QR Code Pro', icon: 'fa-qrcode', color: 'text-indigo-600', category: 'Security' },
+            { id: 'pdf', name: 'PDF to Text', icon: 'fa-file-pdf', color: 'text-red-500', category: 'Documents' },
+            { id: 'pass', name: 'SafePass Gen', icon: 'fa-key', color: 'text-emerald-500', category: 'Security' },
+            { id: 'word', name: 'Word Count', icon: 'fa-font', color: 'text-blue-500', category: 'Writing' },
+            { id: 'img', name: 'Image Resize', icon: 'fa-expand', color: 'text-orange-500', category: 'Graphics' },
+            { id: 'json', name: 'JSON Format', icon: 'fa-code', color: 'text-slate-600', category: 'Dev' },
+            { id: 'lorem', name: 'Lorem Ipsum', icon: 'fa-paragraph', category: 'Writing' }
         ];
 
-        function showPage(id) {
-            document.getElementById('home').className = (id === 'home' ? 'active-page' : 'hidden-page');
-            document.getElementById('workspace').className = (id === 'workspace' ? 'active-page' : 'hidden-page');
-            window.scrollTo(0,0);
+        function initGrid() {
+            const grid = document.getElementById('toolGrid');
+            grid.innerHTML = tools.map(t => `
+                <div onclick="openTool('${t.id}')" class="glass-card p-8 rounded-[2rem] cursor-pointer group">
+                    <div class="w-14 h-14 bg-white shadow-sm rounded-2xl flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                        <i class="fas ${t.icon} text-2xl"></i>
+                    </div>
+                    <p class="text-[10px] font-black uppercase tracking-widest text-blue-500 mb-2">${t.category || 'General'}</p>
+                    <h3 class="text-xl font-extrabold tracking-tight">${t.name}</h3>
+                </div>
+            `).join('');
         }
 
-        function loadTool(id) {
-            showPage('workspace');
+        function showSection(id) {
+            document.getElementById('home-section').classList.toggle('hidden', id !== 'home');
+            document.getElementById('workspace-section').classList.toggle('hidden', id !== 'workspace');
+        }
+
+        function openTool(id) {
+            showSection('workspace');
             const tool = tools.find(t => t.id === id);
-            document.getElementById('toolTitle').innerText = tool.name;
-            document.getElementById('toolDesc').innerText = tool.desc;
-            const input = document.getElementById('dynamicInput');
-            const preview = document.getElementById('previewArea');
+            document.getElementById('activeToolName').innerText = tool.name;
+            const inputArea = document.getElementById('dynamicInputs');
+            const output = document.getElementById('outputArea');
             const dlBtn = document.getElementById('downloadBtn');
             dlBtn.classList.add('hidden');
-            preview.innerHTML = '<i class="fas fa-magic text-6xl text-slate-100"></i>';
 
             if(id === 'qr') {
-                input.innerHTML = `<input type="text" id="target" placeholder="Enter link..." class="w-full p-6 bg-slate-50 border rounded-2xl outline-none focus:border-blue-600 text-xl font-medium">`;
-                document.getElementById('convertBtn').onclick = () => {
-                    preview.innerHTML = '<div id="qrReady" class="bg-white p-4 rounded-xl border"></div>';
-                    new QRCode(document.getElementById('qrReady'), document.getElementById('target').value);
+                inputArea.innerHTML = `<input type="text" id="qrIn" placeholder="Enter URL or Text..." class="w-full p-6 bg-slate-50 border border-slate-100 rounded-2xl outline-none focus:border-blue-500 text-lg font-medium transition-all">`;
+                document.getElementById('actionBtn').onclick = () => {
+                    output.innerHTML = '<div id="qrFinal" class="bg-white p-4 rounded-xl shadow-lg border"></div>';
+                    new QRCode(document.getElementById('qrFinal'), { text: document.getElementById('qrIn').value, width: 200, height: 200 });
                     dlBtn.classList.remove('hidden');
-                    dlBtn.onclick = () => {
-                        html2canvas(document.getElementById('qrReady')).then(c => {
-                            const a = document.createElement('a'); a.download='qr.png'; a.href=c.toDataURL(); a.click();
-                        });
-                    }
-                };
-            }
-            if(id === 'pass') {
-                input.innerHTML = `<div class="p-8 bg-slate-900 text-blue-400 rounded-3xl text-center text-3xl font-mono" id="res">********</div>`;
-                document.getElementById('convertBtn').onclick = () => {
-                    const pass = Math.random().toString(36).slice(-12) + "!";
-                    document.getElementById('res').innerText = pass;
-                    preview.innerHTML = `<span class="text-3xl font-mono">${pass}</span>`;
-                    dlBtn.classList.remove('hidden');
-                    dlBtn.onclick = () => {
-                        const blob = new Blob([pass], {type:'text/plain'});
-                        const a = document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='pass.txt'; a.click();
-                    }
                 };
             }
         }
 
-        // Init Grid
-        const grid = document.getElementById('toolGrid');
-        grid.innerHTML = tools.map(t => `
-            <div onclick="loadTool('${t.id}')" class="tool-card p-10 rounded-[32px] cursor-pointer group">
-                <div class="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-blue-50 transition"><i class="fas ${t.icon} text-3xl ${t.color}"></i></div>
-                <h3 class="font-extrabold text-2xl mb-2">${t.name}</h3>
-                <p class="text-slate-400 text-sm leading-relaxed">${t.desc}</p>
-            </div>
-        `).join('');
+        initGrid();
     </script>
 </body>
 </html>

@@ -3,186 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartConvert Pro | 3D Ultimate Toolset</title>
+    <title>SmartConvert Pro | 3D Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
         
-        :root {
-            --primary: #6366f1;
-            --secondary: #a855f7;
-            --glass: rgba(255, 255, 255, 0.8);
-        }
-
         body {
-            font-family: 'Outfit', sans-serif;
-            background: radial-gradient(circle at top right, #fdfcfb 0%, #e2d1c3 100%);
-            min-height: 100vh;
-            color: #1e293b;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #0f172a; /* Dark Elegant Background */
+            color: #ffffff;
+            overflow-x: hidden;
         }
 
-        /* 3D Glass Card Effect */
+        /* 3D Premium Card */
         .card-3d {
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 30px;
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            transform-style: preserve-3d;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
         }
 
         .card-3d:hover {
-            transform: translateY(-15px) rotateX(5deg) rotateY(-5deg);
-            box-shadow: 0 30px 60px rgba(99, 102, 241, 0.2);
-            border-color: var(--primary);
+            transform: translateY(-12px) scale(1.03);
+            background: rgba(51, 65, 85, 0.9);
+            border-color: #6366f1;
+            box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.3);
         }
 
-        .btn-3d {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
-            transition: 0.3s;
+        .glass-nav {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .btn-3d:hover {
-            transform: scale(1.05) translateY(-3px);
-            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.4);
+        .gradient-text {
+            background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .nav-blur {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            transition: all 0.3s ease;
         }
 
-        .floating {
-            animation: float 6s ease-in-out infinite;
+        .btn-primary:hover {
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.6);
+            transform: translateY(-2px);
         }
 
-        @keyframes float {
+        #outputArea img {
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        /* 3D Floating Animation */
+        .float { animation: floating 3s ease-in-out infinite; }
+        @keyframes floating {
             0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+            50% { transform: translateY(-15px); }
             100% { transform: translateY(0px); }
         }
-
-        .tool-active { display: block; animation: zoomIn 0.4s ease; }
-        @keyframes zoomIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
     </style>
 </head>
-<body>
+<body class="min-h-screen">
 
-    <nav class="nav-blur sticky top-0 z-50 py-4 px-8">
+    <nav class="glass-nav sticky top-0 z-50 py-5 px-8">
         <div class="container mx-auto flex justify-between items-center">
-            <div onclick="location.reload()" class="flex items-center space-x-3 cursor-pointer group">
-                <div class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center text-white shadow-2xl group-hover:rotate-12 transition">
-                    <i class="fas fa-cube text-xl"></i>
+            <div onclick="window.location.reload()" class="flex items-center space-x-3 cursor-pointer">
+                <div class="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center float">
+                    <i class="fas fa-cube text-white"></i>
                 </div>
-                <span class="text-2xl font-black tracking-tighter">SMART<span class="text-indigo-600">HUB</span></span>
+                <span class="text-xl font-extrabold tracking-tighter uppercase">Smart<span class="text-indigo-500">Hub</span></span>
             </div>
-            <div class="flex items-center space-x-6">
-                <div class="hidden md:flex space-x-8 font-bold text-sm uppercase tracking-widest text-slate-500">
-                    <a href="#" class="hover:text-indigo-600 transition">Explore</a>
-                    <a href="#" class="hover:text-indigo-600 transition">3D Tools</a>
-                </div>
-                <button class="btn-3d text-white px-8 py-3 rounded-2xl font-bold text-sm">PRO ACCESS</button>
+            <div class="hidden md:flex space-x-8 text-sm font-bold uppercase tracking-widest text-slate-400">
+                <a href="#" class="hover:text-white transition">Tools</a>
+                <a href="#" class="hover:text-white transition">AI Studio</a>
             </div>
+            <button class="btn-primary px-6 py-2 rounded-xl font-bold text-sm shadow-lg">ABU SIRA PRO</button>
         </div>
     </nav>
 
-    <main id="home-view" class="container mx-auto px-6 py-20">
-        <div class="max-w-4xl mx-auto text-center mb-24">
-            <h1 class="text-6xl md:text-8xl font-black mb-8 tracking-tighter leading-none">
-                Design <span class="text-indigo-600">Simpler.</span> <br> Work <span class="text-purple-600">Faster.</span>
-            </h1>
-            <p class="text-xl text-slate-500 font-medium">Over 200+ professional-grade 3D tools at your fingertips.</p>
-        </div>
+    <header class="container mx-auto px-6 py-24 text-center" id="hero">
+        <h1 class="text-6xl md:text-8xl font-black mb-6 tracking-tighter leading-none">
+            3D <span class="gradient-text">Design</span> Tools
+        </h1>
+        <p class="text-xl text-slate-400 max-w-2xl mx-auto font-medium">
+            Professional high-end utilities for the modern digital developer.
+        </p>
+    </header>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10" id="toolGrid">
+    <main class="container mx-auto px-6 pb-24" id="tool-grid-view">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" id="toolsContainer">
             </div>
     </main>
 
-    <section id="tool-view" class="hidden container mx-auto px-6 py-12">
-        <div class="max-w-5xl mx-auto card-3d p-10 md:p-20 relative overflow-hidden">
-            <div class="absolute -top-20 -right-20 w-64 h-64 bg-indigo-100 rounded-full blur-3xl opacity-50"></div>
-            
-            <button onclick="closeTool()" class="mb-12 flex items-center font-bold text-indigo-600 hover:gap-2 transition-all">
-                <i class="fas fa-arrow-left mr-2"></i> BACK TO HUB
+    <section id="workspace" class="hidden container mx-auto px-6 py-12">
+        <div class="max-w-5xl mx-auto card-3d p-10 md:p-16 border border-white/10 relative overflow-hidden">
+            <button onclick="closeWorkspace()" class="mb-8 text-indigo-400 font-bold flex items-center hover:text-white transition">
+                <i class="fas fa-arrow-left mr-2"></i> Dashboard
             </button>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 relative z-10">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 <div>
-                    <h2 id="toolTitle" class="text-5xl font-black mb-6 tracking-tight italic">Tool Name</h2>
-                    <p id="toolDesc" class="text-lg text-slate-400 mb-10 font-medium leading-relaxed"></p>
-                    <div id="inputArea" class="space-y-6"></div>
-                    <button id="processBtn" class="btn-3d w-full mt-10 text-white py-6 rounded-[2rem] font-black text-xl tracking-widest uppercase">Generate Now</button>
+                    <h2 id="activeToolTitle" class="text-4xl font-extrabold mb-4 italic">Tool Name</h2>
+                    <p id="activeToolDesc" class="text-slate-400 mb-8 font-medium"></p>
+                    <div id="inputSpace" class="space-y-6"></div>
+                    <button id="actionBtn" class="btn-primary w-full mt-8 py-5 rounded-2xl font-black text-lg uppercase tracking-widest shadow-2xl">
+                        Generate Now
+                    </button>
                 </div>
-
                 <div class="flex flex-col items-center">
-                    <div class="w-full aspect-square bg-slate-50 rounded-[3rem] border-4 border-white shadow-inner flex items-center justify-center relative group overflow-hidden">
-                        <div id="outputArea" class="transition-all group-hover:scale-105">
-                            <i class="fas fa-layer-group text-8xl text-slate-200 floating"></i>
-                        </div>
+                    <div id="outputArea" class="w-full min-h-[300px] bg-slate-900/50 rounded-3xl border-2 border-dashed border-white/10 flex items-center justify-center p-6">
+                        <i class="fas fa-wand-magic-sparkles text-7xl text-slate-800 float"></i>
                     </div>
-                    <button id="dlBtn" class="hidden mt-8 w-full bg-slate-900 text-white py-5 rounded-2xl font-bold shadow-2xl flex items-center justify-center gap-3">
-                        <i class="fas fa-cloud-download-alt"></i> DOWNLOAD ASSET
+                    <button id="downloadBtn" class="hidden mt-6 w-full bg-white text-slate-900 py-4 rounded-xl font-bold hover:bg-indigo-500 hover:text-white transition">
+                        <i class="fas fa-download mr-2"></i> DOWNLOAD FILE
                     </button>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="py-20 text-center">
-        <p class="text-[10px] font-black tracking-[0.5em] text-slate-400 uppercase">Built by Abu Sira Designs • 2026 Edition</p>
+    <footer class="py-16 text-center border-t border-white/5">
+        <p class="text-[10px] font-black tracking-[0.4em] text-slate-600 uppercase italic">© 2026 Abu Sira Designs | Next-Gen Toolset</p>
     </footer>
 
     <script>
         const tools = [
-            { id: 'qr', name: 'QR 3D Generator', desc: 'Create professional high-res QR codes for branding.', icon: 'fa-qrcode', cat: 'Marketing' },
-            { id: 'pass', name: 'SafePass Pro', desc: 'Military-grade password encryption generator.', icon: 'fa-shield-halved', cat: 'Security' },
-            { id: 'img', name: 'Image 3D FX', desc: 'Add depth and shadows to your flat images.', icon: 'fa-wand-magic-sparkles', cat: 'Graphics' },
-            { id: 'pdf', name: 'Doc Extractor', desc: 'Convert PDF visuals into raw text data.', icon: 'fa-file-invoice', cat: 'Data' }
+            { id: 'qr', name: '3D QR Maker', desc: 'Create HD branding QR codes.', icon: 'fa-qrcode' },
+            { id: 'pass', name: 'Secure Key', desc: 'Generate encrypted 3D passwords.', icon: 'fa-shield-halved' },
+            { id: 'img', name: 'Image Master', desc: 'Advanced graphics processing.', icon: 'fa-image' },
+            { id: 'doc', name: 'Doc AI', desc: 'Smart document conversion.', icon: 'fa-file-code' }
         ];
 
         function init() {
-            const grid = document.getElementById('toolGrid');
-            grid.innerHTML = tools.map(t => `
-                <div onclick="openTool('${t.id}')" class="card-3d p-10 cursor-pointer group">
-                    <div class="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-8 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500">
-                        <i class="fas ${t.icon} text-3xl"></i>
+            const container = document.getElementById('toolsContainer');
+            container.innerHTML = tools.map(t => `
+                <div onclick="openTool('${t.id}')" class="card-3d p-10 flex flex-col items-start group">
+                    <div class="w-14 h-14 bg-indigo-600/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-indigo-600 transition-all duration-300">
+                        <i class="fas ${t.icon} text-2xl text-indigo-400 group-hover:text-white"></i>
                     </div>
-                    <p class="text-[10px] font-black text-indigo-500 mb-2 tracking-[0.2em] uppercase">${t.cat}</p>
-                    <h3 class="text-2xl font-black mb-4">${t.name}</h3>
-                    <div class="w-8 h-1 bg-slate-100 group-hover:w-full transition-all duration-500"></div>
+                    <h3 class="text-xl font-bold mb-2 tracking-tight">${t.name}</h3>
+                    <p class="text-sm text-slate-500 font-medium">${t.desc}</p>
                 </div>
             `).join('');
         }
 
         function openTool(id) {
-            document.getElementById('home-view').classList.add('hidden');
-            document.getElementById('tool-view').classList.remove('hidden');
-            const t = tools.find(x => x.id === id);
-            document.getElementById('toolTitle').innerText = t.name;
-            document.getElementById('toolDesc').innerText = t.desc;
-            const inputs = document.getElementById('inputArea');
+            document.getElementById('hero').classList.add('hidden');
+            document.getElementById('tool-grid-view').classList.add('hidden');
+            document.getElementById('workspace').classList.remove('hidden');
+            
+            const tool = tools.find(x => x.id === id);
+            document.getElementById('activeToolTitle').innerText = tool.name;
+            document.getElementById('activeToolDesc').innerText = tool.desc;
+
+            const inputArea = document.getElementById('inputSpace');
             const output = document.getElementById('outputArea');
-            const dl = document.getElementById('dlBtn');
+            const dl = document.getElementById('downloadBtn');
             dl.classList.add('hidden');
 
             if(id === 'qr') {
-                inputs.innerHTML = `<input type="text" id="qrIn" placeholder="Enter URL here..." class="w-full p-6 bg-white border-2 border-slate-100 rounded-[2rem] outline-none focus:border-indigo-600 text-lg shadow-inner">`;
-                document.getElementById('processBtn').onclick = () => {
-                    output.innerHTML = '<div id="finalQR" class="p-6 bg-white rounded-3xl shadow-2xl"></div>';
-                    new QRCode(document.getElementById('finalQR'), { text: document.getElementById('qrIn').value, width: 250, height: 250 });
+                inputArea.innerHTML = `<input type="text" id="qrText" placeholder="https://example.com" class="w-full p-5 bg-slate-800 border border-white/10 rounded-xl text-white outline-none focus:border-indigo-500">`;
+                document.getElementById('actionBtn').onclick = () => {
+                    output.innerHTML = '<div id="qrRes" class="bg-white p-3 rounded-xl shadow-2xl"></div>';
+                    new QRCode(document.getElementById('qrRes'), { text: document.getElementById('qrText').value, width: 200, height: 200 });
                     dl.classList.remove('hidden');
+                    dl.onclick = () => {
+                        const canvas = document.querySelector('#qrRes canvas');
+                        const link = document.createElement('a');
+                        link.download = 'QR_AbuSira.png';
+                        link.href = canvas.toDataURL();
+                        link.click();
+                    };
                 };
             }
         }
 
-        function closeTool() {
-            document.getElementById('home-view').classList.remove('hidden');
-            document.getElementById('tool-view').classList.add('hidden');
+        function closeWorkspace() {
+            document.getElementById('hero').classList.remove('hidden');
+            document.getElementById('tool-grid-view').classList.remove('hidden');
+            document.getElementById('workspace').classList.add('hidden');
         }
 
         init();

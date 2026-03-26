@@ -1,248 +1,172 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoConvertFast | Enterprise AI Utility Suite</title>
+import React, { useState } from 'react';
+import { 
+  Search, 
+  Youtube, 
+  FileVideo, 
+  FileText, 
+  Image as ImageIcon, 
+  Music, 
+  Zap, 
+  ArrowRight, 
+  Download, 
+  CloudUpload,
+  X,
+  ChevronRight
+} from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+
+// --- Tool Registry Data ---
+const TOOLS = [
+  { id: 'yt', name: 'YouTube 4K Pro', cat: 'Video', icon: <Youtube />, color: 'bg-red-50 text-red-600', desc: 'Download UHD assets directly from YouTube.' },
+  { id: 'tk', name: 'TikTok Clean', cat: 'Video', icon: <FileVideo />, color: 'bg-slate-900 text-white', desc: 'Remove watermarks for professional editing.' },
+  { id: 'pdf', name: 'PDF to Word AI', cat: 'Docs', icon: <FileText />, color: 'bg-blue-50 text-blue-600', desc: 'OCR powered document reconstruction.' },
+  { id: 'img', name: 'AI Image Opti', cat: 'Graphics', icon: <ImageIcon />, color: 'bg-orange-50 text-brand-orange', desc: 'Reduce file size by 90% without quality loss.' },
+  { id: 'mp3', name: 'HQ Audio Extractor', cat: 'Audio', icon: <Music />, color: 'bg-purple-50 text-purple-600', desc: 'Extract 320kbps MP3 from any video.' },
+  { id: 'fast', name: 'WebP Converter', cat: 'Web', icon: <Zap />, color: 'bg-emerald-50 text-emerald-600', desc: 'Optimize images for 2026 web standards.' },
+];
+
+export default function GoConvertFast() {
+  const [selectedTool, setSelectedTool] = useState<null | typeof TOOLS[0]>(null);
+  const [search, setSearch] = useState("");
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [logs, setLogs] = useState<string[]>([]);
+
+  const filteredTools = TOOLS.filter(t => t.name.toLowerCase().includes(search.toLowerCase()));
+
+  const handleProcess = () => {
+    setIsProcessing(true);
+    setLogs([]);
+    const messages = [
+      "> Initializing AI Cloud Node...",
+      "> Analyzing source parameters...",
+      "> Reconstructing binary streams...",
+      "> Applying lossless conversion...",
+      "> Finalizing export asset..."
+    ];
     
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;600;800&family=Outfit:wght@900&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    messages.forEach((msg, i) => {
+      setTimeout(() => {
+        setLogs(prev => [...prev, msg]);
+        if (i === messages.length - 1) setIsProcessing(false);
+      }, (i + 1) * 800);
+    });
+  };
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'], outfit: ['Outfit', 'sans-serif'] },
-                    colors: { 
-                        brand: { 
-                            orange: '#FF6723', 
-                            deep: '#0A0C10',
-                            glass: 'rgba(255, 255, 255, 0.03)',
-                            border: 'rgba(255, 255, 255, 0.08)'
-                        } 
-                    }
-                }
-            }
-        }
-    </script>
-
-    <style>
-        /* Pro Scrollbar */
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: #0A0C10; }
-        ::-webkit-scrollbar-thumb { background: #FF6723; border-radius: 10px; }
-
-        body { background-color: #ffffff; color: #0A0C10; overflow-x: hidden; }
-        
-        /* Glass Card Effect */
-        .glass-card {
-            background: #ffffff;
-            border: 1px solid #f1f5f9;
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-        .glass-card:hover {
-            border-color: #FF6723;
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 30px 60px -12px rgba(255, 103, 35, 0.15);
-        }
-
-        /* Hero Text Gradient */
-        .text-gradient {
-            background: linear-gradient(to right, #0A0C10, #FF6723);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* Hero Animation */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
-        }
-        .float-anim { animation: float 6s ease-in-out infinite; }
-        
-        #studio { display: none; position: fixed; inset: 0; z-index: 9999; background: #ffffff; overflow-y: auto; }
-    </style>
-</head>
-<body class="font-sans">
-
-    <nav class="fixed top-0 w-full z-[100] bg-white/80 backdrop-blur-2xl border-b border-slate-100 py-4 px-6 md:px-20 flex justify-between items-center">
-        <div class="flex items-center space-x-3 group cursor-pointer" onclick="location.reload()">
-            <div class="w-10 h-10 bg-brand-orange rounded-xl flex items-center justify-center text-white font-black shadow-lg shadow-brand-orange/20 rotate-3 group-hover:rotate-0 transition-transform">G</div>
-            <h1 class="text-xl font-black font-outfit tracking-tighter uppercase leading-none">GO<span class="text-brand-orange">CONVERT</span>FAST</h1>
+  return (
+    <div className="min-h-screen bg-white text-slate-900 selection:bg-orange-100 selection:text-orange-600 font-sans">
+      
+      {/* Navigation */}
+      <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-2xl border-b border-slate-100 px-6 py-4 flex justify-between items-center">
+        <div className="flex items-center space-x-3 cursor-pointer" onClick={() => window.location.reload()}>
+          <div className="w-10 h-10 bg-[#FF6723] rounded-xl flex items-center justify-center text-white font-black shadow-lg shadow-orange-200 rotate-3">G</div>
+          <span className="text-xl font-black tracking-tighter uppercase italic">Go<span className="text-[#FF6723]">Convert</span>Fast</span>
         </div>
-        
-        <div class="hidden lg:flex items-center space-x-10 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
-            <a href="#tools" class="hover:text-brand-orange transition">Registry</a>
-            <a href="#" class="hover:text-brand-orange transition">Cloud Engine</a>
-            <a href="#" class="hover:text-brand-orange transition">API Docs</a>
+        <button className="bg-slate-900 text-white px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-[#FF6723] transition-all">Launch Pro</button>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="pt-40 pb-20 px-6 text-center max-w-5xl mx-auto">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+          <span className="px-4 py-1.5 bg-orange-50 text-[#FF6723] rounded-full text-[10px] font-black uppercase tracking-widest mb-8 inline-block">Enterprise Utility Suite v4.0</span>
+          <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] mb-12 uppercase italic">
+            One Click. <br /> <span className="text-[#FF6723]">Infinite</span> Tools.
+          </h1>
+          
+          <div className="relative max-w-2xl mx-auto group">
+            <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-[#FF6723] transition-colors" />
+            <input 
+              type="text" 
+              placeholder="Search 150+ professional tools..."
+              className="w-full py-6 pl-16 pr-8 bg-slate-50 border border-slate-100 rounded-3xl text-lg font-bold focus:outline-none focus:bg-white focus:ring-4 focus:ring-orange-50 transition-all"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Tools Grid */}
+      <main className="container mx-auto px-6 pb-40">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredTools.map((tool) => (
+            <motion.div 
+              key={tool.id}
+              whileHover={{ y: -8 }}
+              onClick={() => setSelectedTool(tool)}
+              className="p-10 bg-white border border-slate-100 rounded-[40px] cursor-pointer hover:border-[#FF6723] transition-all group shadow-sm hover:shadow-2xl hover:shadow-orange-100"
+            >
+              <div className={`w-14 h-14 ${tool.color} rounded-2xl flex items-center justify-center mb-8 text-2xl transition-transform group-hover:scale-110`}>
+                {tool.icon}
+              </div>
+              <h3 className="text-xl font-black mb-3 uppercase tracking-tighter">{tool.name}</h3>
+              <p className="text-slate-400 font-medium text-sm leading-relaxed mb-8">{tool.desc}</p>
+              <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-slate-300 group-hover:text-[#FF6723]">
+                <span>{tool.cat}</span>
+                <ArrowRight size={14} />
+              </div>
+            </motion.div>
+          ))}
         </div>
+      </main>
 
-        <button class="bg-brand-deep text-white px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-brand-orange transition-all shadow-xl shadow-brand-deep/10">Launch Studio</button>
-    </nav>
+      {/* Studio Modal Overlay */}
+      <AnimatePresence>
+        {selectedTool && (
+          <motion.div 
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-white overflow-y-auto p-6 md:p-20"
+          >
+            <div className="max-w-6xl mx-auto">
+              <button onClick={() => setSelectedTool(null)} className="mb-12 flex items-center text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 hover:text-orange-600 transition">
+                <X size={16} className="mr-2" /> Back to Dashboard
+              </button>
 
-    <section class="relative pt-40 pb-20 px-6 container mx-auto text-center overflow-hidden">
-        <div class="absolute -top-20 -left-20 w-96 h-96 bg-brand-orange/5 blur-[120px] rounded-full"></div>
-        
-        <span class="inline-block px-4 py-2 bg-slate-50 border border-slate-100 rounded-full text-[10px] font-black text-brand-orange uppercase tracking-widest mb-8">
-            Powering 150+ Professional AI Converters
-        </span>
-        
-        <h2 class="text-6xl md:text-[120px] font-black font-outfit tracking-tighter leading-[0.85] mb-12 uppercase">
-            Transform <br> <span class="text-brand-orange italic underline decoration-slate-100">Everything.</span>
-        </h2>
-        
-        <div class="max-w-3xl mx-auto relative group">
-            <input type="text" id="mainSearch" onkeyup="searchRegistry()" placeholder="Search tools (e.g. PDF, 4K Video, WebP)..." 
-                class="w-full py-8 pl-10 pr-10 bg-slate-50 border border-slate-100 rounded-[30px] text-xl font-semibold focus:outline-none focus:ring-4 focus:ring-brand-orange/5 focus:bg-white transition-all shadow-sm">
-            <button class="absolute right-4 top-1/2 -translate-y-1/2 bg-brand-orange text-white p-4 rounded-2xl shadow-lg">
-                <i class="fas fa-search"></i>
-            </button>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
+                <div className="space-y-8">
+                  <h2 className="text-6xl font-black italic uppercase tracking-tighter leading-none">{selectedTool.name}</h2>
+                  <p className="text-slate-500 text-lg font-medium leading-relaxed">{selectedTool.desc}</p>
+                  
+                  <div className="p-10 bg-slate-50 rounded-[40px] border border-slate-100 space-y-6">
+                    <input type="text" placeholder="Paste URL or text here..." className="w-full py-5 px-8 bg-white border border-slate-200 rounded-2xl font-bold outline-none focus:border-[#FF6723] transition shadow-sm" />
+                    <label className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-slate-200 rounded-2xl bg-white cursor-pointer hover:border-orange-400 transition group">
+                      <CloudUpload className="text-slate-300 mb-2 group-hover:text-orange-500" />
+                      <span className="text-[10px] font-black uppercase text-slate-400 tracking-widest">Drop Master Asset</span>
+                      <input type="file" className="hidden" />
+                    </label>
+                    <button 
+                      onClick={handleProcess}
+                      disabled={isProcessing}
+                      className="w-full bg-[#FF6723] text-white py-8 rounded-[30px] font-black text-2xl uppercase tracking-tighter shadow-2xl hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50"
+                    >
+                      {isProcessing ? "Processing..." : "Initialize Agent"}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="flex flex-col">
+                  <div className="flex-1 bg-slate-900 rounded-[40px] p-10 font-mono text-emerald-400 text-sm shadow-2xl overflow-y-auto min-h-[400px]">
+                    {logs.length === 0 && <p className="opacity-40 animate-pulse">> Awaiting instructions...</p>}
+                    {logs.map((log, i) => <p key={i} className="mb-2 leading-relaxed">{log}</p>)}
+                    {!isProcessing && logs.length > 0 && (
+                      <button className="mt-8 bg-emerald-500 text-slate-900 px-8 py-4 rounded-2xl font-black uppercase tracking-widest flex items-center hover:bg-emerald-400 transition">
+                        <Download size={18} className="mr-2" /> Download Ready File
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <footer className="py-20 border-t border-slate-100 text-center bg-slate-50/50">
+        <p className="text-[10px] font-black text-slate-400 uppercase tracking-[1em] mb-4">GoConvertFast Enterprise • 2026</p>
+        <div className="flex justify-center space-x-6 text-[10px] font-black uppercase tracking-widest text-slate-300">
+          <a href="#" className="hover:text-orange-600">Privacy</a>
+          <a href="#" className="hover:text-orange-600">Terms</a>
+          <a href="#" className="hover:text-orange-600">API</a>
         </div>
-    </section>
-
-    <div class="container mx-auto px-6 mb-20">
-        <div class="w-full h-24 bg-slate-50 border border-dashed border-slate-200 rounded-3xl flex items-center justify-center text-[10px] font-black text-slate-300 tracking-[1em]">AD UNIT 01</div>
+      </footer>
     </div>
-
-    <main class="container mx-auto px-6 pb-40" id="tools">
-        <div class="flex items-center justify-between mb-16">
-            <h3 class="text-3xl font-black font-outfit uppercase tracking-tighter italic">Professional Engine</h3>
-            <div class="flex space-x-2">
-                <button onclick="filterCat('all')" class="px-4 py-2 rounded-lg bg-brand-deep text-white text-[10px] font-black uppercase tracking-widest">All</button>
-                <button onclick="filterCat('video')" class="px-4 py-2 rounded-lg bg-slate-50 text-slate-400 text-[10px] font-black uppercase tracking-widest hover:bg-slate-100">Video</button>
-                <button onclick="filterCat('docs')" class="px-4 py-2 rounded-lg bg-slate-50 text-slate-400 text-[10px] font-black uppercase tracking-widest hover:bg-slate-100">Docs</button>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" id="toolGrid">
-            </div>
-    </main>
-
-    <div id="studio">
-        <div class="max-w-7xl mx-auto px-6 py-20">
-            <button onclick="closeStudio()" class="mb-20 text-[10px] font-black uppercase tracking-[0.4em] text-slate-400 hover:text-brand-orange transition">
-                <i class="fas fa-arrow-left mr-2"></i> Close Studio
-            </button>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-24">
-                <div class="space-y-10">
-                    <h2 id="stName" class="text-7xl font-black font-outfit tracking-tighter uppercase italic leading-none">Tool Title</h2>
-                    <p id="stDesc" class="text-xl text-slate-500 font-medium leading-relaxed">Description goes here.</p>
-                    
-                    <div class="space-y-6 bg-slate-50 p-12 rounded-[50px] border border-slate-100">
-                        <input type="text" placeholder="Paste link or text here..." class="w-full bg-white py-6 px-8 rounded-3xl font-bold text-lg border border-slate-200 focus:border-brand-orange outline-none shadow-sm">
-                        <div class="w-full h-40 border-2 border-dashed border-slate-200 rounded-3xl flex flex-col items-center justify-center text-slate-300 hover:border-brand-orange transition cursor-pointer">
-                            <i class="fas fa-cloud-upload-alt text-3xl mb-2"></i>
-                            <span class="text-[10px] font-black uppercase tracking-widest">Drop Master File</span>
-                        </div>
-                        <button onclick="processTool()" id="procBtn" class="w-full bg-brand-orange text-white py-8 rounded-[30px] font-black text-2xl uppercase tracking-tighter shadow-2xl hover:scale-105 active:scale-95 transition-all">Execute Agent</button>
-                    </div>
-                </div>
-                
-                <div class="flex flex-col h-full">
-                    <div id="terminal" class="bg-brand-deep rounded-[40px] p-10 flex-1 min-h-[400px] shadow-2xl text-emerald-400 font-mono text-sm leading-relaxed overflow-y-auto">
-                        <p>> System Standby...</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="mt-40 pt-20 border-t border-slate-100">
-                <h4 class="text-2xl font-black uppercase tracking-tighter mb-10">Enterprise Documentation</h4>
-                <div id="stLong" class="grid grid-cols-1 md:grid-cols-2 gap-12 text-slate-500 leading-loose text-lg font-medium">
-                    </div>
-            </div>
-        </div>
-    </div>
-
-    <footer class="bg-slate-50 py-20 px-6 border-t border-slate-100 text-center">
-        <p class="text-[10px] font-black text-slate-400 uppercase tracking-[1em] mb-4">GoConvertFast Enterprise</p>
-        <p class="text-xs text-slate-300 font-bold uppercase">Developed by Abubeker Nasir • 2026</p>
-    </footer>
-
-    <script>
-        // MASTER REGISTRY (150+ Tools Framework)
-        const registry = [
-            { id: "yt", name: "YouTube 4K Pro", cat: "video", icon: "fa-youtube", desc: "Lossless video asset extraction.", long: "Professional YouTube downloader engine designed for creators. Supporting 4K and 8K resolution, this tool preserves original HDR metadata and high-bitrate audio streams. Perfect for content repurposing and high-end video production workflows." },
-            { id: "tk", name: "TikTok Clean", cat: "video", icon: "fa-tiktok", desc: "No-watermark video retrieval.", long: "Advanced TikTok engine that identifies and extracts clean video paths directly from CDN servers. It removes all UI overlays, usernames, and watermarks to provide a 100% clean asset for professional editing and viral curation." },
-            { id: "pdf", name: "PDF to Word AI", cat: "docs", icon: "fa-file-word", desc: "OCR document reconstruction.", long: "Enterprise-grade PDF to Word converter using AI-powered Optical Character Recognition (OCR). It reconstructs fonts, tables, and layouts with 99.9% accuracy, transforming static PDFs into fully editable documents." },
-            { id: "webp", name: "WebP Master", cat: "video", icon: "fa-code", desc: "Next-gen image optimization.", long: "Prepare your web assets for 2026 standards. Convert legacy JPG and PNG files into WebP format to reduce page load speed by up to 40%. Highly recommended for SEO-focused web development projects." },
-            { id: "img", name: "AI Image Opti", cat: "docs", icon: "fa-wand-magic-sparkles", desc: "Lossless 90% compression.", long: "Our AI Image Optimization engine analyzes pixel redundancy to compress files by up to 90% without visible quality loss. Essential for graphic designers and content creators managing large portfolios." }
-            // To make it 2000 lines, I would add 140 more entries here...
-        ];
-
-        function renderRegistry(data) {
-            const grid = document.getElementById('toolGrid');
-            grid.innerHTML = data.map(t => `
-                <div class="glass-card p-10 rounded-[40px] cursor-pointer group" onclick="openStudio('${t.id}')">
-                    <div class="w-14 h-14 bg-slate-50 text-brand-deep rounded-2xl flex items-center justify-center mb-8 text-2xl group-hover:bg-brand-orange group-hover:text-white transition-all">
-                        <i class="fab ${t.icon}"></i>
-                    </div>
-                    <h4 class="text-xl font-black font-outfit uppercase tracking-tighter mb-4">${t.name}</h4>
-                    <p class="text-sm text-slate-400 font-bold mb-8">${t.desc}</p>
-                    <div class="flex items-center justify-between">
-                        <span class="text-[9px] font-black uppercase text-slate-300 tracking-widest">${t.cat}</span>
-                        <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-xs text-slate-300 group-hover:bg-brand-orange group-hover:text-white transition">
-                            <i class="fas fa-arrow-right"></i>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function openStudio(id) {
-            const t = registry.find(x => x.id === id);
-            document.getElementById('stName').innerText = t.name;
-            document.getElementById('stDesc').innerText = t.desc;
-            document.getElementById('stLong').innerHTML = `<p>${t.long}</p><p>This tool is built on our proprietary AI-Core 07, ensuring that each file is processed within seconds. No data is stored on our servers for more than 1 hour.</p>`;
-            document.getElementById('studio').style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeStudio() {
-            document.getElementById('studio').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        function searchRegistry() {
-            const val = document.getElementById('mainSearch').value.toLowerCase();
-            const filtered = registry.filter(t => t.name.toLowerCase().includes(val));
-            renderRegistry(filtered);
-        }
-
-        function processTool() {
-            const btn = document.getElementById('procBtn');
-            const term = document.getElementById('terminal');
-            btn.disabled = true;
-            btn.innerText = "Processing Asset...";
-            
-            const logs = [
-                "> Initializing AI Cloud Node 01...",
-                "> Extracting binary data clusters...",
-                "> Applying lossless transcoding...",
-                "> Finalizing file reconstruction...",
-                "> SUCCESS: Your asset is ready."
-            ];
-
-            let i = 0;
-            term.innerHTML = "";
-            const t = setInterval(() => {
-                if(i < logs.length) {
-                    const p = document.createElement('p');
-                    p.innerText = logs[i];
-                    term.appendChild(p);
-                    i++;
-                } else {
-                    clearInterval(t);
-                    btn.innerHTML = "Download <i class='fas fa-download ml-2'></i>";
-                    btn.style.background = "#22c55e";
-                    btn.disabled = false;
-                }
-            }, 800);
-        }
-
-        window.onload = () => renderRegistry(registry);
-    </script>
-</body>
-</html>
+  );
+}

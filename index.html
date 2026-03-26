@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GoConvertFast | Enterprise AI Studio</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Outfit:wght@800;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@800;900&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
@@ -13,165 +16,148 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'], outfit: ['Outfit', 'sans-serif'] },
-                    colors: { brand: { orange: '#FF6723', dark: '#05070A', panel: '#0F1115', border: '#1E222C' } }
+                    fontFamily: { sans: ['Inter', 'sans-serif'], outfit: ['Outfit', 'sans-serif'] },
+                    colors: { brand: { orange: '#FF6723', blue: '#1A2B47', bg: '#FFFFFF', card: '#F8FAFC' } }
                 }
             }
         }
     </script>
 
     <style>
-        body { background: #05070A; color: #E2E8F0; overflow: hidden; }
-        .sidebar-scroll::-webkit-scrollbar { width: 4px; }
-        .sidebar-scroll::-webkit-scrollbar-thumb { background: #1E222C; border-radius: 10px; }
-        .tool-btn { transition: all 0.3s; border: 1px solid transparent; }
-        .tool-btn:hover { background: rgba(255, 103, 35, 0.08); border-color: rgba(255, 103, 35, 0.2); color: #FF6723; }
-        .tool-btn.active { background: #FF6723; color: #fff; box-shadow: 0 10px 20px -5px rgba(255, 103, 35, 0.4); }
-        .glass-blur { background: rgba(15, 17, 21, 0.85); backdrop-filter: blur(25px); border-right: 1px solid #1E222C; }
-        .console-text { font-family: 'Courier New', Courier, monospace; }
+        body { background: #FFFFFF; color: #1A2B47; }
+        .white-nav { background: #ffffff; border-bottom: 1px solid #e2e8f0; }
+        .tool-card { background: #F8FAFC; border: 1px solid #e2e8f0; transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1); }
+        .tool-card:hover { transform: translateY(-10px); border-color: #FF6723; box-shadow: 0 30px 60px rgba(0,0,0,0.05); }
+        .studio-btn { background: #FF6723; transition: 0.3s; }
+        .studio-btn:hover { background: #e0561a; transform: scale(1.02); }
+        .ad-placeholder { background: #f1f5f9; border: 2px dashed #e2e8f0; border-radius: 12px; text-align: center; padding: 20px; color: #94a3b8; font-size: 11px; font-weight: bold; }
     </style>
 </head>
-<body class="font-sans">
+<body class="antialiased">
 
-    <div class="flex h-screen overflow-hidden">
-        
-        <aside class="w-80 glass-blur flex flex-col z-20">
-            <div class="p-8 border-b border-brand-border">
-                <div class="flex items-center space-x-4">
-                    <div class="w-10 h-10 bg-brand-orange rounded-xl flex items-center justify-center shadow-lg shadow-brand-orange/20">
-                        <i class="fas fa-bolt text-white text-xl"></i>
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="text-2xl font-black font-outfit tracking-tighter leading-none uppercase">GO<span class="text-brand-orange">.</span></span>
-                        <span class="text-[9px] font-bold text-slate-500 uppercase tracking-[0.3em]">ConvertFast</span>
-                    </div>
-                </div>
+    <nav class="white-nav sticky top-0 z-50 py-5 px-6 md:px-20 flex justify-between items-center shadow-sm">
+        <div class="flex items-center space-x-4 cursor-pointer" onclick="location.reload()">
+            <img src="brand_logo.png" alt="GF Logo" class="w-11 h-11 object-contain">
+            <div class="flex flex-col">
+                <span class="text-2xl font-black italic text-brand-blue tracking-tighter uppercase font-outfit leading-none">GO<span class="text-brand-orange">CONVERT</span>FAST</span>
+                <span class="text-[9px] font-bold text-slate-400 uppercase tracking-[0.4em]">Enterprise AI Ecosystem</span>
             </div>
+        </div>
+        <div class="hidden md:flex space-x-10 text-[11px] font-extrabold text-brand-blue uppercase tracking-widest">
+            <a href="#video" class="hover:text-brand-orange">Video Studio</a>
+            <a href="#doc" class="hover:text-brand-orange">Document Pro</a>
+            <a href="#" class="bg-brand-orange text-white px-5 py-2.5 rounded-full hover:brightness-110 transition">API Access</a>
+        </div>
+    </nav>
 
-            <nav id="toolRegistryList" class="flex-1 overflow-y-auto px-4 py-6 sidebar-scroll space-y-2">
-                </nav>
-
-            <div class="p-6 border-t border-brand-border bg-brand-dark/30">
-                <div class="flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-slate-600">
-                    <span>Engine: v3.0</span>
-                    <span class="text-green-500">● Online</span>
-                </div>
-            </div>
-        </aside>
-
-        <main class="flex-1 overflow-y-auto bg-[radial-gradient(#1E222C_1px,transparent_0)] [background-size:40px_40px] relative">
-            
-            <div class="w-full h-24 bg-brand-panel/50 border-b border-brand-border flex items-center justify-center">
-                <span class="text-[10px] font-bold text-slate-800 uppercase tracking-[1em]">Leaderboard Ad Unit</span>
-            </div>
-
-            <div id="activeWorkspace" class="max-w-4xl mx-auto p-12 mt-10">
-                <div class="text-center py-20 space-y-8">
-                    <h1 class="text-7xl font-black font-outfit tracking-tighter uppercase leading-none">
-                        Unified <br><span class="text-brand-orange italic">AI Studio</span>
-                    </h1>
-                    <p class="text-slate-500 max-w-md mx-auto font-medium text-lg leading-relaxed">
-                        Select a specialized tool from the registry to initialize the autonomous processing engine.
-                    </p>
-                </div>
-            </div>
-        </main>
-
-        <aside class="w-80 bg-brand-panel border-l border-brand-border p-8 flex flex-col space-y-10 z-20">
-            <div class="aspect-[3/4] rounded-3xl bg-brand-dark border border-brand-border flex items-center justify-center text-center p-6">
-                <span class="text-[10px] font-bold text-slate-800 uppercase tracking-[0.5em] leading-loose">Vertical Ad Slot</span>
-            </div>
-            <div class="space-y-4">
-                <h4 class="text-xs font-black uppercase tracking-widest text-brand-orange">System Meta</h4>
-                <div id="toolMeta" class="text-xs text-slate-500 leading-relaxed font-medium italic">
-                    Waiting for agent instruction...
-                </div>
-            </div>
-        </aside>
-
+    <div class="container mx-auto px-6 mt-8">
+        <div class="ad-placeholder w-full h-24 flex items-center justify-center uppercase tracking-widest">
+            [ AdSense Responsive Leaderboard - High Traffic Unit ]
+        </div>
     </div>
 
+    <main class="container mx-auto px-6 py-20 max-w-7xl">
+        
+        <div class="text-center max-w-4xl mx-auto mb-24">
+            <h1 class="text-6xl md:text-8xl font-black font-outfit text-brand-blue tracking-tighter mb-8 leading-[0.9]">
+                Professional AI <br> <span class="text-brand-orange italic">Digital Studio.</span>
+            </h1>
+            <p class="text-slate-500 text-lg md:text-xl font-medium max-w-3xl mx-auto leading-relaxed">
+                The fastest, most secure toolkit for professional creators. Analyze, convert, and export TikTok, YouTube, and complex documents in HD.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20">
+            
+            <div id="video" class="tool-card p-12 rounded-[40px] flex flex-col items-start group">
+                <div class="w-16 h-16 bg-orange-50 rounded-2xl flex items-center justify-center mb-8 border border-orange-100 group-hover:bg-brand-orange group-hover:text-white transition-all duration-300">
+                    <i class="fab fa-youtube text-3xl text-brand-orange group-hover:text-white transition"></i>
+                </div>
+                <h3 class="text-3xl font-black font-outfit text-brand-blue mb-5 tracking-tight uppercase">Video Growth <br>Studio</h3>
+                <p class="text-slate-500 text-base mb-10 leading-relaxed flex-1">Enterprise-grade extraction for TikTok and YouTube. Generates viral SEO tags and descriptions with 4K asset retrieval.</p>
+                <button onclick="openStudio('video')" class="studio-btn text-white px-10 py-5 rounded-2xl font-black uppercase text-xs tracking-widest w-full">Initialize Video Agent</button>
+            </div>
+
+            <div id="doc" class="tool-card p-12 rounded-[40px] flex flex-col items-start group">
+                <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mb-8 border border-blue-100 group-hover:bg-brand-blue group-hover:text-white transition-all duration-300">
+                    <i class="fas fa-file-pdf text-3xl text-blue-600 group-hover:text-white transition"></i>
+                </div>
+                <h3 class="text-3xl font-black font-outfit text-brand-blue mb-5 tracking-tight uppercase">Document <br>Master Pro</h3>
+                <p class="text-slate-500 text-base mb-10 leading-relaxed flex-1">Convert complex PDF structures into editable formats (Word, Image) with absolute precision. Ideal for professional workflows.</p>
+                <button onclick="openStudio('document')" class="bg-brand-blue text-white px-10 py-5 rounded-2xl font-black uppercase text-xs tracking-widest w-full hover:brightness-110 transition">Launch Document Engine</button>
+            </div>
+
+        </div>
+
+        <div class="ad-placeholder h-40 flex items-center justify-center uppercase tracking-widest">
+            [ AdSense Native In-Feed Ad Unit ]
+        </div>
+
+    </main>
+
+    <section id="studioOverlay" class="hidden fixed inset-0 z-[60] bg-white overflow-y-auto">
+        <div class="container mx-auto px-6 py-12 max-w-6xl">
+            <button onclick="closeStudio()" class="mb-12 text-slate-400 hover:text-brand-blue font-bold flex items-center uppercase tracking-widest text-xs transition">
+                <i class="fas fa-arrow-left mr-3"></i> Back to Dashboard
+            </button>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center bg-slate-50 p-12 rounded-[48px] border border-slate-100">
+                <div class="space-y-6">
+                    <h2 id="studioTitle" class="text-5xl md:text-6xl font-black text-brand-blue italic tracking-tighter uppercase font-outfit">Video Studio</h2>
+                    <input type="text" id="targetUrl" placeholder="Paste link here..." class="w-full bg-white border border-slate-200 rounded-2xl py-6 px-8 text-lg font-medium focus:border-brand-orange focus:ring-4 focus:ring-brand-orange/10 outline-none transition shadow-sm">
+                    <button id="execBtn" class="studio-btn text-white w-full py-6 rounded-3xl font-black text-2xl uppercase tracking-tighter shadow-3xl">Execute Agent</button>
+                </div>
+                
+                <div id="monitor" class="aspect-square bg-white rounded-[40px] border border-slate-100 flex flex-col items-center justify-center p-10 text-center shadow-lg relative overflow-hidden">
+                    <i id="idleIcon" class="fas fa-microchip text-7xl text-slate-100 mb-6"></i>
+                    <div id="loader" class="hidden space-y-4 flex flex-col items-center">
+                        <div class="animate-spin rounded-full h-12 w-12 border-b-4 border-brand-orange"></div>
+                        <p class="text-brand-orange font-bold text-xs uppercase tracking-widest animate-pulse">Processing via Engine...</p>
+                    </div>
+                    <div id="result" class="hidden space-y-4 flex flex-col items-center">
+                        <i class="fas fa-check-circle text-7xl text-green-500"></i>
+                        <p class="font-black uppercase tracking-widest text-xs mt-4">Task Completed</p>
+                        <a id="dlLink" class="bg-brand-blue text-white px-8 py-3 rounded-xl font-bold uppercase text-xs tracking-widest hover:bg-brand-orange transition">Download Asset</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-white border-t border-slate-100 py-16 text-center mt-20">
+        <img src="brand_logo.png" alt="Footer Logo" class="w-10 h-10 mx-auto mb-6 opacity-40">
+        <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.8em] italic">Abu Sira Designs • GOCONVERTFAST • Enterprise Ecosystem • 2026</p>
+    </footer>
+
     <script>
-        const tools = [
-            { id: "yt", name: "YouTube 4K Downloader", icon: "fa-youtube", desc: "Extract high-bitrate video streams directly from YouTube." },
-            { id: "tk", name: "TikTok No-Watermark", icon: "fa-tiktok", desc: "Retrieves clean TikTok assets for repurposing." },
-            { id: "pdf", name: "PDF to High-Res Image", icon: "fa-file-pdf", desc: "Convert PDF documents to professional JPEG/PNG assets." },
-            { id: "img", name: "AI Image Optimizer", icon: "fa-wand-magic-sparkles", desc: "Reduce file size without losing visual quality." }
-        ];
-
-        function initApp() {
-            const list = document.getElementById('toolRegistryList');
-            list.innerHTML = tools.map(tool => `
-                <div onclick="loadTool('${tool.id}')" class="tool-btn p-4 flex items-center space-x-4 rounded-xl cursor-pointer font-bold text-sm text-slate-400">
-                    <i class="fab ${tool.icon} text-lg w-6"></i>
-                    <span>${tool.name}</span>
-                </div>
-            `).join('');
+        function openStudio(type) {
+            document.getElementById('studioOverlay').classList.remove('hidden');
+            const title = document.getElementById('studioTitle');
+            if(type === 'video') title.innerText = "Video Studio Agent";
+            if(type === 'document') title.innerText = "Document Engine";
         }
 
-        function loadTool(id) {
-            const tool = tools.find(t => t.id === id);
-            document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
-            event.currentTarget.classList.add('active');
-            document.getElementById('toolMeta').innerText = tool.desc;
-
-            document.getElementById('activeWorkspace').innerHTML = `
-                <div class="space-y-10 animate-in slide-in-from-bottom-4 duration-500">
-                    <h2 class="text-5xl font-black font-outfit uppercase tracking-tighter italic">${tool.name}</h2>
-                    <div class="bg-brand-panel p-10 rounded-[40px] border border-brand-border space-y-8 shadow-2xl">
-                        <input type="text" id="targetUrl" placeholder="Paste link or instruction here..." 
-                            class="w-full bg-brand-dark border border-brand-border rounded-2xl py-6 px-8 text-lg font-bold outline-none focus:border-brand-orange transition">
-                        <button onclick="runAgent('${tool.id}')" id="runBtn" class="w-full bg-brand-orange py-8 rounded-[30px] font-extrabold text-2xl uppercase tracking-tighter shadow-2xl hover:brightness-110 active:scale-95 transition-all">
-                            Initialize Agent
-                        </button>
-                    </div>
-                    <div id="console" class="hidden bg-black rounded-3xl p-8 border border-brand-border console-text text-[11px] text-green-500 space-y-2">
-                        <div class="flex items-center space-x-3 mb-4 pb-2 border-b border-white/5">
-                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                            <span class="uppercase tracking-widest font-black">AI Agent Terminal</span>
-                        </div>
-                        <div id="logs"></div>
-                    </div>
-                </div>
-            `;
+        function closeStudio() {
+            document.getElementById('studioOverlay').classList.add('hidden');
         }
 
-        function runAgent(id) {
-            const btn = document.getElementById('runBtn');
-            const con = document.getElementById('console');
-            const logs = document.getElementById('logs');
-            const url = document.getElementById('targetUrl').value;
+        document.getElementById('execBtn').onclick = () => {
+            const idle = document.getElementById('idleIcon');
+            const loader = document.getElementById('loader');
+            const result = document.getElementById('result');
+            const dl = document.getElementById('dlLink');
+            
+            idle.classList.add('hidden'); result.classList.add('hidden');
+            loader.classList.remove('hidden');
 
-            if(!url) return alert("Please enter a valid link!");
-
-            con.classList.remove('hidden');
-            btn.disabled = true;
-            btn.innerHTML = `<i class="fas fa-spinner animate-spin"></i> Processing...`;
-
-            const steps = [
-                `> Booting ${id} Engine...`,
-                `> Handshake with remote server successful.`,
-                `> Extracting binary streams...`,
-                `> AI analysis complete. High-quality export ready.`
-            ];
-
-            let i = 0;
-            const interval = setInterval(() => {
-                if(i < steps.length) {
-                    const p = document.createElement('p');
-                    p.innerText = steps[i];
-                    logs.appendChild(p);
-                    i++;
-                } else {
-                    clearInterval(interval);
-                    btn.style.background = "#22C55E";
-                    btn.innerHTML = `<span>Download Assets</span> <i class="fas fa-download"></i>`;
-                    btn.disabled = false;
-                }
-            }, 800);
+            setTimeout(() => {
+                loader.classList.add('hidden');
+                result.classList.remove('hidden');
+                // Fake download for simulation
+                const b = new Blob(["Simulation Result"], {type: 'text/plain'});
+                dl.href = URL.createObjectURL(b); dl.download = "GF_Result.txt";
+            }, 3000);
         }
-
-        window.onload = initApp;
     </script>
 </body>
 </html>

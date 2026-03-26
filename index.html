@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoConvertFast | 200+ Professional AI Tools</title>
+    <title>GoConvertFast | 200+ Professional AI Tools Suite</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Outfit:wght@800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
@@ -13,292 +13,249 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'], outfit: ['Outfit', 'sans-serif'] },
-                    colors: { brand: { orange: '#FF6723', blue: '#0F172A', slate: '#64748B' } }
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'], outfit: ['Outfit', 'sans-serif'] },
+                    colors: { brand: { orange: '#FF6723', blue: '#0F172A', slate: '#64748B', bg: '#FFFFFF' } }
                 }
             }
         }
     </script>
 
     <style>
-        /* Custom Scrollbar for 200 Tools */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: #FF6723; border-radius: 10px; }
-
-        body { background-color: #ffffff; color: #0F172A; scroll-behavior: smooth; }
-        .tool-card { 
-            border: 1px solid #e2e8f0; 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        /* Global Reset & Performance */
+        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+        body { background-color: #ffffff; color: #0F172A; scroll-behavior: smooth; overflow-x: hidden; }
+        
+        /* AdSense Optimized Layouts */
+        .ad-unit { background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 16px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        
+        /* Tool Registry Cards */
+        .tool-card {
+            border: 1px solid #f1f5f9;
             background: #ffffff;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
         }
-        .tool-card:hover { 
-            border-color: #FF6723; 
-            box-shadow: 0 20px 40px rgba(255, 103, 35, 0.08);
-            transform: translateY(-5px);
+        .tool-card:hover {
+            border-color: #FF6723;
+            transform: translateY(-8px);
+            box-shadow: 0 40px 80px -12px rgba(255, 103, 35, 0.12);
+            z-index: 10;
         }
-        .nav-link { position: relative; font-weight: 700; transition: 0.3s; }
-        .nav-link::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: #FF6723; transition: 0.3s; }
-        .nav-link:hover::after { width: 100%; }
+        .tool-icon { transition: 0.4s ease-in-out; }
+        .tool-card:hover .tool-icon { transform: scale(1.1) rotate(5deg); color: #FF6723; }
+
+        /* Categorization Badge */
+        .badge { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; padding: 4px 10px; border-radius: 6px; }
+
+        /* Studio Overlay Logic */
+        #studioOverlay { transition: opacity 0.4s ease, transform 0.4s ease; }
+        .terminal-glow { box-shadow: 0 0 30px rgba(16, 185, 129, 0.1); }
         
-        /* Agent Console Style */
-        .terminal { background: #0F172A; color: #10b981; font-family: 'Courier New', monospace; padding: 20px; border-radius: 15px; }
-        
-        /* Grid Layout for 200 tools */
-        .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+        /* Massive Scroll Area */
+        .scroll-container { max-height: 80vh; overflow-y: auto; padding-right: 10px; }
+        .scroll-container::-webkit-scrollbar { width: 4px; }
+        .scroll-container::-webkit-scrollbar-thumb { background: #FF6723; border-radius: 10px; }
+
+        /* SEO Rich Text Sections */
+        .content-section p { margin-bottom: 1.5rem; line-height: 1.8; color: #475569; }
     </style>
 </head>
 <body>
 
-    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100 py-4 px-8 md:px-20 flex justify-between items-center">
-        <div class="flex items-center space-x-4 cursor-pointer" onclick="window.location.href='/'">
-            <img src="brand_logo.png" alt="Logo" class="w-12 h-12">
+    <nav class="sticky top-0 z-[100] bg-white/80 backdrop-blur-xl border-b border-slate-100 py-4 px-6 md:px-16 flex justify-between items-center">
+        <div class="flex items-center space-x-4 cursor-pointer" onclick="location.reload()">
+            <img src="brand_logo.png" alt="GoConvertFast Logo" class="w-10 h-10 object-contain">
             <div class="flex flex-col">
-                <h1 class="text-2xl font-black font-outfit text-brand-blue tracking-tighter uppercase leading-none">GO<span class="text-brand-orange">CONVERT</span>FAST</h1>
-                <span class="text-[9px] font-bold text-slate-400 tracking-[0.4em] uppercase">The Enterprise Utility Engine</span>
+                <span class="text-2xl font-black font-outfit tracking-tighter uppercase leading-none italic text-brand-blue">GO<span class="text-brand-orange">CONVERT</span>FAST</span>
+                <span class="text-[8px] font-extrabold text-slate-400 uppercase tracking-[0.5em] mt-1">Professional Utility Studio</span>
             </div>
         </div>
-        <div class="hidden lg:flex items-center space-x-8 text-[11px] uppercase tracking-widest font-black text-slate-500">
-            <a href="#video-tools" class="nav-link">Video</a>
-            <a href="#image-tools" class="nav-link">Images</a>
-            <a href="#doc-tools" class="nav-link">Documents</a>
-            <a href="#audio-tools" class="nav-link">Audio</a>
-            <a href="#unit-tools" class="nav-link">Units</a>
-            <a href="#dev-tools" class="nav-link">Dev Tools</a>
+        <div class="hidden xl:flex space-x-8 text-[11px] font-black uppercase tracking-widest text-slate-500">
+            <a href="#video-studio" class="hover:text-brand-orange transition">Video</a>
+            <a href="#doc-pro" class="hover:text-brand-orange transition">Document</a>
+            <a href="#image-studio" class="hover:text-brand-orange transition">Graphics</a>
+            <a href="#audio-engine" class="hover:text-brand-orange transition">Audio</a>
+            <a href="#seo-tools" class="hover:text-brand-orange transition">SEO</a>
+            <a href="#dev-suite" class="hover:text-brand-orange transition">Dev Suite</a>
         </div>
-        <button class="bg-brand-blue text-white px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-brand-orange transition-all">API Access</button>
+        <div class="flex items-center space-x-6">
+            <button class="bg-brand-blue text-white px-6 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-brand-orange shadow-lg shadow-brand-blue/10 transition-all">Studio Pro</button>
+        </div>
     </nav>
 
-    <header class="container mx-auto px-6 py-20 text-center border-b border-slate-50">
-        <h2 class="text-5xl md:text-8xl font-black font-outfit text-brand-blue mb-8 tracking-tighter leading-none">
-            200+ Professional <br> <span class="text-brand-orange italic underline decoration-slate-100">AI Powered</span> Tools.
-        </h2>
-        <p class="text-slate-500 text-xl max-w-2xl mx-auto font-medium mb-12">
-            Convert, optimize, and generate assets with enterprise-grade precision. Fast, secure, and always free.
+    <header class="container mx-auto px-6 pt-24 pb-12 text-center max-w-6xl">
+        <div class="inline-block px-4 py-2 bg-slate-50 border border-slate-100 rounded-full text-[10px] font-black uppercase tracking-widest text-brand-orange mb-8 animate-bounce">
+            New: AI Agent v4.0 is Live
+        </div>
+        <h1 class="text-6xl md:text-9xl font-black font-outfit text-brand-blue tracking-tighter leading-[0.85] mb-10">
+            One Click. <br> <span class="text-brand-orange italic">Infinite</span> Tools.
+        </h1>
+        <p class="text-slate-500 text-xl font-medium max-w-2xl mx-auto mb-16 leading-relaxed">
+            The world's most powerful online conversion ecosystem. Over 200+ specialized tools for video, document, and creative professionals.
         </p>
-        
-        <div class="max-w-2xl mx-auto relative group">
-            <i class="fas fa-search absolute left-6 top-1/2 -translate-y-1/2 text-slate-400"></i>
-            <input type="text" id="toolSearch" onkeyup="searchTools()" placeholder="Search from 150+ converters (e.g. PDF to Word, TikTok Downloader...)" 
-                class="w-full py-6 pl-16 pr-8 bg-slate-50 border border-slate-200 rounded-3xl text-lg font-semibold focus:outline-none focus:border-brand-orange focus:ring-4 focus:ring-brand-orange/5 transition-all">
+
+        <div class="max-w-3xl mx-auto relative group mb-20">
+            <div class="absolute inset-0 bg-brand-orange/5 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <i class="fas fa-search absolute left-8 top-1/2 -translate-y-1/2 text-slate-300 text-xl"></i>
+            <input type="text" id="masterSearch" onkeyup="filterTools()" placeholder="Search from 200+ professional tools (e.g., 'MP4 to WebM', 'PDF to Word')..." 
+                class="w-full py-8 pl-20 pr-10 bg-white border border-slate-200 rounded-[32px] text-xl font-semibold shadow-2xl shadow-slate-200/50 focus:outline-none focus:border-brand-orange transition-all relative z-10">
+        </div>
+
+        <div class="ad-unit w-full h-24 mb-20 text-[10px] font-black text-slate-300 uppercase tracking-[1em]">
+            Google AdSense Leaderboard Unit
         </div>
     </header>
 
-    <main class="container mx-auto px-6 py-24 max-w-7xl">
+    <main class="container mx-auto px-6 pb-32">
         
-        <section id="video-tools" class="mb-32">
-            <div class="flex items-center space-x-4 mb-12">
-                <div class="w-10 h-2 bg-brand-orange rounded-full"></div>
-                <h3 class="text-3xl font-black font-outfit uppercase tracking-tighter italic">Video & Social Studio</h3>
+        <section id="video-studio" class="mb-32">
+            <div class="flex items-end justify-between mb-12 pb-6 border-b border-slate-100">
+                <div>
+                    <h2 class="text-4xl font-black font-outfit uppercase tracking-tighter italic">01. Video Studio</h2>
+                    <p class="text-slate-400 font-bold uppercase text-[10px] tracking-widest mt-2">Professional Grade Extraction & Transcoding</p>
+                </div>
+                <span class="text-brand-orange font-black text-6xl opacity-10">VOD</span>
             </div>
-            <div class="tools-grid" id="videoGrid">
-                <div class="tool-card p-8 rounded-[32px] cursor-pointer" onclick="openTool('youtube-4k')">
-                    <div class="w-12 h-12 bg-red-50 text-red-600 rounded-xl flex items-center justify-center mb-6 text-2xl">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="videoGrid">
+                <div class="tool-card p-10 rounded-[40px] cursor-pointer" onclick="openTool('yt-4k')">
+                    <div class="tool-icon w-14 h-14 bg-red-50 text-red-600 rounded-2xl flex items-center justify-center mb-8 text-3xl">
                         <i class="fab fa-youtube"></i>
                     </div>
-                    <h4 class="text-xl font-extrabold mb-3">YouTube 4K Downloader</h4>
-                    <p class="text-sm text-slate-500 font-medium mb-6">Extract high-resolution video and audio assets from YouTube servers instantly.</p>
-                    <span class="text-[10px] font-black uppercase text-brand-orange tracking-widest">Enterprise HD</span>
+                    <h3 class="text-xl font-black mb-3">YouTube Pro 4K</h3>
+                    <p class="text-sm text-slate-500 font-medium leading-relaxed mb-6">Download high-bitrate video streams directly from YouTube servers in UHD.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="badge bg-red-50 text-red-600">Video</span>
+                        <i class="fas fa-arrow-right text-slate-200"></i>
+                    </div>
                 </div>
-                <div class="tool-card p-8 rounded-[32px] cursor-pointer" onclick="openTool('tiktok-hd')">
-                    <div class="w-12 h-12 bg-slate-900 text-white rounded-xl flex items-center justify-center mb-6 text-2xl">
+
+                <div class="tool-card p-10 rounded-[40px] cursor-pointer" onclick="openTool('tk-no-wm')">
+                    <div class="tool-icon w-14 h-14 bg-slate-900 text-white rounded-2xl flex items-center justify-center mb-8 text-3xl">
                         <i class="fab fa-tiktok"></i>
                     </div>
-                    <h4 class="text-xl font-extrabold mb-3">TikTok No-Watermark</h4>
-                    <p class="text-sm text-slate-500 font-medium mb-6">Clean TikTok video retrieval without meta-data or watermarks.</p>
-                    <span class="text-[10px] font-black uppercase text-brand-orange tracking-widest">Viral Optimized</span>
-                </div>
-                <div class="tool-card p-8 rounded-[32px] cursor-pointer" onclick="openTool('v-to-mp3')">
-                    <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center mb-6 text-2xl">
-                        <i class="fas fa-music"></i>
+                    <h3 class="text-xl font-black mb-3">TikTok No-Watermark</h3>
+                    <p class="text-sm text-slate-500 font-medium leading-relaxed mb-6">Extract clean TikTok assets without UI overlays or branding watermarks.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="badge bg-slate-100 text-slate-800">Social</span>
+                        <i class="fas fa-arrow-right text-slate-200"></i>
                     </div>
-                    <h4 class="text-xl font-extrabold mb-3">Video to MP3 High-Bitrate</h4>
-                    <p class="text-sm text-slate-500 font-medium mb-6">Lossless audio extraction with 320kbps output quality.</p>
-                    <span class="text-[10px] font-black uppercase text-brand-orange tracking-widest">320KBPS Support</span>
                 </div>
+
+                <div class="tool-card p-10 rounded-[40px] cursor-pointer" onclick="openTool('mp4-gif')">
+                    <div class="tool-icon w-14 h-14 bg-orange-50 text-brand-orange rounded-2xl flex items-center justify-center mb-8 text-3xl">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="text-xl font-black mb-3">MP4 to Ultra GIF</h3>
+                    <p class="text-sm text-slate-500 font-medium leading-relaxed mb-6">High-quality GIF conversion with optimized file size for web use.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="badge bg-orange-50 text-brand-orange">Graphics</span>
+                        <i class="fas fa-arrow-right text-slate-200"></i>
+                    </div>
+                </div>
+
+                <div class="tool-card p-10 rounded-[40px] cursor-pointer" onclick="openTool('ig-reels')">
+                    <div class="tool-icon w-14 h-14 bg-pink-50 text-pink-600 rounded-2xl flex items-center justify-center mb-8 text-3xl">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <h3 class="text-xl font-black mb-3">IG Reels Downloader</h3>
+                    <p class="text-sm text-slate-500 font-medium leading-relaxed mb-6">Lossless retrieval of Instagram Reels and Video posts in 1080p.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="badge bg-pink-50 text-pink-600">Video</span>
+                        <i class="fas fa-arrow-right text-slate-200"></i>
+                    </div>
+                </div>
+
                 </div>
         </section>
 
-        <section id="doc-tools" class="mb-32">
-            <div class="flex items-center space-x-4 mb-12">
-                <div class="w-10 h-2 bg-blue-600 rounded-full"></div>
-                <h3 class="text-3xl font-black font-outfit uppercase tracking-tighter italic">Document Engine</h3>
+        <section id="doc-pro" class="mb-32">
+            <div class="flex items-end justify-between mb-12 pb-6 border-b border-slate-100">
+                <div>
+                    <h2 class="text-4xl font-black font-outfit uppercase tracking-tighter italic">02. Document Pro</h2>
+                    <p class="text-slate-400 font-bold uppercase text-[10px] tracking-widest mt-2">OCR & Vector Based Conversion</p>
+                </div>
+                <span class="text-blue-600 font-black text-6xl opacity-10">PDF</span>
             </div>
-            <div class="tools-grid" id="docGrid">
-                <div class="tool-card p-8 rounded-[32px] cursor-pointer" onclick="openTool('pdf-to-word')">
-                    <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-6 text-2xl">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="docGrid">
+                <div class="tool-card p-10 rounded-[40px] cursor-pointer" onclick="openTool('pdf-word')">
+                    <div class="tool-icon w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-8 text-3xl">
                         <i class="fas fa-file-word"></i>
                     </div>
-                    <h4 class="text-xl font-extrabold mb-3">PDF to Word (Editable)</h4>
-                    <p class="text-sm text-slate-500 font-medium mb-6">Convert static PDFs into fully editable Microsoft Word documents.</p>
-                    <span class="text-[10px] font-black uppercase text-brand-orange tracking-widest">OCR Enabled</span>
+                    <h3 class="text-xl font-black mb-3">PDF to Word OCR</h3>
+                    <p class="text-sm text-slate-500 font-medium leading-relaxed mb-6">Convert PDFs into editable Word documents using advanced AI text recognition.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="badge bg-blue-50 text-blue-600">Office</span>
+                        <i class="fas fa-arrow-right text-slate-200"></i>
+                    </div>
                 </div>
-                <div class="tool-card p-8 rounded-[32px] cursor-pointer" onclick="openTool('merge-pdf')">
-                    <div class="w-12 h-12 bg-red-50 text-red-500 rounded-xl flex items-center justify-center mb-6 text-2xl">
+
+                <div class="tool-card p-10 rounded-[40px] cursor-pointer" onclick="openTool('merge-pdf')">
+                    <div class="tool-icon w-14 h-14 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mb-8 text-3xl">
                         <i class="fas fa-object-group"></i>
                     </div>
-                    <h4 class="text-xl font-extrabold mb-3">Merge PDF Documents</h4>
-                    <p class="text-sm text-slate-500 font-medium mb-6">Combine multiple PDF files into one organized document.</p>
-                    <span class="text-[10px] font-black uppercase text-brand-orange tracking-widest">Fast Merge</span>
-                </div>
-                <div class="tool-card p-8 rounded-[32px] cursor-pointer" onclick="openTool('word-to-pdf')">
-                    <div class="w-12 h-12 bg-blue-100 text-blue-800 rounded-xl flex items-center justify-center mb-6 text-2xl">
-                        <i class="fas fa-file-pdf"></i>
+                    <h3 class="text-xl font-black mb-3">Smart PDF Merge</h3>
+                    <p class="text-sm text-slate-500 font-medium leading-relaxed mb-6">Combine unlimited PDF pages into a single, optimized document.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="badge bg-indigo-50 text-indigo-600">Utility</span>
+                        <i class="fas fa-arrow-right text-slate-200"></i>
                     </div>
-                    <h4 class="text-xl font-extrabold mb-3">Word to PDF Converter</h4>
-                    <p class="text-sm text-slate-500 font-medium mb-6">Convert Word .docx files to high-quality PDF formats.</p>
-                    <span class="text-[10px] font-black uppercase text-brand-orange tracking-widest">PDF/A Standard</span>
+                </div>
+
+                <div class="tool-card p-10 rounded-[40px] cursor-pointer" onclick="openTool('pdf-img')">
+                    <div class="tool-icon w-14 h-14 bg-teal-50 text-teal-600 rounded-2xl flex items-center justify-center mb-8 text-3xl">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <h3 class="text-xl font-black mb-3">PDF to JPEG (HQ)</h3>
+                    <p class="text-sm text-slate-500 font-medium leading-relaxed mb-6">Extract every PDF page as a high-resolution standalone image.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="badge bg-teal-50 text-teal-600">Graphics</span>
+                        <i class="fas fa-arrow-right text-slate-200"></i>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <article class="bg-slate-50 p-12 md:p-20 rounded-[48px] border border-slate-100 mb-32 leading-relaxed">
-            <h4 class="text-4xl font-black font-outfit mb-8 uppercase italic tracking-tighter">Why Choose GoConvertFast Enterprise?</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 text-slate-600 font-medium text-lg">
-                <p>
-                    Our platform is built on the **Unified AI Agent** architecture, ensuring that every file you upload is analyzed and processed by the most efficient engine available. Whether you are a professional graphic designer, motion artist, or a business owner, our suite of 200+ tools provides the technical edge needed in today’s digital landscape.
-                </p>
-                <p>
-                    Unlike standard converters, **GoConvertFast** prioritizes metadata preservation and lossless quality. From 4K video extraction to high-bitrate audio conversion and OCR-enabled document processing, we offer tools that were previously only available in expensive software suites.
-                </p>
-            </div>
-        </article>
+        <div class="ad-unit w-full h-40 mb-32 text-[10px] font-black text-slate-300 uppercase tracking-[1em]">
+            Google AdSense In-Feed Ad Slot
+        </div>
+
     </main>
 
-    <div id="studioLayer" class="hidden fixed inset-0 z-[100] bg-white overflow-y-auto">
-        <div class="container mx-auto px-6 py-12 max-w-5xl">
-            <button onclick="closeTool()" class="mb-10 text-slate-400 hover:text-brand-orange font-black uppercase tracking-[0.3em] text-[10px] flex items-center">
-                <i class="fas fa-arrow-left mr-3"></i> Back to Main Registry
-            </button>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
-                <div class="space-y-10">
-                    <div id="toolHeader">
-                        <h2 id="toolTitle" class="text-6xl font-black font-outfit text-brand-blue tracking-tighter uppercase italic">Tool Name</h2>
-                        <p id="toolDesc" class="text-slate-500 text-lg font-medium mt-4">Detailed description will load here.</p>
+    <footer class="bg-slate-50 pt-32 pb-16 px-6">
+        <div class="container mx-auto max-w-7xl">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-20 mb-32">
+                <div class="space-y-8">
+                    <div class="flex items-center space-x-3">
+                        <img src="brand_logo.png" class="w-8 h-8 opacity-40">
+                        <span class="text-lg font-black font-outfit uppercase tracking-tighter text-slate-400">GoConvertFast</span>
                     </div>
-
-                    <div class="space-y-6 bg-slate-50 p-10 rounded-[40px] border border-slate-100 shadow-sm">
-                        <div class="space-y-2">
-                            <label class="text-[10px] font-black uppercase text-slate-400 ml-4">Universal Input</label>
-                            <input type="text" id="targetInput" placeholder="Paste URL or text instructions..." class="w-full bg-white border border-slate-200 rounded-2xl py-6 px-8 text-lg font-bold outline-none focus:border-brand-orange transition">
-                        </div>
-                        <div class="flex items-center justify-center w-full">
-                            <label class="w-full flex flex-col items-center px-4 py-8 bg-white text-slate-400 rounded-2xl border-2 border-dashed border-slate-200 cursor-pointer hover:border-brand-orange transition">
-                                <i class="fas fa-cloud-upload-alt text-3xl mb-2"></i>
-                                <span class="text-[10px] font-black uppercase tracking-widest">Select Original File</span>
-                                <input type='file' class="hidden" />
-                            </label>
-                        </div>
-                        <button onclick="runAgent()" class="w-full bg-brand-orange text-white py-8 rounded-[30px] font-black text-2xl uppercase tracking-tighter shadow-2xl hover:scale-[1.02] active:scale-95 transition-all">
-                            Start Processing
-                        </button>
-                    </div>
+                    <p class="text-slate-400 font-medium leading-relaxed">
+                        The ultimate digital utility engine for creators, developers, and businesses. Built for speed, security, and professional accuracy.
+                    </p>
                 </div>
-
-                <div class="flex flex-col">
-                    <div id="terminal" class="terminal h-full min-h-[400px] shadow-2xl overflow-y-auto">
-                        <p id="logStream">> AI Agent Standby...</p>
-                    </div>
-                    <div class="mt-8 bg-slate-50 h-32 rounded-3xl border border-slate-100 flex items-center justify-center">
-                        <span class="text-[9px] font-black text-slate-300 uppercase tracking-[1em]">Studio Ad Slot</span>
-                    </div>
+                <div class="content-section lg:col-span-2">
+                    <h4 class="text-2xl font-black font-outfit text-brand-blue uppercase italic mb-8">Enterprise Conversion Standards</h4>
+                    <p>At GoConvertFast, we leverage high-performance cloud nodes to handle heavy-duty media processing. Our AI-driven agent system ensures that each file—whether it's a 4K YouTube stream or a complex multi-layered PDF—is processed with zero data loss. Our architecture is designed to rival tools like Adobe Creative Cloud and conversiontools.io, offering professional results for free.</p>
+                    <p>Security is our core priority. Every asset processed through our ecosystem is encrypted at rest and automatically purged within 1 hour of completion. No tracking, no data harvesting—just pure utility.</p>
                 </div>
             </div>
-
-            <div class="mt-20 pt-20 border-t border-slate-100">
-                <h5 class="text-2xl font-black uppercase tracking-tighter mb-6">About this Professional Engine</h5>
-                <p id="longDesc" class="text-slate-500 leading-relaxed font-medium">
-                    This specific tool is optimized for enterprise workflows. It uses advanced algorithms to ensure that every pixel and every bit of data is handled with maximum care. By utilizing our global server network, we guarantee processing speeds that are 5x faster than conventional web-based converters.
-                </p>
+            <div class="pt-12 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center text-[10px] font-black uppercase tracking-[0.4em] text-slate-400 italic">
+                <span>© 2026 Abu Nasir Designs • Enterprise Ecosystem</span>
+                <span class="mt-4 md:mt-0">Powered by Lyria AI Core Engine</span>
             </div>
         </div>
-    </div>
-
-    <footer class="bg-white border-t border-slate-100 py-20 text-center">
-        <img src="brand_logo.png" alt="Footer Logo" class="w-12 h-12 mx-auto mb-8 opacity-50 grayscale">
-        <p class="text-[10px] font-black text-slate-400 uppercase tracking-[1em] italic">GoConvertFast • Enterprise AI Ecosystem • 2026</p>
     </footer>
 
     <script>
-        /* THE GIANT TOOL REGISTRY (150+ Entry Template) */
-        const toolRegistry = [
-            // VIDEO
-            { id: "youtube-4k", name: "YouTube 4K Downloader", cat: "video", desc: "Extract UHD quality video assets.", long: "Our YouTube Pro Downloader is designed for content creators who need the highest quality assets. It bypasses conventional limitations to give you 4K and 8K video streams directly. Perfect for repurposing content for high-end production." },
-            { id: "tiktok-hd", name: "TikTok No-Watermark", cat: "video", desc: "Clean TikTok asset retrieval.", long: "The TikTok engine identifies the raw video path on TikTok servers, allowing for a download that contains no UI overlays, usernames, or watermarks. Essential for viral reaction videos and content curation." },
-            { id: "v-to-mp3", name: "Video to MP3 Pro", cat: "video", desc: "320kbps audio extraction.", long: "High-fidelity audio extraction for musicians and podcasters. Our AI balances the EQ during extraction to ensure the output MP3 sounds exactly like the original source video." },
-            
-            // DOCUMENTS
-            { id: "pdf-to-word", name: "PDF to Word Pro", cat: "doc", desc: "OCR-enabled document conversion.", long: "This isn't just a converter; it's a reconstructor. Our AI Agent analyzes the layout, fonts, and tables in your PDF to create a Microsoft Word file that looks identical to the original but is 100% editable." },
-            { id: "merge-pdf", name: "Merge PDF Studio", cat: "doc", desc: "Professional PDF organizer.", long: "Seamlessly merge hundreds of PDF pages into a single document. Our engine optimizes the file size after merging to ensure the result is email-friendly while maintaining high resolution." },
-            
-            // IMAGES
-            { id: "img-comp", name: "Image Compressor", cat: "image", desc: "AI-based size reduction.", long: "Reduce JPG/PNG sizes by 80% with zero visible quality loss. The AI removes redundant pixel data that the human eye cannot see." },
-            { id: "webp-conv", name: "JPG to WebP Next-Gen", cat: "image", desc: "Web optimization tool.", long: "Convert your legacy images to WebP to improve website loading speeds by 40%. Highly recommended for SEO and mobile performance." },
-            
-            // ADDING 140+ DUMMY ENTRIES TO THE LOGIC ENGINE (Internal Loop)
-            // Note: In a real app, these would be loaded from a JSON file. 
-            // I'm adding a loop to demonstrate the 'Registry' capacity.
-        ];
-
-        /* SYSTEM INITIALIZATION */
-        function openTool(id) {
-            const tool = toolRegistry.find(t => t.id === id);
-            if(!tool) return;
-            
-            document.getElementById('studioLayer').classList.remove('hidden');
-            document.getElementById('toolTitle').innerText = tool.name;
-            document.getElementById('toolDesc').innerText = tool.desc;
-            document.getElementById('longDesc').innerText = tool.long;
-            
-            // Reset Terminal
-            document.getElementById('logStream').innerHTML = `> AI Agent v3.0 Initialized for: ${tool.name}\n> Waiting for user input...`;
-        }
-
-        function closeTool() {
-            document.getElementById('studioLayer').classList.add('hidden');
-        }
-
-        function runAgent() {
-            const log = document.getElementById('logStream');
-            const steps = [
-                "> Analyzing input source...",
-                "> Connecting to high-speed processing nodes...",
-                "> Extracting binary data clusters...",
-                "> AI Logic: Applying lossless compression algorithms...",
-                "> FINALIZING: Building high-resolution export...",
-                "> SUCCESS: Your asset is ready for deployment."
-            ];
-
-            let i = 0;
-            log.innerHTML = "";
-            const interval = setInterval(() => {
-                if(i < steps.length) {
-                    const p = document.createElement('div');
-                    p.innerText = steps[i];
-                    log.appendChild(p);
-                    i++;
-                } else {
-                    clearInterval(interval);
-                    const success = document.createElement('div');
-                    success.innerHTML = "<br><span style='color:#FF6723'>[DOWNLOAD READY] click below to export.</span>";
-                    log.appendChild(success);
-                }
-            }, 700);
-        }
-
-        /* SEARCH ENGINE FOR 200 TOOLS */
-        function searchTools() {
-            const input = document.getElementById('toolSearch').value.toLowerCase();
-            const cards = document.querySelectorAll('.tool-card');
-            
+        // Preliminary JS to handle UI
+        function filterTools() {
+            let input = document.getElementById('masterSearch').value.toLowerCase();
+            let cards = document.querySelectorAll('.tool-card');
             cards.forEach(card => {
-                const title = card.querySelector('h4').innerText.toLowerCase();
-                if(title.includes(input)) {
-                    card.style.display = "block";
-                } else {
-                    card.style.display = "none";
-                }
+                let title = card.querySelector('h3').innerText.toLowerCase();
+                card.style.display = title.includes(input) ? 'block' : 'none';
             });
         }
     </script>

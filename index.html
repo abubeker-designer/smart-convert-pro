@@ -1,172 +1,46 @@
-import React, { useState } from 'react';
-import { 
-  Search, 
-  Youtube, 
-  FileVideo, 
-  FileText, 
-  Image as ImageIcon, 
-  Music, 
-  Zap, 
-  ArrowRight, 
-  Download, 
-  CloudUpload,
-  X,
-  ChevronRight
-} from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Gebeya Dala Generated Project" />
+    <meta name="author" content="Gebeya Dala" />
+    <meta
+      name="keywords"
+      content="Gebeya Dala, AI, web development, generated project, React, Vite, Nextjs"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#ffffff" />
 
-// --- Tool Registry Data ---
-const TOOLS = [
-  { id: 'yt', name: 'YouTube 4K Pro', cat: 'Video', icon: <Youtube />, color: 'bg-red-50 text-red-600', desc: 'Download UHD assets directly from YouTube.' },
-  { id: 'tk', name: 'TikTok Clean', cat: 'Video', icon: <FileVideo />, color: 'bg-slate-900 text-white', desc: 'Remove watermarks for professional editing.' },
-  { id: 'pdf', name: 'PDF to Word AI', cat: 'Docs', icon: <FileText />, color: 'bg-blue-50 text-blue-600', desc: 'OCR powered document reconstruction.' },
-  { id: 'img', name: 'AI Image Opti', cat: 'Graphics', icon: <ImageIcon />, color: 'bg-orange-50 text-brand-orange', desc: 'Reduce file size by 90% without quality loss.' },
-  { id: 'mp3', name: 'HQ Audio Extractor', cat: 'Audio', icon: <Music />, color: 'bg-purple-50 text-purple-600', desc: 'Extract 320kbps MP3 from any video.' },
-  { id: 'fast', name: 'WebP Converter', cat: 'Web', icon: <Zap />, color: 'bg-emerald-50 text-emerald-600', desc: 'Optimize images for 2026 web standards.' },
-];
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="/" />
+    <meta property="og:title" content="Gebeya Dala" />
+    <meta property="og:description" content="Gebeya Dala Generated Project" />
+    <meta property="og:image" content="/gebeya.webp" />
+    <meta property="og:site_name" content="Gebeya Dala" />
 
-export default function GoConvertFast() {
-  const [selectedTool, setSelectedTool] = useState<null | typeof TOOLS[0]>(null);
-  const [search, setSearch] = useState("");
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [logs, setLogs] = useState<string[]>([]);
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="/" />
+    <meta property="twitter:title" content="Gebeya Dala" />
+    <meta
+      property="twitter:description"
+      content="Gebeya Dala Generated Project"
+    />
+    <meta property="twitter:image" content="/gebeya.webp" />
 
-  const filteredTools = TOOLS.filter(t => t.name.toLowerCase().includes(search.toLowerCase()));
+    <!-- Additional meta tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Gebeya Dala" />
+    <meta name="format-detection" content="telephone=no" />
 
-  const handleProcess = () => {
-    setIsProcessing(true);
-    setLogs([]);
-    const messages = [
-      "> Initializing AI Cloud Node...",
-      "> Analyzing source parameters...",
-      "> Reconstructing binary streams...",
-      "> Applying lossless conversion...",
-      "> Finalizing export asset..."
-    ];
-    
-    messages.forEach((msg, i) => {
-      setTimeout(() => {
-        setLogs(prev => [...prev, msg]);
-        if (i === messages.length - 1) setIsProcessing(false);
-      }, (i + 1) * 800);
-    });
-  };
-
-  return (
-    <div className="min-h-screen bg-white text-slate-900 selection:bg-orange-100 selection:text-orange-600 font-sans">
-      
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-2xl border-b border-slate-100 px-6 py-4 flex justify-between items-center">
-        <div className="flex items-center space-x-3 cursor-pointer" onClick={() => window.location.reload()}>
-          <div className="w-10 h-10 bg-[#FF6723] rounded-xl flex items-center justify-center text-white font-black shadow-lg shadow-orange-200 rotate-3">G</div>
-          <span className="text-xl font-black tracking-tighter uppercase italic">Go<span className="text-[#FF6723]">Convert</span>Fast</span>
-        </div>
-        <button className="bg-slate-900 text-white px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-[#FF6723] transition-all">Launch Pro</button>
-      </nav>
-
-      {/* Hero Section */}
-      <section className="pt-40 pb-20 px-6 text-center max-w-5xl mx-auto">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <span className="px-4 py-1.5 bg-orange-50 text-[#FF6723] rounded-full text-[10px] font-black uppercase tracking-widest mb-8 inline-block">Enterprise Utility Suite v4.0</span>
-          <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] mb-12 uppercase italic">
-            One Click. <br /> <span className="text-[#FF6723]">Infinite</span> Tools.
-          </h1>
-          
-          <div className="relative max-w-2xl mx-auto group">
-            <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-[#FF6723] transition-colors" />
-            <input 
-              type="text" 
-              placeholder="Search 150+ professional tools..."
-              className="w-full py-6 pl-16 pr-8 bg-slate-50 border border-slate-100 rounded-3xl text-lg font-bold focus:outline-none focus:bg-white focus:ring-4 focus:ring-orange-50 transition-all"
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div>
-        </motion.div>
-      </section>
-
-      {/* Tools Grid */}
-      <main className="container mx-auto px-6 pb-40">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredTools.map((tool) => (
-            <motion.div 
-              key={tool.id}
-              whileHover={{ y: -8 }}
-              onClick={() => setSelectedTool(tool)}
-              className="p-10 bg-white border border-slate-100 rounded-[40px] cursor-pointer hover:border-[#FF6723] transition-all group shadow-sm hover:shadow-2xl hover:shadow-orange-100"
-            >
-              <div className={`w-14 h-14 ${tool.color} rounded-2xl flex items-center justify-center mb-8 text-2xl transition-transform group-hover:scale-110`}>
-                {tool.icon}
-              </div>
-              <h3 className="text-xl font-black mb-3 uppercase tracking-tighter">{tool.name}</h3>
-              <p className="text-slate-400 font-medium text-sm leading-relaxed mb-8">{tool.desc}</p>
-              <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-slate-300 group-hover:text-[#FF6723]">
-                <span>{tool.cat}</span>
-                <ArrowRight size={14} />
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </main>
-
-      {/* Studio Modal Overlay */}
-      <AnimatePresence>
-        {selectedTool && (
-          <motion.div 
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-white overflow-y-auto p-6 md:p-20"
-          >
-            <div className="max-w-6xl mx-auto">
-              <button onClick={() => setSelectedTool(null)} className="mb-12 flex items-center text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 hover:text-orange-600 transition">
-                <X size={16} className="mr-2" /> Back to Dashboard
-              </button>
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
-                <div className="space-y-8">
-                  <h2 className="text-6xl font-black italic uppercase tracking-tighter leading-none">{selectedTool.name}</h2>
-                  <p className="text-slate-500 text-lg font-medium leading-relaxed">{selectedTool.desc}</p>
-                  
-                  <div className="p-10 bg-slate-50 rounded-[40px] border border-slate-100 space-y-6">
-                    <input type="text" placeholder="Paste URL or text here..." className="w-full py-5 px-8 bg-white border border-slate-200 rounded-2xl font-bold outline-none focus:border-[#FF6723] transition shadow-sm" />
-                    <label className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-slate-200 rounded-2xl bg-white cursor-pointer hover:border-orange-400 transition group">
-                      <CloudUpload className="text-slate-300 mb-2 group-hover:text-orange-500" />
-                      <span className="text-[10px] font-black uppercase text-slate-400 tracking-widest">Drop Master Asset</span>
-                      <input type="file" className="hidden" />
-                    </label>
-                    <button 
-                      onClick={handleProcess}
-                      disabled={isProcessing}
-                      className="w-full bg-[#FF6723] text-white py-8 rounded-[30px] font-black text-2xl uppercase tracking-tighter shadow-2xl hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50"
-                    >
-                      {isProcessing ? "Processing..." : "Initialize Agent"}
-                    </button>
-                  </div>
-                </div>
-
-                <div className="flex flex-col">
-                  <div className="flex-1 bg-slate-900 rounded-[40px] p-10 font-mono text-emerald-400 text-sm shadow-2xl overflow-y-auto min-h-[400px]">
-                    {logs.length === 0 && <p className="opacity-40 animate-pulse">> Awaiting instructions...</p>}
-                    {logs.map((log, i) => <p key={i} className="mb-2 leading-relaxed">{log}</p>)}
-                    {!isProcessing && logs.length > 0 && (
-                      <button className="mt-8 bg-emerald-500 text-slate-900 px-8 py-4 rounded-2xl font-black uppercase tracking-widest flex items-center hover:bg-emerald-400 transition">
-                        <Download size={18} className="mr-2" /> Download Ready File
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <footer className="py-20 border-t border-slate-100 text-center bg-slate-50/50">
-        <p className="text-[10px] font-black text-slate-400 uppercase tracking-[1em] mb-4">GoConvertFast Enterprise • 2026</p>
-        <div className="flex justify-center space-x-6 text-[10px] font-black uppercase tracking-widest text-slate-300">
-          <a href="#" className="hover:text-orange-600">Privacy</a>
-          <a href="#" className="hover:text-orange-600">Terms</a>
-          <a href="#" className="hover:text-orange-600">API</a>
-        </div>
-      </footer>
-    </div>
-  );
-}
+    <title>Gebeya Dala</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
